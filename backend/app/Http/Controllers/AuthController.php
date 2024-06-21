@@ -57,7 +57,7 @@ class AuthController extends Controller
 
                     $token = $user->createToken('authToken');
                     $accessToken = $token->accessToken;
-                    Auth::login($user);
+                    Auth::login($user, $request->rememberMe);
 
                     return response()->json([
                         'success' => 1,
@@ -70,16 +70,16 @@ class AuthController extends Controller
                     return response()->json([
                         'success' => 0,
                         'type' => 'error',
-                        'message'  => 'Something went wrong',
-                    ]);
+                        'message'  => "Your password doesn't match",
+                    ], 401);
                 }
             }
 
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong',
-            ]);
+                'message'  => 'Email you provided is wrong',
+            ], 401);
         } catch (\Exception $exception) {
             Log::error($exception);
             return response()->json([
