@@ -124,6 +124,9 @@
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/oauth2-server" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/event" />
       <excludeFolder url="file://$MODULE_DIR$/backend/vendor/league/uri" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/intervention/image-laravel" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/intervention/image" />
+      <excludeFolder url="file://$MODULE_DIR$/backend/vendor/intervention/gif" />
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />

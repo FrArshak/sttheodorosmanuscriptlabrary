@@ -124,6 +124,9 @@
       <path value="$PROJECT_DIR$/backend/vendor/league/oauth2-server" />
       <path value="$PROJECT_DIR$/backend/vendor/league/event" />
       <path value="$PROJECT_DIR$/backend/vendor/league/uri" />
+      <path value="$PROJECT_DIR$/backend/vendor/intervention/image-laravel" />
+      <path value="$PROJECT_DIR$/backend/vendor/intervention/image" />
+      <path value="$PROJECT_DIR$/backend/vendor/intervention/gif" />
     </include_path>
   </component>
   <component name="PhpProjectSharedConfiguration" php_language_level="8.1">
