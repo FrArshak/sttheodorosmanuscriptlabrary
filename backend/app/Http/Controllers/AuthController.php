@@ -64,7 +64,7 @@ class AuthController extends Controller
                         'type' => 'success',
                         'message'  => trans('main.logged_in'),
                         'authUser' => $user,
-                        'token' => $accessToken,
+                        'authToken' => $accessToken,
                     ], 200);
                 } else {
                     return response()->json([
