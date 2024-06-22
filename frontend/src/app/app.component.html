@@ -1,0 +1,5 @@
+<div class="admin-header" *ngIf="isLogged">Edgaradawdawdaw</div>
+<header *ngIf="showHeader"></header>
+<div [@routeAnimations]="prepareRoute(outlet)">
+  <router-outlet #outlet="outlet"></router-outlet>
+</div>

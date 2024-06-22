@@ -1,0 +1,17 @@
+@import "variables";
+
+@mixin head-lato-60 {
+  font-family: Lato, sans-serif;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 60px;
+  color: $color-blue-light;
+}
+
+@mixin subHead-lato-30 {
+  font-family: Lato, sans-serif;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 30px;
+  color: $color-blue-light;
+}

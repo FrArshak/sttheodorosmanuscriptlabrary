@@ -1,0 +1,143 @@
+@import "../../../../assets/styles/global";
+
+.header {
+
+  padding-top: 35px ;
+  padding-bottom: 20px;
+  position: relative;
+  background: transparent;
+
+  .container {
+    display: flex;
+    justify-content: space-between;
+
+    .logo {
+      display: flex;
+      column-gap: 8px;
+      align-items: center;
+
+      .logo-text {
+        color: white;
+        font-family: Lato, sans-serif;
+        font-weight: 500;
+      }
+    }
+
+
+    .nav {
+      .menu {
+        max-width: 700px;
+        width: 700px;
+        display: flex;
+        justify-content: space-around;
+
+
+      }
+    }
+
+
+
+
+    .burger {
+      display: none;
+
+      svg {
+        width: 20px;
+        height: 20px;
+        fill: white;
+        cursor: pointer;
+      }
+
+    }
+
+  }
+}
+.language {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+}
+
+.menu-responsive {
+  transform: scale(0);
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background-image: linear-gradient(90deg, rgba(5, 9, 31, 0.6) 0%,  rgba(66, 65, 68, 0.8) 55%, rgba(1, 12, 14, 0.7) 93%);
+  transition: all 300ms ease-in-out;
+
+  .menu {
+    display: flex;
+    flex-direction: column;
+    row-gap: 4px;
+  }
+
+  li {
+    transition: all 300ms ease-in;
+    cursor: pointer;
+
+    a {
+      display: inline-block;
+      width: 100%;
+      font-family: Lato, sans-serif;
+      font-size: 18px;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    &:hover {
+      padding: 10px 2px;
+      background: white;
+
+      a {
+        color: black;
+      }
+    }
+  }
+}
+@media screen and (max-width: 1160px) {
+
+  .header {
+
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .container {
+      .nav {
+        display: none;
+      }
+
+      .language {
+        display: none;
+      }
+
+      .burger {
+        display: block;
+        position: relative;
+        z-index: 100;
+      }
+    }
+  }
+
+  .menu-responsive.active {
+    //display: block;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: scale(1);
+
+
+    .menu {
+      padding: 0;
+      li {
+        a {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+}
