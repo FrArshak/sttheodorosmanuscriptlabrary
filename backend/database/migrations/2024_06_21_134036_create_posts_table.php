@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('post_type');
             $table->json('post_en');
             $table->json('post_am');
+            $table->string('image');
             $table->unsignedBigInteger('created_by');
             $table->timestamps();
 

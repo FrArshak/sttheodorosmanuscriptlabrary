@@ -3,24 +3,34 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\PostController;
+use App\Http\Controllers\ImageController;
 
 Route::group(['middleware' => 'api'], function() {
 
     //auth routes
     Route::post('/login', [AuthController::class, 'login']);
 
+    //posts routs
+    Route::get('/get-post/{postId}', [PostController::class, 'getPost']);
+    Route::get('/get-posts', [PostController::class, 'getPosts']);
+
     Route::group(['middleware' => 'auth:api'], function () {
         //auth routs
         Route::post('/logout',  [AuthController::class, 'logOut']);
         Route::get('/check-auth',  [AuthController::class, 'checkAuth']);
         Route::post('/create-user',  [AuthController::class, 'register']);
-        Route::put('/change-current-user-data/{user}', 'App\Http\Controllers\AuthController@changeUserData');
+        Route::put('/change-current-user-data/{user}', [AuthController::class, 'changeUserData']);
 
+        //posts routs
+        Route::post('/store-post', [PostController::class, 'storePost']);
+        Route::put('/update-post/{postId}', [PostController::class, 'updatePost']);
+        Route::put('/delete-post/{postId}', [PostController::class, 'deletePost']);
 
         //image routes
-        Route::post('/upload-image', 'App\Http\Controllers\ImageController@uploadImage');
-        Route::delete('/delete-image/{image}', 'App\Http\Controllers\ImageController@deleteImage');
-        Route::delete('/delete-image-from-db/{image}', 'App\Http\Controllers\ImageController@deleteImageFromDB');
+        Route::post('/upload-image', [ImageController::class, 'uploadImage']);
+        Route::delete('/delete-image/{image}', [ImageController::class, 'deleteImage']);
+        Route::delete('/delete-image-from-db/{image}', [ImageController::class, 'deleteImageFromDB']);
 
 
     });

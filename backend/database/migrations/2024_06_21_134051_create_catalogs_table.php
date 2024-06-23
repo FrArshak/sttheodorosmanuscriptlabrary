@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('catalog_title');
             $table->longText('catalog_text');
+            $table->string('pdf_path');
+            $table->string('image');
             $table->timestamps();
         });
     }

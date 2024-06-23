@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Interfaces\PostInterface;
+use App\Repositories\PostRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use App\Interfaces\ImageInterface;
@@ -29,6 +31,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             ImageInterface::class,
             ImageRepository::class
+        );
+
+        $this->app->bind(
+            PostInterface::class,
+            PostRepository::class
         );
     }
 }
