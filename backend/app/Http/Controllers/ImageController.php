@@ -6,7 +6,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\FileManagerService;
 use Illuminate\Support\Facades\Log;
-use Intervention\Image\Laravel\Facades\Image;
+use Intervention\Image\Facades\Image;
 use App\Interfaces\ImageInterface;
 
 class ImageController extends Controller
