@@ -1,20 +1,25 @@
-import { Component } from '@angular/core';
-import {OwlOptions} from "ngx-owl-carousel-o";
+import { Component, OnInit } from '@angular/core';
+import {CarouselModule, OwlOptions} from "ngx-owl-carousel-o";
 import {SliderService} from "../../services/slider.service";
+
 @Component({
-  selector: 'app-image-slider',
+  selector: 'image-slider',
+  standalone: true,
+  imports: [CarouselModule],
   templateUrl: './image-slider.component.html',
   styleUrl: './image-slider.component.scss'
 })
-export class ImageSliderComponent {
+export class ImageSliderComponent implements OnInit {
 
 
   customOptions: OwlOptions = {
     loop: true,
-    mouseDrag: false,
+    // autoplay: true,
+    // autoplaySpeed: 1000,
+    // autoplayTimeout: 3000,
+    mouseDrag: true,
     touchDrag: true,
     pullDrag: false,
-
     dots: true,
     navSpeed: 700,
     navText: ['', ''],
@@ -32,12 +37,19 @@ export class ImageSliderComponent {
         items: 1
       }
     },
-    nav: false,
-    // stagePadding: this.stagePadding
+    nav: false
   }
 
   constructor(private sliderService: SliderService) {
   }
 
+
+  ngOnInit(): void {
+    
+  }
+
+  changeSlide() {
+
+  }
 
 }

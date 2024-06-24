@@ -1,0 +1,52 @@
+@import '../../../../assets/styles/variables';
+
+.admin-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 30px;
+    background: $color-blue-dark;
+
+    .admin-info {
+        color: #ffffff;
+        display: flex;
+        column-gap: 15px;
+
+        .admin-img {
+            width: 44px;
+            height: 44px;
+            background-position: center;
+            background-size: cover;
+        }
+
+        .admin-name {
+            display: flex;
+            flex-direction: column;
+            row-gap: 8px;
+
+            &:first-child {
+                font-size: 14px;
+            }
+
+            .admin-word {
+                font-size: 12px;
+            }
+        }
+    }
+
+    .admin-menu {
+        cursor: pointer;
+
+        &:hover {
+            .admin-menu-icon {
+                svg {
+                    path {
+                      transition: all 200ms ease-in-out;
+                      stroke: rgb(46, 46, 224);
+                    }
+                }
+            }
+
+        }
+    }
+}

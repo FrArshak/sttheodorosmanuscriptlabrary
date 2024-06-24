@@ -1,18 +1,22 @@
-<header class="admin-header">
+<div class="admin-header">
   <div class="admin-info">
     <div class="admin-img"></div>
 
-    <div class="admin-name">arshak</div>
+    <div class="admin-name">
+      <span>Arshak</span>
+      <span class="admin-word">Admin</span>
+    </div>
   </div>
 
   <div class="admin-menu">
-    <svg
+    <div class="admin-menu-icon" [matMenuTriggerFor]="menu">
+      <svg
       width="30"
       height="20"
       viewBox="0 0 30 20"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
-    >
+       >
       <path
         d="M1.875 1.875H28.125M1.875 10H28.125M1.875 18.125H28.125"
         stroke="white"
@@ -20,6 +24,17 @@
         stroke-miterlimit="10"
         stroke-linecap="round"
       />
-    </svg>
+      </svg>
+    </div>
+    <mat-menu  #menu="matMenu" >
+      <button mat-menu-item (click)="logout()">
+        <a>Logout</a>
+      </button>
+      <button mat-menu-item >
+        <a>Go to the Dashboard</a>
+      </button>
+    </mat-menu>
+
+  
   </div>
-</header>
+</div>

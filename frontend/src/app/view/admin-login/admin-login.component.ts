@@ -50,11 +50,17 @@ export class AdminLoginComponent {
             return;
           }
           const loginResponse = data as LoginType;
-          if (!loginResponse.token || !loginResponse.authUser.id) {
+          if (!loginResponse.authToken || !loginResponse.authUser.id) {
             error = 'Error during authorization';
           }
-
-          this.authService.setTokens(loginResponse.token);
+          if(loginResponse.authToken) {
+            this.authService.setTokens(loginResponse.authToken);
+          } else {
+            this._snackBar.open('There was an error during the authentication please try again');
+            this.authService.clearToken();
+            this.router.navigate(['/']);
+          } 
+           
           this.router.navigate(['/']);
           // this.authService.userId = loginResponse.userId;
 

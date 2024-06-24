@@ -9,7 +9,7 @@ import { environment } from '../../environments/environment';
   providedIn: 'root',
 })
 export class AuthService {
-  public accessTokenKey: string = 'Authorization';
+  public accessTokenKey: string = 'Token';
 
   constructor(private http: HttpClient) {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey);
@@ -23,6 +23,20 @@ export class AuthService {
     return this.isLogged;
   }
 
+  public setTokens(accessToken: string): void {
+    localStorage.setItem(this.accessTokenKey, accessToken);
+    this.isLogged = true;
+    this.isLogged$.next(true);
+  }
+
+  public getAccessToken(): string {
+    return localStorage.getItem(this.accessTokenKey) as string;
+  }
+
+  public clearToken () {
+    localStorage.removeItem(this.accessTokenKey);
+  }
+
   login(
     email: string,
     password: string,
@@ -34,13 +48,11 @@ export class AuthService {
     );
   }
 
-  public setTokens(accessToken: string): void {
-    localStorage.setItem(this.accessTokenKey, accessToken);
-    this.isLogged = true;
-    this.isLogged$.next(true);
+  logout(): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'logout', {Token: `Bearer ${this.getAccessToken}`})
   }
 
-  public getAccessToken(): string {
-    return localStorage.getItem(this.accessTokenKey) as string;
-  }
+
+
+
 }

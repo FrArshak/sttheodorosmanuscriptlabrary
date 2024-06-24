@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
         this.showHeader = false;
       } else if (this.currentRoute === '/') {
         this.showHeader = true;
+        this.isLogged = this.authService.getIsLoggedIn();
       }
     });
   }

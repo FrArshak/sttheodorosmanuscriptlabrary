@@ -11,5 +11,5 @@ export type LoginType = {
     created_at: string | null,
     updated_at: string | null
   },
-  token: string
+  authToken: string
 }

@@ -3,12 +3,22 @@
 .main {
 
 
-    .news {
+    .news-article {
       padding-top: 120px;
       padding-bottom: 120px;
       background: $color-blue-dark;
 
       .container {
+
+        .title {
+          margin: 30px;
+          text-align: center;
+        }
+
+        .subhead {
+          margin-bottom: 90px;
+          text-align: center;
+        }
       }
     }
 }
