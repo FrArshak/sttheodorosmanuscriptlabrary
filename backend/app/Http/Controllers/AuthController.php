@@ -231,6 +231,7 @@ class AuthController extends Controller
     public function logOut(Request $request): JsonResponse
     {
         try {
+
             $token = $request->user()->token();
             $token->revoke();
 
