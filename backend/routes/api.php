@@ -19,6 +19,12 @@ Route::group(['middleware' => 'api'], function() {
     //email routs
     Route::post('/contact-us', [ContactUsController::class, 'contactUs']);
 
+    //get general settings
+    Route::get('/get-general-settings', 'App\Http\Controllers\GeneralSettingsController@getGeneralSettings');
+
+    //get page settings
+    Route::get('/get-page-settings', 'App\Http\Controllers\GeneralSettingsController@getPageSettings');
+
     //statistics
     Route::post('/count-visitor', 'App\Http\Controllers\StatisticsController@countVisitors');
 
@@ -33,6 +39,11 @@ Route::group(['middleware' => 'api'], function() {
         Route::post('/store-post', [PostController::class, 'storePost']);
         Route::put('/update-post/{postId}', [PostController::class, 'updatePost']);
         Route::put('/delete-post/{postId}', [PostController::class, 'deletePost']);
+
+        //General Settings
+        Route::post('/upload-logo', 'App\Http\Controllers\GeneralSettingsController@uploadLogo');
+        Route::delete('/delete-logo/{logo}', 'App\Http\Controllers\GeneralSettingsController@deleteLogo');
+        Route::post('/update-general-settings', 'App\Http\Controllers\GeneralSettingsController@updateGeneralSettings');
 
         //image routes
         Route::post('/upload-image', [ImageController::class, 'uploadImage']);
