@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ContactUsController;
 
 Route::group(['middleware' => 'api'], function() {
 
@@ -14,6 +15,12 @@ Route::group(['middleware' => 'api'], function() {
     //posts routs
     Route::get('/get-post/{postId}', [PostController::class, 'getPost']);
     Route::get('/get-posts', [PostController::class, 'getPosts']);
+
+    //email routs
+    Route::post('/contact-us', [ContactUsController::class, 'contactUs']);
+
+    //statistics
+    Route::post('/count-visitor', 'App\Http\Controllers\StatisticsController@countVisitors');
 
     Route::group(['middleware' => 'auth:api'], function () {
         //auth routs
@@ -32,6 +39,7 @@ Route::group(['middleware' => 'api'], function() {
         Route::delete('/delete-image/{image}', [ImageController::class, 'deleteImage']);
         Route::delete('/delete-image-from-db/{image}', [ImageController::class, 'deleteImageFromDB']);
 
-
+        //statistics
+        Route::get('/get-statistics-data', 'App\Http\Controllers\StatisticsController@getStatisticsData');
     });
 });
