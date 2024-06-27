@@ -52,7 +52,7 @@ class PostRepository implements PostInterface
      */
     public function update($postId, $data) : mixed
     {
-        return $this->model->where('id', $postId)->update([$data]);
+        return $this->model->where('id', $postId)->update($data);
     }
 
     /**
