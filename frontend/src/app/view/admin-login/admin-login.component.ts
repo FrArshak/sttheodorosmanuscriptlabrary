@@ -59,8 +59,8 @@ export class AdminLoginComponent {
             this._snackBar.open('There was an error during the authentication please try again');
             this.authService.clearToken();
             this.router.navigate(['/']);
-          } 
-           
+          }
+
           this.router.navigate(['/']);
           // this.authService.userId = loginResponse.userId;
 
