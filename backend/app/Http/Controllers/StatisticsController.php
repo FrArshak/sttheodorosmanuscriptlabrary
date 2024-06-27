@@ -45,7 +45,7 @@ class StatisticsController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong',
+                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
             ]);
         }
     }
@@ -101,7 +101,7 @@ class StatisticsController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong',
+                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
             ]);
         }
     }
