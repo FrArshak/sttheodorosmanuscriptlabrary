@@ -65,7 +65,7 @@ class ImageController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -89,7 +89,7 @@ class ImageController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -123,7 +123,7 @@ class ImageController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }

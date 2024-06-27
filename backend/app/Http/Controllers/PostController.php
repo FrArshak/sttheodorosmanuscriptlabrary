@@ -56,7 +56,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -80,7 +80,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -109,7 +109,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -125,7 +125,7 @@ class PostController extends Controller
             DB::beginTransaction();
             $data = $request->all();
 
-            $this->postRepo->update($data['id'], $data);
+            $this->postRepo->update($postId, $data);
 
             DB::commit();
             return response()->json([
@@ -139,7 +139,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -168,7 +168,7 @@ class PostController extends Controller
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }

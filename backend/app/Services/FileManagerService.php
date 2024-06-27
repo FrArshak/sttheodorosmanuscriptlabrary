@@ -52,7 +52,7 @@ class FileManagerService
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -82,7 +82,7 @@ class FileManagerService
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
@@ -165,7 +165,7 @@ class FileManagerService
             return response()->json([
                 'success' => 0,
                 'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error' . $exception->getMessage(),
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
             ]);
         }
     }
