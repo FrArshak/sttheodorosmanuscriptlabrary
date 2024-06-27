@@ -7,22 +7,28 @@ import {ImageSliderComponent} from "./components/image-slider/image-slider.compo
 import { BannerTextSliderComponent } from './components/banner-text-slider/banner-text-slider.component';
 import { AdminHeaderComponent } from './layout/admin-header/admin-header.component';
 import { MatMenuModule } from '@angular/material/menu';
+import { AdminModalComponent } from './components/admin-modal/admin-modal.component';
+import {QuillModule} from "ngx-quill";
+import {FormsModule} from "@angular/forms";
 
 
 
 @NgModule({
   declarations: [
     HeaderComponent,
-    AdminHeaderComponent,
+    AdminHeaderComponent
   ],
   imports: [
     CommonModule,
     MatMenuModule,
+    FormsModule,
+
     RouterModule,
   ],
   exports: [
     HeaderComponent,
     AdminHeaderComponent
+
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

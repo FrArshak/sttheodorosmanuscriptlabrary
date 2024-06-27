@@ -12,12 +12,14 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './core/auth-interceptor';
 import { MainComponent } from './view/main/main.component';
+import {NewsArticleModule} from "./view/news-article/news-article.module";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     SharedModule,
+    NewsArticleModule,
     HttpClientModule,
     ReactiveFormsModule,
     MatMenuModule,
@@ -25,7 +27,7 @@ import { MainComponent } from './view/main/main.component';
     RouterModule,
     MatSnackBarModule,
     AppRoutingModule,
-    
+
   ],
   providers: [
     // {provide: provideRouter}

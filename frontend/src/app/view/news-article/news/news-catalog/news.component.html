@@ -1,0 +1,18 @@
+<div class="news">
+  <div class="container">
+
+    <div class="title news-title">
+      News
+    </div>
+
+    <div class="subhead news-subhead">
+      Fresh Discoveries and News on Armenian Manuscripts
+    </div>
+
+    <span class="btn add-news-btn" *ngIf="isLogged" (click)="toggleActive()">Add a news article</span>
+
+    <app-card></app-card>
+  </div>
+
+  <admin-modal [active]="active"></admin-modal>
+</div>

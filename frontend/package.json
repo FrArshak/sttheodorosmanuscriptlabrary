@@ -1,5 +1,5 @@
 {
-  "name": "frontend2",
+  "name": "frontend",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
@@ -21,8 +21,11 @@
     "@angular/platform-browser-dynamic": "^18.0.0",
     "@angular/router": "^18.0.0",
     "ngx-owl-carousel-o": "^18.0.0",
+    "ngx-quill": "^26.0.4",
+    "quill": "^2.0.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "typed.js": "^2.1.0",
     "zone.js": "~0.14.3"
   },
   "devDependencies": {

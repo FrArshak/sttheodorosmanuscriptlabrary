@@ -10,31 +10,40 @@ import { environment } from '../../environments/environment';
 })
 export class AuthService {
   public accessTokenKey: string = 'Token';
+  public isLogged$: Subject<boolean> = new Subject<boolean>();
+  private isLogged: boolean = false;
 
   constructor(private http: HttpClient) {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey);
-    console.log(this.isLogged);
+
   }
 
-  public isLogged$: Subject<boolean> = new Subject<boolean>();
-  private isLogged: boolean = false;
+
 
   public getIsLoggedIn(): boolean {
     return this.isLogged;
   }
 
-  public setTokens(accessToken: string): void {
+  public setTokens(accessToken: string, userId: number): void {
     localStorage.setItem(this.accessTokenKey, accessToken);
+    localStorage.setItem('userId', userId.toString())
     this.isLogged = true;
     this.isLogged$.next(true);
   }
 
-  public getAccessToken(): string {
-    return localStorage.getItem(this.accessTokenKey) as string;
+  public getTokens(): {accessToken: string, userId: number} {
+    return  {
+      accessToken: localStorage.getItem(this.accessTokenKey) as string,
+      userId: JSON.parse(localStorage.getItem('userId') as string)
+    }
   }
 
-  public clearToken () {
+
+  public clearTokens () {
     localStorage.removeItem(this.accessTokenKey);
+    localStorage.removeItem('userId');
+
+    this.isLogged$.next(false);
   }
 
   login(
@@ -49,7 +58,8 @@ export class AuthService {
   }
 
   logout(): Observable<DefaultResponseType> {
-    return this.http.post<DefaultResponseType>(environment.api + 'logout', {Token: `Bearer ${this.getAccessToken}`})
+    const tokens = this.getTokens();
+    return this.http.post<DefaultResponseType>(environment.api + 'logout', {Token: `Bearer ${tokens.accessToken}`})
   }
 
 

@@ -54,13 +54,13 @@ export class AdminLoginComponent {
             error = 'Error during authorization';
           }
           if(loginResponse.authToken) {
-            this.authService.setTokens(loginResponse.authToken);
+            this.authService.setTokens(loginResponse.authToken, loginResponse.authUser.id);
           } else {
             this._snackBar.open('There was an error during the authentication please try again');
-            this.authService.clearToken();
+            this.authService.clearTokens();
             this.router.navigate(['/']);
-          } 
-           
+          }
+
           this.router.navigate(['/']);
           // this.authService.userId = loginResponse.userId;
 

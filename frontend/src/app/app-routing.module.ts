@@ -7,7 +7,7 @@ const routes: Routes = [
   {
     path: '',
     loadChildren: () =>
-      import('./view/article/article.module').then((m) => m.ArticleModule),
+      import('./view/news-article/news-article.module').then((m) => m.NewsArticleModule),
     data: { animation: 'ArticlePage' },
   },
   {

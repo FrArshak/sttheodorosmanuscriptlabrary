@@ -1,0 +1,29 @@
+@import "../../../../../assets/styles/variables";
+
+.news {
+  background: $color-blue-dark;
+  padding-top: 190px;
+  padding-bottom: 275px;
+  margin-top: -106px;
+
+  .title.news-title {
+    margin-bottom: 30px;
+  }
+
+  .subhead.news-subhead {
+    margin-bottom: 50px;
+  }
+
+  .btn.add-news-btn {
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    padding: 20px;
+    width: 130px;
+    background: $color-blue;
+    color: white;
+    font-size: 16px;
+    border-radius: 8px;
+    margin-bottom: 30px;
+  }
+}
