@@ -16,7 +16,7 @@ class StatisticsService
      * @param string $bookingDataType
      * @return array
      */
-    public function generateStatisticsData($startDate, $endDate, $statistics, $interval, bool $booking, string $bookingDataType = ''): array
+    public function generateStatisticsData($startDate, $endDate, $statistics, $interval, bool $booking = false, string $bookingDataType = ''): array
     {
         // Initialize the result array
         $result = [];

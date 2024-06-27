@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Interfaces\PostInterface;
+use App\Interfaces\StatisticsInterface;
 use App\Repositories\PostRepository;
+use App\Repositories\StatisticsRepository;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Passport\Passport;
 use App\Interfaces\ImageInterface;
@@ -36,6 +38,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             PostInterface::class,
             PostRepository::class
+        );
+
+        $this->app->bind(
+            StatisticsInterface::class,
+            StatisticsRepository::class
         );
     }
 }

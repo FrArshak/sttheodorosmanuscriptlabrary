@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
+use App\Http\Controllers\ContactUsController;
 
 Route::group(['middleware' => 'api'], function() {
 
@@ -14,6 +15,18 @@ Route::group(['middleware' => 'api'], function() {
     //posts routs
     Route::get('/get-post/{postId}', [PostController::class, 'getPost']);
     Route::get('/get-posts', [PostController::class, 'getPosts']);
+
+    //email routs
+    Route::post('/contact-us', [ContactUsController::class, 'contactUs']);
+
+    //get general settings
+    Route::get('/get-general-settings', 'App\Http\Controllers\GeneralSettingsController@getGeneralSettings');
+
+    //get page settings
+    Route::get('/get-page-settings', 'App\Http\Controllers\GeneralSettingsController@getPageSettings');
+
+    //statistics
+    Route::post('/count-visitor', 'App\Http\Controllers\StatisticsController@countVisitors');
 
     Route::group(['middleware' => 'auth:api'], function () {
         //auth routs
@@ -27,11 +40,17 @@ Route::group(['middleware' => 'api'], function() {
         Route::put('/update-post/{postId}', [PostController::class, 'updatePost']);
         Route::put('/delete-post/{postId}', [PostController::class, 'deletePost']);
 
+        //General Settings
+        Route::post('/upload-logo', 'App\Http\Controllers\GeneralSettingsController@uploadLogo');
+        Route::delete('/delete-logo/{logo}', 'App\Http\Controllers\GeneralSettingsController@deleteLogo');
+        Route::post('/update-general-settings', 'App\Http\Controllers\GeneralSettingsController@updateGeneralSettings');
+
         //image routes
         Route::post('/upload-image', [ImageController::class, 'uploadImage']);
         Route::delete('/delete-image/{image}', [ImageController::class, 'deleteImage']);
         Route::delete('/delete-image-from-db/{image}', [ImageController::class, 'deleteImageFromDB']);
 
-
+        //statistics
+        Route::get('/get-statistics-data', 'App\Http\Controllers\StatisticsController@getStatisticsData');
     });
 });

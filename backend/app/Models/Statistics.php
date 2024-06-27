@@ -5,21 +5,19 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class GeneralSettings extends Model
+class Statistics extends Model
 {
     use HasFactory;
 
-    /**
-     * @var string[]
-     */
     protected $fillable = [
         'key',
-        'value',
-        'json_value',
-        'page_setting'
+        'statistics_date',
+        'statistics_count',
+        'statistics_data',
     ];
 
     protected $casts = [
-        'json_value' => 'array'
+        'statistics_data' => 'array'
     ];
+
 }
