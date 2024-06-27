@@ -19,4 +19,9 @@ class Post extends Model
         'image',
         'created_by'
     ];
+
+    protected $casts = [
+        'post_am' => 'array',
+        'post_en' => 'array',
+    ];
 }
