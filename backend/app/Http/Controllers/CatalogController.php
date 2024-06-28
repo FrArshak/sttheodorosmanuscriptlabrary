@@ -133,13 +133,16 @@ class CatalogController extends Controller
     }
 
     /**
-     * @param $skip
-     * @param $take
+     * @param Request $request
      * @return JsonResponse
      */
-    public function getCatalogs($skip, $take): JsonResponse
+    public function getCatalogs(Request $request): JsonResponse
     {
         try {
+
+            $skip = isset($request['skip']) ? $request['skip'] : 0;
+            $take = isset($request['take']) ? $request['take'] : 10;
+
             $catalogs = $this->catalogRepo->getCatalogs($skip, $take);
             $totalCatalogs  = $this->catalogRepo->totalCatalogs();
 

@@ -85,11 +85,18 @@ class GeneralSettingsController extends Controller
     {
         try {
             $data = $this->generalSettingsRepo->getAboutUsContent('aboutUsPageContent');
+            if($data) {
+                return response()->json([
+                    'success' => 1,
+                    'type' => 'success',
+                    'aboutUs' => $data
+                ], 200);
+            }
 
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'aboutUs' => $data
+                'message' => 'No about us page data'
             ], 200);
         } catch (\Exception $exception) {
             Log::error($exception);
