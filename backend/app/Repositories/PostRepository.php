@@ -36,6 +36,15 @@ class PostRepository implements PostInterface
 
     /**
      * @param $postType
+     * @return mixed
+     */
+    public function getTotalCount($postType): mixed
+    {
+        return $this->model->where('post_type', $postType)->count();
+    }
+
+    /**
+     * @param $postType
      * @param $skip
      * @param $take
      * @return mixed

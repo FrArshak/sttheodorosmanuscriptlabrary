@@ -93,16 +93,19 @@ class PostController extends Controller
     {
         try {
 
-            $postType = $request['postType'];
-            $skip = $request['skip'];
-            $take = $request['take'];
+            $postType = isset($request['postType']) ? $request['postType'] : "news";
+            $skip = isset($request['skip']) ? $request['skip'] : 0;
+            $take = isset($request['take']) ? $request['take'] : 10;
 
+
+            $totalPost = $this->postRepo->getTotalCount($postType);
             $posts = $this->postRepo->getPosts($postType, $skip, $take);
 
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
                 'posts'  => $posts,
+                'totalPost' => $totalPost,
             ], 200);
         } catch (\Exception $exception) {
             Log::error($exception);
