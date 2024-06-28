@@ -3,9 +3,9 @@
 namespace App\Repositories;
 
 use App\Models\GeneralSettings;
-use App\Interfaces\GeneralSettingsInterface;
+use App\Interfaces\GeneralSettingInterface;
 
-class GeneralSettingRepository
+class GeneralSettingRepository implements GeneralSettingInterface
 {
     /**
      * @var GeneralSettings
@@ -38,10 +38,7 @@ class GeneralSettingRepository
     {
         $data['value'] = $data['value'] === null ? '' : $data['value'];
         if($this->ifExist($key)) {
-            if($key === 'aboutUsPageContent' ||
-                $key === 'termsAndConditions' ||
-                $key === 'priceListIntervals' ||
-                $key === 'bookingConfirmEmail') {
+            if($key === 'aboutUsPageContent') {
                 return $this->model->where('key', $key)->update([
                     'value' => $data['value'] ?: '',
                     'json_value' => $data['json_value'] ?: ''
@@ -52,10 +49,7 @@ class GeneralSettingRepository
                 ]);
             }
         } else {
-            if($key === 'aboutUsPageContent' ||
-                $key === 'termsAndConditions' ||
-                $key === 'priceListIntervals' ||
-                $key === 'bookingConfirmEmail') {
+            if($key === 'aboutUsPageContent') {
                 $myData = [
                     'key' => $key,
                     'value' => $data['value'] ?: '',
@@ -97,11 +91,10 @@ class GeneralSettingRepository
     }
 
     /**
-     * @param $page_setting
      * @return mixed
      */
-    public function getGeneralSettings($page_setting): mixed
+    public function getGeneralSettings(): mixed
     {
-        return $this->model->where('page_setting', $page_setting)->get();
+        return $this->model->get();
     }
 }

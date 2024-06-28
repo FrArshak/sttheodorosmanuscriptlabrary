@@ -29,8 +29,7 @@ interface GeneralSettingInterface
     public function ifExist($key): mixed;
 
     /**
-     * @param $page_setting
      * @return mixed
      */
-    public function getGeneralSettings($page_setting): mixed;
+    public function getGeneralSettings(): mixed;
 }

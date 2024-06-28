@@ -3,9 +3,11 @@
 namespace App\Providers;
 
 use App\Interfaces\CatalogInterface;
+use App\Interfaces\GeneralSettingInterface;
 use App\Interfaces\PostInterface;
 use App\Interfaces\StatisticsInterface;
 use App\Repositories\CatalogRepository;
+use App\Repositories\GeneralSettingRepository;
 use App\Repositories\PostRepository;
 use App\Repositories\StatisticsRepository;
 use Illuminate\Support\ServiceProvider;
@@ -50,6 +52,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             CatalogInterface::class,
             CatalogRepository::class
+        );
+
+        $this->app->bind(
+            GeneralSettingInterface::class,
+            GeneralSettingRepository::class
         );
     }
 }

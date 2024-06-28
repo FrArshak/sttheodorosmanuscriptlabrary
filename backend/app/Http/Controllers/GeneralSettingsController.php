@@ -40,7 +40,7 @@ class GeneralSettingsController extends Controller
     public function getGeneralSettings(): JsonResponse
     {
         try {
-            $generalSettings =  $this->generalSettingsRepo->getGeneralSettings(false);
+            $generalSettings =  $this->generalSettingsRepo->getGeneralSettings();
             $logo = '';
             $companyName = '';
             $address = '';
@@ -51,9 +51,6 @@ class GeneralSettingsController extends Controller
             $metaTitle = '';
             $metaDesc = '';
             $addressOnMap = '';
-            $termsAndConditions = [];
-            $bookingConfirmEmail = [];
-            $priceListIntervals = [];
             foreach ($generalSettings as $setting) {
                 if($setting->key === 'logo') {
                     $logo = $setting->value;
@@ -73,14 +70,8 @@ class GeneralSettingsController extends Controller
                     $metaTitle = $setting->value;
                 }  elseif($setting->key === 'metaDesc') {
                     $metaDesc = $setting->value;
-                }  elseif($setting->key === 'termsAndConditions') {
-                    $termsAndConditions = $setting->json_value;
-                }  elseif($setting->key === 'bookingConfirmEmail') {
-                    $bookingConfirmEmail = $setting->json_value;
                 } elseif ($setting->key === 'addressOnMap') {
                     $addressOnMap = $setting->value;
-                } elseif ($setting->key === 'priceListIntervals') {
-                    $priceListIntervals = $setting->json_value;
                 }
             }
 
@@ -94,10 +85,7 @@ class GeneralSettingsController extends Controller
                 'businessHours' => $businessHours ?: '',
                 'metaTitle' => $metaTitle ?: '',
                 'metaDesc' => $metaDesc ?: '',
-                'termsAndConditions' => $termsAndConditions ?: [],
-                'bookingConfirmEmail' => $bookingConfirmEmail ?: [],
                 'addressOnMap' => $addressOnMap ?: '',
-                'priceListIntervals' => $priceListIntervals ?: []
             ];
             return response()->json([
                 'success' => 1,
@@ -117,10 +105,10 @@ class GeneralSettingsController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getPageSettings(): JsonResponse
+    public function getAboutUsContent(): JsonResponse
     {
         try {
-            $data = $this->generalSettingsRepo->getGeneralSettings(true);
+            $data = $this->generalSettingsRepo->getGeneralSettings();
 
             return response()->json([
                 'success' => 1,
@@ -141,7 +129,7 @@ class GeneralSettingsController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function updatePageSettings(Request $request): JsonResponse
+    public function updateAboutUsContent(Request $request): JsonResponse
     {
         try {
             $pageSettings = [];
@@ -152,14 +140,12 @@ class GeneralSettingsController extends Controller
                     if(gettype($item) === 'array') {
                         $pageSettings[] = [
                             'key' => $key,
-                            'json_value' => $item,
-                            'page_setting' => true
+                            'json_value' => $item
                         ];
                     } else {
                         $pageSettings[] = [
                             'key' => $key,
-                            'value' => $item,
-                            'page_setting' => true
+                            'value' => $item
                         ];
                     }
 
