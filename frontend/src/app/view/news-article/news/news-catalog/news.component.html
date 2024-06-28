@@ -11,8 +11,15 @@
 
     <span class="btn add-news-btn" *ngIf="isLogged" (click)="toggleActive()">Add a news article</span>
 
-    <app-card></app-card>
+    <div class="cards" *ngIf="news && news.length > 0">
+      <app-card   *ngFor="let post of news" [post]="post"></app-card>
+    </div>
   </div>
 
   <admin-modal [active]="active"></admin-modal>
+
+  <div class="pagination">
+    <button class="prev" (click)="goToPrev()"><</button>
+    <button class="next" (click)="goToNext()">></button>
+  </div>
 </div>

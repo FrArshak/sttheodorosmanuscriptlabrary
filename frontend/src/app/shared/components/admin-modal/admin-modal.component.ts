@@ -1,23 +1,30 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {PostService} from "../../services/post.service";
-import {HttpErrorResponse} from "@angular/common/http";
-import {MatSnackBar} from "@angular/material/snack-bar";
-import {QuillModule} from "ngx-quill";
+import {Component, Input, OnInit, NgZone, Injectable} from '@angular/core';
+import { PostService } from "../../services/post.service";
+import { HttpErrorResponse } from "@angular/common/http";
+import { MatSnackBar } from "@angular/material/snack-bar";
+import { QuillModule } from "ngx-quill";
 import {FormBuilder, FormsModule, ReactiveFormsModule, Validators} from "@angular/forms";
-import {UploadImgType} from "../../../../types/upload-img.type";
-import {DefaultResponseType} from "../../../../types/default-response.type";
-import {CommonModule} from "@angular/common";
-import {Router} from "@angular/router";
-import {AuthService} from "../../../core/auth.service";
+import { UploadImgType } from "../../../../types/upload-img.type";
+import { DefaultResponseType } from "../../../../types/default-response.type";
+import { CommonModule } from "@angular/common";
+import { Router } from "@angular/router";
+import { AuthService } from "../../../core/auth.service";
+import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import {MatMenuModule} from "@angular/material/menu";
+import {BrowserModule, DomSanitizer} from "@angular/platform-browser";
 
+@Injectable()
 @Component({
   selector: 'admin-modal',
   standalone: true,
-  imports: [QuillModule, ReactiveFormsModule, CommonModule],
+  imports: [QuillModule, ReactiveFormsModule, FormsModule, CommonModule, BrowserModule, MatMenuModule],
   templateUrl: './admin-modal.component.html',
   styleUrls: ['./admin-modal.component.scss']
 })
-export class AdminModalComponent implements OnInit{
+
+
+export class AdminModalComponent implements OnInit {
 
   @Input() active: boolean = false;
 
@@ -28,36 +35,49 @@ export class AdminModalComponent implements OnInit{
   maxCharacters: number = 2500;
   currentRoute: string = '';
   currentCharacters: number = 0;
+
+  formData: FormData | null = null;
+  postTitleEn: string = '';
+  postTitleArm: string = '';
+  postParagraph: string = '';
+
+  isEn: boolean = true;
+
+
   quillConfig = {
     toolbar: [
       ['bold', 'italic', 'underline', 'strike'],
-      [{ 'header': 1 }, { 'header': 2 }],
-      [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-      [{ 'script': 'sub'}, { 'script': 'super' }],
-      [{ 'indent': '-1'}, { 'indent': '+1' }],
-      [{ 'direction': 'rtl' }],
-      [{ 'size': ['small', false, 'large', 'huge'] }],
-      [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-      [{ 'color': [] }, { 'background': [] }],
-      [{ 'font': [] }],
-      [{ 'align': [] }],
-      ['clean']
+      [{'header': 1}],
+      [{'list': 'ordered'}, {'list': 'bullet'}],
+      [{'script': 'sub'}, {'script': 'super'}],
+      [{'indent': '-1'}, {'indent': '+1'}],
+      [{'direction': 'rtl'}]
     ]
   };
+
+  private contentChangedSubject = new Subject<any>();
 
   constructor(
     private postService: PostService,
     private _snackBar: MatSnackBar,
     private router: Router,
     private fb: FormBuilder,
-    private authService: AuthService
-  ) {}
+    private authService: AuthService,
+    private ngZone: NgZone,
+    private sanitizer: DomSanitizer
 
-  createPostForm = this.fb.group({
-    postTitle: ['', [Validators.required]],
-    postParagraph: ['', [Validators.required]],
-    postImg: [null],
-  });
+
+  ) {
+    this.contentChangedSubject.pipe(
+      debounceTime(300)
+    ).subscribe(event => this.handleContentChanged(event));
+
+    // Bind the onContentChanged method
+    this.onContentChanged = this.onContentChanged.bind(this);
+  }
+
+
+
 
   ngOnInit() {
     this.currentRoute = this.router.url;
@@ -65,15 +85,22 @@ export class AdminModalComponent implements OnInit{
       this.currentRoute = this.router.url;
       if (this.currentRoute === '/news') {
         this.postType = 'news';
+        console.log(this.postType)
       } else if (this.currentRoute === '/articles') {
         this.postType = 'articles';
       }
     });
+
+
   }
 
-  toggleModal(img: string) {
+  toggleModal(img?: string, update?: boolean) {
+
+    if(update) {
+      this.postService
+    }
     if (this.active && this.imgIsAdded) {
-      this.postService.deleteUploadedImg(img)
+      this.postService.deleteUploadedImg(img as string)
         .subscribe((data: DefaultResponseType) => {
           this._snackBar.open(data.message);
           this.imgIsAdded = false;
@@ -91,15 +118,14 @@ export class AdminModalComponent implements OnInit{
   }
 
   uploadFile(file: File) {
-    const formData = new FormData();
-    formData.append('image', file);
+    this.formData = new FormData();
+    this.formData.append('image', file);
 
-    this.postService.sendUploadedImage(formData)
+    this.postService.sendUploadedImage(this.formData)
       .subscribe({
         next: (data: UploadImgType | DefaultResponseType) => {
           this.img = (data as UploadImgType).image;
           this.imgIsAdded = true;
-          this.createPostForm.patchValue({ postImg: this.img });
         },
         error: (error: HttpErrorResponse) => {
           this._snackBar.open(error.message);
@@ -113,30 +139,60 @@ export class AdminModalComponent implements OnInit{
         next: (data: DefaultResponseType) => {
           this._snackBar.open(data.message);
           this.imgIsAdded = false;
-          this.createPostForm.patchValue({ postImg: '' });
         }
       });
   }
 
   createPost() {
-    if (this.createPostForm.valid && this.createPostForm.value.postTitle && this.createPostForm.value.postParagraph && this.createPostForm.value.postImg) {
+    if (this.postTitleEn || this.postTitleArm && this.postParagraph) {
       const tokens = this.authService.getTokens();
-      this.postService.createNewPost(this.postType, this.createPostForm.value.postParagraph, this.img, tokens.userId)
+      this.postService.createNewPost(this.postType, {
+        title: this.postTitleEn,
+        paragraph: this.postParagraph
+      }, this.img, tokens.userId)
         .subscribe({
-          next: (response) => {
-            console.log(response);
+          next: (response: DefaultResponseType) => {
+            this.active = false;
           }
         });
     }
   }
 
   onContentChanged(event: any) {
+    this.contentChangedSubject.next(event);
+  }
+
+  handleContentChanged(event: any) {
     const quill = event.editor;
-    this.currentCharacters = quill.getLength() - 1;
-    if (this.currentCharacters > this.maxCharacters) {
-      quill.deleteText(this.maxCharacters, this.currentCharacters);
-      this.currentCharacters = this.maxCharacters;
-    }
-    this.createPostForm.patchValue({ postParagraph: event.html });
+    const currentLength = quill.getLength() - 1;
+
+    // Save cursor position
+    const cursorPosition = quill.getSelection(true).index;
+
+    this.ngZone.run(() => {
+      this.currentCharacters = currentLength;
+
+      if (this.currentCharacters > this.maxCharacters) {
+        // Temporarily disable the 'text-change' event listener
+        quill.off('text-change', this.onContentChanged);
+
+        quill.deleteText(this.maxCharacters, this.currentCharacters);
+        this.currentCharacters = this.maxCharacters;
+
+        // Restore cursor position
+        quill.setSelection(cursorPosition, 0);
+
+        // Re-enable the 'text-change' event listener
+        quill.on('text-change', this.onContentChanged);
+      }
+
+      // Directly update the bound model
+      this.postParagraph = quill.root.innerHTML;
+    });
+  }
+
+  chooseLang() {
+    this.isEn = !this.isEn;
   }
 }
+

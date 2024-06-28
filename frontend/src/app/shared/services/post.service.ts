@@ -4,6 +4,9 @@ import {environment} from "../../../environments/environment";
 import {UploadImgType} from "../../../types/upload-img.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {Observable} from "rxjs";
+import {PostType} from "../../../types/post.type";
+import {Params} from "@angular/router";
+import {ActiveParamsType} from "../../../types/active-params.type";
 
 @Injectable({
   providedIn: 'root'
@@ -20,13 +23,18 @@ export class PostService {
     return this.http.delete<DefaultResponseType>(environment.api + 'delete-image/' + img);
   }
 
-  // string('post_type');
-  // $table->json('post_en');
-  // $table->json('post_am');
-  // $table->string('image');
-  // $table->unsignedBigInteger('created_by');
-  createNewPost(post_type: string,  post_en: string,  image: string, created_by: number, post_am?: string) {
-    return this.http.post(environment.api + 'store-post', {post_type, post_en, image, created_by})
+  createNewPost(post_type: string,  post_en: {title: string, paragraph: string},  image: string, created_by: number, post_am?: string): Observable<DefaultResponseType> {
+    return this.http.post<DefaultResponseType>(environment.api + 'store-post', {post_type, post_en, post_am: post_en, image, created_by})
+  }
+
+  getPosts(params: ActiveParamsType) : Observable<PostType | DefaultResponseType>{
+    return this.http.get<PostType | DefaultResponseType>(environment.api + 'get-posts', {
+      params: params
+    }  )
+  }
+
+  getPost(id: string)  {
+
   }
 
 

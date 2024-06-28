@@ -7,26 +7,7 @@
   background-color: white;
   margin: 0 auto;
 
-  .btn {
-    width: 50px;
-    height: 50px;
-    top: -30px;
-    right: -20px;
-    z-index: 999;
-    position: absolute;
-    padding: 15px;
-    border-radius: 50%;
-    background: #ffffff;
-    cursor: pointer;
 
-    svg {
-      width: 100%;
-      height: 100%;
-      fill: #ffffff;
-      stroke: $color-blue;
-
-    }
-  }
 
   // display: flex;
 
