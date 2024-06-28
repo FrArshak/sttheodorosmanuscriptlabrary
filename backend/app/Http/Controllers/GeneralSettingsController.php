@@ -41,56 +41,32 @@ class GeneralSettingsController extends Controller
     {
         try {
             $generalSettings =  $this->generalSettingsRepo->getGeneralSettings();
-            $logo = '';
-            $companyName = '';
-            $address = '';
-            $phone = '';
-            $email = '';
-            $fax = '';
-            $businessHours = '';
-            $metaTitle = '';
-            $metaDesc = '';
-            $addressOnMap = '';
+
+            // Initialize settings array with default values
+            $settings = [
+                'logo' => '',
+                'companyName' => '',
+                'address' => '',
+                'phone' => '',
+                'email' => '',
+                'fax' => '',
+                'businessHours' => '',
+                'metaTitle' => '',
+                'metaDesc' => '',
+                'addressOnMap' => ''
+            ];
+
+            // Map setting values to corresponding keys
             foreach ($generalSettings as $setting) {
-                if($setting->setting_key === 'logo') {
-                    $logo = $setting->setting_value;
-                } elseif($setting->setting_key === 'address') {
-                    $address = $setting->setting_value;
-                } elseif($setting->setting_key === 'companyName') {
-                    $companyName = $setting->setting_value;
-                } elseif($setting->setting_key === 'phone') {
-                    $phone = $setting->setting_value;
-                } elseif($setting->setting_key === 'email') {
-                    $email = $setting->setting_value;
-                } elseif($setting->setting_key === 'fax') {
-                    $fax = $setting->setting_value;
-                } elseif($setting->setting_key === 'businessHours') {
-                    $businessHours = $setting->setting_value;
-                }  elseif($setting->setting_key === 'metaTitle') {
-                    $metaTitle = $setting->setting_value;
-                }  elseif($setting->setting_key === 'metaDesc') {
-                    $metaDesc = $setting->setting_value;
-                } elseif ($setting->setting_key === 'addressOnMap') {
-                    $addressOnMap = $setting->setting_value;
+                if (array_key_exists($setting->setting_key, $settings)) {
+                    $settings[$setting->setting_key] = $setting->setting_value;
                 }
             }
 
-            $data = [
-                'logo' => $logo ?: '',
-                'companyName' => $companyName ?: '',
-                'address' => $address ?: '',
-                'phone' => $phone ?: '',
-                'email' => $email ?: '',
-                'fax' => $fax ?: '',
-                'businessHours' => $businessHours ?: '',
-                'metaTitle' => $metaTitle ?: '',
-                'metaDesc' => $metaDesc ?: '',
-                'addressOnMap' => $addressOnMap ?: '',
-            ];
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'settings' => $data
+                'settings' => $settings
             ], 200);
         }  catch (\Exception $exception) {
             Log::error($exception);
