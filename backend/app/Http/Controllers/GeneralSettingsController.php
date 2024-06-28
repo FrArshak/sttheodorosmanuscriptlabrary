@@ -52,26 +52,26 @@ class GeneralSettingsController extends Controller
             $metaDesc = '';
             $addressOnMap = '';
             foreach ($generalSettings as $setting) {
-                if($setting->key === 'logo') {
-                    $logo = $setting->value;
-                } elseif($setting->key === 'address') {
-                    $address = $setting->value;
-                } elseif($setting->key === 'companyName') {
-                    $companyName = $setting->value;
-                } elseif($setting->key === 'phone') {
-                    $phone = $setting->value;
-                } elseif($setting->key === 'email') {
-                    $email = $setting->value;
-                } elseif($setting->key === 'fax') {
-                    $fax = $setting->value;
-                } elseif($setting->key === 'businessHours') {
-                    $businessHours = $setting->value;
-                }  elseif($setting->key === 'metaTitle') {
-                    $metaTitle = $setting->value;
-                }  elseif($setting->key === 'metaDesc') {
-                    $metaDesc = $setting->value;
-                } elseif ($setting->key === 'addressOnMap') {
-                    $addressOnMap = $setting->value;
+                if($setting->setting_key === 'logo') {
+                    $logo = $setting->setting_value;
+                } elseif($setting->setting_key === 'address') {
+                    $address = $setting->setting_value;
+                } elseif($setting->setting_key === 'companyName') {
+                    $companyName = $setting->setting_value;
+                } elseif($setting->setting_key === 'phone') {
+                    $phone = $setting->setting_value;
+                } elseif($setting->setting_key === 'email') {
+                    $email = $setting->setting_value;
+                } elseif($setting->setting_key === 'fax') {
+                    $fax = $setting->setting_value;
+                } elseif($setting->setting_key === 'businessHours') {
+                    $businessHours = $setting->setting_value;
+                }  elseif($setting->setting_key === 'metaTitle') {
+                    $metaTitle = $setting->setting_value;
+                }  elseif($setting->setting_key === 'metaDesc') {
+                    $metaDesc = $setting->setting_value;
+                } elseif ($setting->setting_key === 'addressOnMap') {
+                    $addressOnMap = $setting->setting_value;
                 }
             }
 
@@ -108,12 +108,12 @@ class GeneralSettingsController extends Controller
     public function getAboutUsContent(): JsonResponse
     {
         try {
-            $data = $this->generalSettingsRepo->getGeneralSettings();
+            $data = $this->generalSettingsRepo->getAboutUsContent('aboutUsPageContent');
 
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'settings' => $data
+                'aboutUs' => $data
             ], 200);
         } catch (\Exception $exception) {
             Log::error($exception);
@@ -132,30 +132,11 @@ class GeneralSettingsController extends Controller
     public function updateAboutUsContent(Request $request): JsonResponse
     {
         try {
-            $pageSettings = [];
             DB::beginTransaction();
 
-            foreach ($request->all() as $value ) {
-                foreach ($value as $key=>$item) {
-                    if(gettype($item) === 'array') {
-                        $pageSettings[] = [
-                            'key' => $key,
-                            'json_value' => $item
-                        ];
-                    } else {
-                        $pageSettings[] = [
-                            'key' => $key,
-                            'value' => $item
-                        ];
-                    }
+            $data = $request->all();
 
-                }
-
-            }
-
-            foreach ($pageSettings as $data) {
-                $this->generalSettingsRepo->updateOrCreatePageData($data['key'], $data);
-            }
+            $this->generalSettingsRepo->updateOrCreatePageData($data['setting_key'], $data);
 
             DB::commit();
             return response()->json([
@@ -184,7 +165,7 @@ class GeneralSettingsController extends Controller
             $settingsData = $request->all();
             DB::beginTransaction();
             foreach ($settingsData as $data) {
-                $this->generalSettingsRepo->updateOrCreateData($data['key'], $data);
+                $this->generalSettingsRepo->updateOrCreateData($data['setting_key'], $data);
             }
             DB::commit();
             return response()->json([

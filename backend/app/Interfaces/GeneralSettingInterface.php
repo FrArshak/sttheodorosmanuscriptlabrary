@@ -32,4 +32,10 @@ interface GeneralSettingInterface
      * @return mixed
      */
     public function getGeneralSettings(): mixed;
+
+    /**
+     * @param $key
+     * @return mixed
+     */
+    public function getAboutUsContent($key): mixed;
 }
