@@ -19,6 +19,12 @@ interface PostInterface
 
     /**
      * @param $postType
+     * @return mixed
+     */
+    public function getTotalCount($postType): mixed;
+
+    /**
+     * @param $postType
      * @param $skip
      * @param $take
      * @return mixed
