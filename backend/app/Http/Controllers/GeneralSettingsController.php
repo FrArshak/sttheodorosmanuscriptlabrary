@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\FileManagerService;
@@ -217,10 +218,10 @@ class GeneralSettingsController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param ImageRequest $request
      * @return JsonResponse
      */
-    public function uploadLogo(Request $request): JsonResponse
+    public function uploadLogo(ImageRequest $request): JsonResponse
     {
         try {
             DB::beginTransaction();
@@ -238,7 +239,7 @@ class GeneralSettingsController extends Controller
             }
 
             $newImage = $this->fileMenager->imageSizeLimit($newImage);
-            $this->fileMenager->uploadFile($newImage, $newImageName);
+            $this->fileMenager->uploadImage($newImage, $newImageName);
 
             $this->generalSettingsRepo->updateOrCreateData('logo', $newImageName);
 

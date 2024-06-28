@@ -58,12 +58,26 @@ class FileManagerService
     }
 
     /**
+     * @param $filePath
+     * @return bool
+     */
+    public function checkIfExists($filePath): bool
+    {
+        try {
+            return $this->disk->exists('/public/' . $filePath);
+        } catch (\Exception $exception) {
+            Log::error($exception);
+            return false;
+        }
+    }
+
+    /**
      * @param $image
      * @param $name
      * @param bool $uploadPrefix
      * @return JsonResponse
      */
-    public function uploadFile($image, $name, $uploadPrefix = true): JsonResponse
+    public function uploadImage($image, $name, bool $uploadPrefix = true): JsonResponse
     {
         try {
             $image->encode();
@@ -77,6 +91,34 @@ class FileManagerService
                 'message'  => 'File has been Uploaded',
             ], 200);
 
+        } catch (\Exception $exception) {
+            Log::error($exception);
+            return response()->json([
+                'success' => 0,
+                'type' => 'error',
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * @param $pdfPath
+     * @param $pdfContent
+     * @return JsonResponse
+     */
+    public function uploadPDF($pdfPath, $pdfContent): JsonResponse
+    {
+        try {
+
+            $prefix = $pdfPath[0] === '/' ? 'public' : 'public/';
+
+            $this->disk->put($prefix . $pdfPath, $pdfContent, 'public');
+
+            return response()->json([
+                'success' => 1,
+                'type' => 'success',
+                'message'  => 'File has been Uploaded',
+            ], 200);
         } catch (\Exception $exception) {
             Log::error($exception);
             return response()->json([
@@ -142,9 +184,10 @@ class FileManagerService
     public function delete($path): JsonResponse
     {
         try {
-            $path = $path . '.webp';
+
             $prefix = $path[0] === '/' ? 'public' : 'public/';
             if($this->disk->exists($prefix . $path)) {
+
                 $this->disk->delete($prefix . $path);
 
                 return response()->json([

@@ -22,7 +22,8 @@ class RegisterRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    #[ArrayShape(['email' => "string", 'name' => "string", 'password' => "string", 'passwordConfirm' => "string"])] public function rules(): array
+    #[ArrayShape(['email' => "string", 'name' => "string", 'password' => "string", 'passwordConfirm' => "string"])]
+    public function rules(): array
     {
         return [
             'email' => 'required|email:rfc,dns|unique:users,email',

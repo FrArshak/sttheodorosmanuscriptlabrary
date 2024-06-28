@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\FileManagerService;
@@ -33,10 +34,10 @@ class ImageController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param ImageRequest $request
      * @return JsonResponse
      */
-    public function uploadImage(Request $request): JsonResponse
+    public function uploadImage(ImageRequest $request): JsonResponse
     {
         try {
             $file = $request->file('image');
@@ -52,7 +53,7 @@ class ImageController extends Controller
             }
 
             $newImage = $this->filemenager->imageSizeLimit($newImage);
-            $this->filemenager->uploadFile($newImage, $newImageName);
+            $this->filemenager->uploadImage($newImage, $newImageName);
 
             return response()->json([
                 'success' => 1,

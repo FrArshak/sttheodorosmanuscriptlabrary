@@ -2,17 +2,15 @@
 
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use JetBrains\PhpStorm\ArrayShape;
 
-class LoginRequest extends FormRequest
+class CatalogRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
-     *
-     * @return bool
      */
     public function authorize(): bool
     {
@@ -22,24 +20,28 @@ class LoginRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, mixed>
+     * @return array
      */
-    #[ArrayShape(['email' => "string", 'password' => "string"])]
+    #[ArrayShape(['catalog_title' => "string", 'catalog_text' => "string", 'pdf_path' => "string", 'image' => "string"])]
     public function rules(): array
     {
-
         return [
-            'email' => 'required|string|email',
-            'password' => 'required|string',
+            'catalog_title' => 'required',
+            'catalog_text' => 'required',
+            'pdf_path' => 'required',
+            'image' => 'required',
         ];
     }
 
-    #[ArrayShape(['email.required' => "string", 'password.required' => "string"])]
+
+    #[ArrayShape(['catalog_title.required' => "string", 'catalog_text.required' => "string", 'pdf_path.required' => "string", 'image.required' => "string"])]
     public function messages(): array
     {
         return [
-            'email.required' => 'Email is required',
-            'password.required' => 'Password is required',
+            'catalog_title.required' => 'Catalog title is required',
+            'catalog_text.required' => 'Catalog text is required',
+            'pdf_path.required' => 'Catalog pdf is required',
+            'image.required' => 'Catalog image is required',
         ];
     }
 
@@ -60,5 +62,4 @@ class LoginRequest extends FormRequest
             'message' => $firstError
         ], 422));
     }
-
 }

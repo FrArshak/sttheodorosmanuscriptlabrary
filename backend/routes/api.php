@@ -6,6 +6,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\ImageController;
 use App\Http\Controllers\ContactUsController;
+use App\Http\Controllers\CatalogController;
 
 Route::group(['middleware' => 'api'], function() {
 
@@ -25,6 +26,10 @@ Route::group(['middleware' => 'api'], function() {
     //get page settings
     Route::get('/get-page-settings', 'App\Http\Controllers\GeneralSettingsController@getPageSettings');
 
+    //catalog routs
+    Route::get('/get-catalogs', [CatalogController::class, 'getCatalogs']);
+    Route::get('/get-catalog/{id}', [CatalogController::class, 'getCatalog']);
+
     //statistics
     Route::post('/count-visitor', 'App\Http\Controllers\StatisticsController@countVisitors');
 
@@ -34,6 +39,13 @@ Route::group(['middleware' => 'api'], function() {
         Route::get('/check-auth',  [AuthController::class, 'checkAuth']);
         Route::post('/create-user',  [AuthController::class, 'register']);
         Route::put('/change-current-user-data/{user}', [AuthController::class, 'changeUserData']);
+
+        //catalog routs
+        Route::post('/upload-pdf', [CatalogController::class, 'uploadPDF']);
+        Route::delete('/delete-pdf/{pdf}', [CatalogController::class, 'deletePDF']);
+        Route::post('/store-catalog', [CatalogController::class, 'storeCatalog']);
+        Route::put('/update-catalog/{id}', [CatalogController::class, 'updateCatalog']);
+        Route::delete('/delete-catalog/{catalog}', [CatalogController::class, 'deleteCatalog']);
 
         //posts routs
         Route::post('/store-post', [PostController::class, 'storePost']);
