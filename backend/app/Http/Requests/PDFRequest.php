@@ -5,7 +5,7 @@ namespace App\Http\Requests;
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 
-class EmailRequest extends FormRequest
+class PDFRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,13 +20,11 @@ class EmailRequest extends FormRequest
      *
      * @return array
      */
-    #[ArrayShape(['name' => "string", 'email' => "string", 'message' => "string"])]
+    #[ArrayShape(['pdf' => "string"])]
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'email' => 'required|max:255',
-            'message' => 'required|max:2500',
+            'pdf' => 'required|mimes:pdf|max:2048',
         ];
     }
 }

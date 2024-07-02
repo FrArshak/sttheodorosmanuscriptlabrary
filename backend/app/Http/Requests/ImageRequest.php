@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use JetBrains\PhpStorm\ArrayShape;
 
-class EmailRequest extends FormRequest
+class ImageRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -20,13 +21,11 @@ class EmailRequest extends FormRequest
      *
      * @return array
      */
-    #[ArrayShape(['name' => "string", 'email' => "string", 'message' => "string"])]
+    #[ArrayShape(['image' => "string"])]
     public function rules(): array
     {
         return [
-            'name' => 'required|max:255',
-            'email' => 'required|max:255',
-            'message' => 'required|max:2500',
+            'image' => 'required|mimes:jpg,jpeg,webp,png,pdf|max:2048'
         ];
     }
 }

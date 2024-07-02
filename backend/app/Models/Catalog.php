@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class Catalog extends Model
 {
     use HasFactory;
+
+    protected $fillable = [
+        'catalog_title',
+        'catalog_text',
+        'pdf_path',
+        'image'
+    ];
 }

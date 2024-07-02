@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\ImageRequest;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use App\Services\FileManagerService;
@@ -39,69 +40,33 @@ class GeneralSettingsController extends Controller
     public function getGeneralSettings(): JsonResponse
     {
         try {
-            $generalSettings =  $this->generalSettingsRepo->getGeneralSettings(false);
-            $logo = '';
-            $companyName = '';
-            $address = '';
-            $phone = '';
-            $email = '';
-            $fax = '';
-            $businessHours = '';
-            $metaTitle = '';
-            $metaDesc = '';
-            $addressOnMap = '';
-            $termsAndConditions = [];
-            $bookingConfirmEmail = [];
-            $priceListIntervals = [];
+            $generalSettings =  $this->generalSettingsRepo->getGeneralSettings();
+
+            // Initialize settings array with default values
+            $settings = [
+                'logo' => '',
+                'companyName' => '',
+                'address' => '',
+                'phone' => '',
+                'email' => '',
+                'fax' => '',
+                'businessHours' => '',
+                'metaTitle' => '',
+                'metaDesc' => '',
+                'addressOnMap' => ''
+            ];
+
+            // Map setting values to corresponding keys
             foreach ($generalSettings as $setting) {
-                if($setting->key === 'logo') {
-                    $logo = $setting->value;
-                } elseif($setting->key === 'address') {
-                    $address = $setting->value;
-                } elseif($setting->key === 'companyName') {
-                    $companyName = $setting->value;
-                } elseif($setting->key === 'phone') {
-                    $phone = $setting->value;
-                } elseif($setting->key === 'email') {
-                    $email = $setting->value;
-                } elseif($setting->key === 'fax') {
-                    $fax = $setting->value;
-                } elseif($setting->key === 'businessHours') {
-                    $businessHours = $setting->value;
-                }  elseif($setting->key === 'metaTitle') {
-                    $metaTitle = $setting->value;
-                }  elseif($setting->key === 'metaDesc') {
-                    $metaDesc = $setting->value;
-                }  elseif($setting->key === 'termsAndConditions') {
-                    $termsAndConditions = $setting->json_value;
-                }  elseif($setting->key === 'bookingConfirmEmail') {
-                    $bookingConfirmEmail = $setting->json_value;
-                } elseif ($setting->key === 'addressOnMap') {
-                    $addressOnMap = $setting->value;
-                } elseif ($setting->key === 'priceListIntervals') {
-                    $priceListIntervals = $setting->json_value;
+                if (array_key_exists($setting->setting_key, $settings)) {
+                    $settings[$setting->setting_key] = $setting->setting_value;
                 }
             }
 
-            $data = [
-                'logo' => $logo ?: '',
-                'companyName' => $companyName ?: '',
-                'address' => $address ?: '',
-                'phone' => $phone ?: '',
-                'email' => $email ?: '',
-                'fax' => $fax ?: '',
-                'businessHours' => $businessHours ?: '',
-                'metaTitle' => $metaTitle ?: '',
-                'metaDesc' => $metaDesc ?: '',
-                'termsAndConditions' => $termsAndConditions ?: [],
-                'bookingConfirmEmail' => $bookingConfirmEmail ?: [],
-                'addressOnMap' => $addressOnMap ?: '',
-                'priceListIntervals' => $priceListIntervals ?: []
-            ];
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'settings' => $data
+                'settings' => $settings
             ], 200);
         }  catch (\Exception $exception) {
             Log::error($exception);
@@ -116,15 +81,22 @@ class GeneralSettingsController extends Controller
     /**
      * @return JsonResponse
      */
-    public function getPageSettings(): JsonResponse
+    public function getAboutUsContent(): JsonResponse
     {
         try {
-            $data = $this->generalSettingsRepo->getGeneralSettings(true);
+            $data = $this->generalSettingsRepo->getAboutUsContent('aboutUsPageContent');
+            if($data) {
+                return response()->json([
+                    'success' => 1,
+                    'type' => 'success',
+                    'aboutUs' => $data
+                ], 200);
+            }
 
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'settings' => $data
+                'message' => 'No about us page data'
             ], 200);
         } catch (\Exception $exception) {
             Log::error($exception);
@@ -140,35 +112,14 @@ class GeneralSettingsController extends Controller
      * @param Request $request
      * @return JsonResponse
      */
-    public function updatePageSettings(Request $request): JsonResponse
+    public function updateAboutUsContent(Request $request): JsonResponse
     {
         try {
-            $pageSettings = [];
             DB::beginTransaction();
 
-            foreach ($request->all() as $value ) {
-                foreach ($value as $key=>$item) {
-                    if(gettype($item) === 'array') {
-                        $pageSettings[] = [
-                            'key' => $key,
-                            'json_value' => $item,
-                            'page_setting' => true
-                        ];
-                    } else {
-                        $pageSettings[] = [
-                            'key' => $key,
-                            'value' => $item,
-                            'page_setting' => true
-                        ];
-                    }
+            $data = $request->all();
 
-                }
-
-            }
-
-            foreach ($pageSettings as $data) {
-                $this->generalSettingsRepo->updateOrCreatePageData($data['key'], $data);
-            }
+            $this->generalSettingsRepo->updateOrCreatePageData($data['setting_key'], $data);
 
             DB::commit();
             return response()->json([
@@ -197,7 +148,7 @@ class GeneralSettingsController extends Controller
             $settingsData = $request->all();
             DB::beginTransaction();
             foreach ($settingsData as $data) {
-                $this->generalSettingsRepo->updateOrCreateData($data['key'], $data);
+                $this->generalSettingsRepo->updateOrCreateData($data['setting_key'], $data);
             }
             DB::commit();
             return response()->json([
@@ -217,10 +168,10 @@ class GeneralSettingsController extends Controller
     }
 
     /**
-     * @param Request $request
+     * @param ImageRequest $request
      * @return JsonResponse
      */
-    public function uploadLogo(Request $request): JsonResponse
+    public function uploadLogo(ImageRequest $request): JsonResponse
     {
         try {
             DB::beginTransaction();
@@ -238,7 +189,7 @@ class GeneralSettingsController extends Controller
             }
 
             $newImage = $this->fileMenager->imageSizeLimit($newImage);
-            $this->fileMenager->uploadFile($newImage, $newImageName);
+            $this->fileMenager->uploadImage($newImage, $newImageName);
 
             $this->generalSettingsRepo->updateOrCreateData('logo', $newImageName);
 
