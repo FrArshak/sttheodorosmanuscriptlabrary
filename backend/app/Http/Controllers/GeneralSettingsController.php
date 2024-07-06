@@ -109,7 +109,12 @@ class GeneralSettingsController extends Controller
             $settingsData = $request->all();
             DB::beginTransaction();
             foreach ($settingsData as $data) {
-                $this->generalSettingsRepo->updateOrCreateData($data['setting_key'], $data);
+                if(is_array($data)) {
+                    $this->generalSettingsRepo->updateOrCreateData($data['setting_key'], $data);
+                } else {
+                    $this->generalSettingsRepo->updateOrCreateData($settingsData['setting_key'], $settingsData);
+                    break;
+                }
             }
             DB::commit();
             return response()->json([

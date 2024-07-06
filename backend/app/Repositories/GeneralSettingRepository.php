@@ -57,14 +57,14 @@ class GeneralSettingRepository implements GeneralSettingInterface
         $data['setting_value'] = $data['setting_value'] === null ? '' : $data['setting_value'];
         if($this->ifExist($key)) {
             return $this->model->where('setting_key', $key)->update([
-                'setting_value' => $data['setting_value'] ?: '',
-                'setting_json' => $data['setting_json'] ?: ''
+                'setting_value' => $data['setting_value'] ?? '',
+                'setting_json' => $data['setting_json'] ?? null
             ]);
         } else {
             $myData = [
                 'setting_key' => $key,
-                'setting_value' => $data['setting_value'] ?: '',
-                'setting_json' => $data['setting_json'] ?: ''
+                'setting_value' => $data['setting_value'] ?? '',
+                'setting_json' => $data['setting_json'] ?? null
             ];
             return $this->model->create($myData);
         }
