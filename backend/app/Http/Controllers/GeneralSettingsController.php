@@ -87,7 +87,7 @@ class GeneralSettingsController extends Controller
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'message' => 'No about us page data'
+                'message' => 'No data has been found'
             ], 200);
         } catch (\Exception $exception) {
             Log::error($exception);
@@ -150,7 +150,7 @@ class GeneralSettingsController extends Controller
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'message' => 'Section has been updated'
+                'message' => 'Setting has been updated'
             ], 200);
         } catch (\Exception $exception) {
             DB::rollBack();
