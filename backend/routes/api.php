@@ -26,7 +26,7 @@ Route::group(['middleware' => 'api'], function() {
     Route::get('/get-general-settings',  [GeneralSettingsController::class, 'getGeneralSettings']);
 
     //get page settings
-    Route::get('/get-about-us-content', [GeneralSettingsController::class, 'getAboutUsContent']);
+    Route::get('/get-specific-setting/{key}', [GeneralSettingsController::class, 'getSpecificSetting']);
 
     //catalog routs
     Route::get('/get-catalogs', [CatalogController::class, 'getCatalogs']);
@@ -60,7 +60,7 @@ Route::group(['middleware' => 'api'], function() {
         Route::post('/update-general-settings', [GeneralSettingsController::class, 'updateGeneralSettings']);
 
         //About Page Content
-        Route::post('/update-about-us-content', [GeneralSettingsController::class, 'updateAboutUsContent']);
+        Route::post('/update-specific-setting', [GeneralSettingsController::class, 'updateSpecificSetting']);
 
         //image routes
         Route::post('/upload-image', [ImageController::class, 'uploadImage']);
