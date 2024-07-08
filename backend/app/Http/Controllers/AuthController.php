@@ -197,7 +197,7 @@ class AuthController extends Controller
                         }
                     }
 
-                    $user->notification_switch = $request->notification_switch;
+                  
 
                     $user->save();
 
