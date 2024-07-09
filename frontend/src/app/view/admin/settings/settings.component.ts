@@ -8,6 +8,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {FormBuilder, Validators} from "@angular/forms";
 import {UserInfoType} from "../../../../types/userInfo.type";
 import {AuthService} from "../../../core/auth.service";
+import {GeneralSettingsType} from "../../../../types/general-settings.type";
 
 @Component({
   selector: 'settings',
@@ -59,6 +60,7 @@ export class SettingsComponent implements OnInit{
   ngOnInit() {
 
   this.getAdminsInfo();
+  this.getSettings();
   }
 
   onFileSelected(event: Event): void {
@@ -192,6 +194,7 @@ export class SettingsComponent implements OnInit{
       this.createNewAdminFlag = true;
       this.pageSettingsFlag = false;
     } else if(flag === 'settings') {
+      this.getSettings();
       this.adminFormFlag = false;
       this.createNewAdminFlag = false;
       this.pageSettingsFlag = true;
@@ -215,6 +218,34 @@ export class SettingsComponent implements OnInit{
           }
 
           this.snackBar.open(response.message);
+        }
+      })
+  }
+
+  getSettings() {
+    this.settingsService.getSettings()
+      .subscribe({
+        next: (response: DefaultResponseType | GeneralSettingsType) => {
+          if((response as DefaultResponseType).success === 0) {
+            throw new Error((response as DefaultResponseType).message)
+          }
+          const settings = response as GeneralSettingsType
+          if(settings) {
+            this.imgIsAdded = true;
+            this.img = settings.settings.logo.setting_value as string;
+            this.settingsForm.setValue({
+              companyName: settings.settings.companyName.setting_value,
+              address: settings.settings.address.setting_value,
+              phone: settings.settings.phone.setting_value,
+              email: settings.settings.email.setting_value,
+              fax: settings.settings.fax.setting_value,
+              businessHours: settings.settings.businessHours.setting_value,
+              metaTitle: settings.settings.metaTitle.setting_value,
+              metaDesc: settings.settings.metaDesc.setting_value,
+              addressOnMap: settings.settings.addressOnMap.setting_value
+            })
+          }
+
         }
       })
   }
