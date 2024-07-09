@@ -197,8 +197,10 @@ class AuthController extends Controller
                  }
              }
 
-                    $user->avatar = $request->avatar;
-
+                    if ($request->has('avatar')) {
+                        $user->avatar = $request->avatar;
+                    }
+                    
                     $user->save();
 
 
