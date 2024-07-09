@@ -9,6 +9,7 @@ import {FormBuilder, Validators} from "@angular/forms";
 import {UserInfoType} from "../../../../types/userInfo.type";
 import {AuthService} from "../../../core/auth.service";
 import {GeneralSettingsType} from "../../../../types/general-settings.type";
+import {UploadLogoType} from "../../../../types/upload-logo.type";
 
 @Component({
   selector: 'settings',
@@ -17,9 +18,13 @@ import {GeneralSettingsType} from "../../../../types/general-settings.type";
 })
 export class SettingsComponent implements OnInit{
 
+
+  // FLAGS //
   adminFormFlag: boolean = false;
   createNewAdminFlag: boolean = false;
   pageSettingsFlag: boolean = true;
+
+  ///////
   formData: FormData | null = null;
 
 
@@ -36,6 +41,10 @@ export class SettingsComponent implements OnInit{
   logoIsAdded: boolean = false;
 /////////////////////
   showPassword: boolean = false;
+
+  showNewPassword: boolean = false;
+
+  showNewPasswordConfirm: boolean = false;
 
   passwordType: string = 'password'
 
@@ -83,6 +92,15 @@ export class SettingsComponent implements OnInit{
   uploadFile(file: File, flag: string): void {
     this.formData = new FormData();
       this.formData.append('image', file);
+      if(flag === 'logo') {
+        this.settingsService.sendUploadedLogo(this.formData).subscribe({
+          next: (data: UploadLogoType | DefaultResponseType) => {
+              this.logoImg = (data as UploadLogoType).logo as string;
+              this.logoIsAdded = true;
+          },
+          error: (error) => this.snackBar.open(error.message)
+        });
+      }
       this.postService.sendUploadedImage(this.formData).subscribe({
         next: (data: UploadImgType | DefaultResponseType) => {
           if(flag === 'current') {
@@ -91,9 +109,6 @@ export class SettingsComponent implements OnInit{
           } else if(flag === 'new') {
             this.newAdminImg = (data as UploadImgType).image as string;
             this.newAdminImgIsAdded = true;
-          } else if(flag === 'logo') {
-            this.logoImg = this.newAdminImg = (data as UploadImgType).image as string;
-            this.logoIsAdded = true;
           }
 
         },
@@ -102,24 +117,48 @@ export class SettingsComponent implements OnInit{
 
   }
 
-  deleteUploadedImg(img: string) {
-    this.postService.deleteUploadedImg(img)
-      .subscribe({
-        next: (response: DefaultResponseType) => {
-          if(response.success === 0) {
-            this.snackBar.open(response.message);
-          }
+  deleteUploadedImg(img: string, logo: boolean = false) {
+    if(logo) {
+      this.settingsService.deleteUploadedLogo(img)
+        .subscribe({
+          next: (response: DefaultResponseType) => {
+            if(response.success === 0) {
+              this.snackBar.open(response.message);
+            }
 
-          this.imgIsAdded = false;
-        },
-        error: (error: HttpErrorResponse) => {
-          throw new Error(error.message);
-        }
-      })
+            this.logoIsAdded = false;
+          },
+          error: (error: HttpErrorResponse) => {
+            throw new Error(error.message);
+          }
+        })
+    } else {
+      this.postService.deleteUploadedImg(img)
+        .subscribe({
+          next: (response: DefaultResponseType) => {
+            if(response.success === 0) {
+              this.snackBar.open(response.message);
+            }
+
+            this.imgIsAdded = false;
+          },
+          error: (error: HttpErrorResponse) => {
+            throw new Error(error.message);
+          }
+        })
+    }
+
   }
 
   togglePassword() {
-      this.showPassword = !this.showPassword;
+      this.showPassword = !this.showPassword
+      this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }
+  toggleNewPassword() {
+      this.showPassword = !this.showPassword
+      this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+  }  toggleNewPasswordConfirm() {
+      this.showPassword = !this.showPassword
       this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
 
@@ -143,24 +182,30 @@ export class SettingsComponent implements OnInit{
   }
 
   updateAdminInfo() {
-    console.log(this.img)
     const id = localStorage.getItem('userId');
-    if(id && this.adminForm.value.name
-      && this.adminForm.value.email
-      && this.adminForm.value.password
-      && this.adminForm.value.newPassword
-      && this.adminForm.value.newPasswordConfirm)
-      this.settingsService.updateAdminsInfo(
-        JSON.parse(id as string), this.img as string,
-        this.adminForm.value.name,
-        this.adminForm.value.email,
-        this.adminForm.value.password,
-        this.adminForm.value.newPassword,
-        this.adminForm.value.newPasswordConfirm
-      ) .subscribe({
+    if (id && this.adminForm.value.name && this.adminForm.value.email) {
+      // Create an object to hold the parameters
+      const updateParams: any = {
+        avatar: this.img as string,
+        name: this.adminForm.value.name,
+        email: this.adminForm.value.email
+      };
+
+      // Add password fields if they are present
+      if (this.adminForm.value.password) {
+        updateParams.password = this.adminForm.value.password;
+      }
+      if (this.adminForm.value.newPassword) {
+        updateParams.newPassword = this.adminForm.value.newPassword;
+      }
+      if (this.adminForm.value.newPasswordConfirm) {
+        updateParams.newPasswordConfirm = this.adminForm.value.newPasswordConfirm;
+      }
+
+      this.settingsService.updateAdminsInfo(updateParams, id).subscribe({
         next: (response: DefaultResponseType) => {
-          if(response.success === 0 ) {
-            throw new Error(response.message)
+          if (response.success === 0) {
+            throw new Error(response.message);
           }
 
           this.snackBar.open(response.message);
@@ -170,13 +215,15 @@ export class SettingsComponent implements OnInit{
             password: '',
             newPassword: '',
             newPasswordConfirm: ''
-          })
-
+          });
         },
         error: (error) => {
-
+          console.error('Error updating admin info:', error);
         }
-      })
+      });
+    }
+
+
   }
   getAdminsInfo() {
 
@@ -187,6 +234,7 @@ export class SettingsComponent implements OnInit{
             this.snackBar.open((response as DefaultResponseType).message);
           }
           this.img = (response as UserInfoType).authUser.avatar as string;
+          this.imgIsAdded = true;
           this.adminForm.setValue({
             name: (response as UserInfoType).authUser.name,
             email: (response as UserInfoType).authUser.email,
@@ -197,33 +245,9 @@ export class SettingsComponent implements OnInit{
         }
       })
   }
-  changeTheInnerSettings(flag: string) {
-    if(flag === 'admin-info') {
-      this.getAdminsInfo();
-      this.adminFormFlag = true;
-      this.pageSettingsFlag = false;
-      this.createNewAdminFlag = false;
-    } else if(flag === 'create-new') {
-      this.adminForm.setValue({
-        name: '',
-        email: '',
-        password: '',
-        newPassword: '',
-        newPasswordConfirm: ''
-      })
-      this.adminFormFlag = false;
-      this.createNewAdminFlag = true;
-      this.pageSettingsFlag = false;
-    } else if(flag === 'settings') {
-      this.getSettings();
-      this.adminFormFlag = false;
-      this.createNewAdminFlag = false;
-      this.pageSettingsFlag = true;
-    }
-  }
 
   updateSettings() {
-    this.settingsService.updateSettings(this.img, this.settingsForm.value.companyName as string,
+    this.settingsService.updateSettings(this.img as string, this.settingsForm.value.companyName as string,
       this.settingsForm.value.address as string,
       this.settingsForm.value.phone as string,
       this.settingsForm.value.email as string,
@@ -252,8 +276,8 @@ export class SettingsComponent implements OnInit{
           }
           const settings = response as GeneralSettingsType
           if(settings) {
-            this.imgIsAdded = true;
-            this.img = settings.settings.logo.setting_value as string;
+            this.logoIsAdded = true;
+            this.logoImg = settings.settings.logo.setting_value as string;
             this.settingsForm.setValue({
               companyName: settings.settings.companyName.setting_value,
               address: settings.settings.address.setting_value,
@@ -270,4 +294,30 @@ export class SettingsComponent implements OnInit{
         }
       })
   }
+
+  changeTheInnerSettings(flag: string) {
+    if(flag === 'admin-info') {
+      this.getAdminsInfo();
+      this.adminFormFlag = true;
+      this.pageSettingsFlag = false;
+      this.createNewAdminFlag = false;
+    } else if(flag === 'create-new') {
+      this.adminForm.setValue({
+        name: '',
+        email: '',
+        password: '',
+        newPassword: '',
+        newPasswordConfirm: ''
+      })
+      this.adminFormFlag = false;
+      this.createNewAdminFlag = true;
+      this.pageSettingsFlag = false;
+    } else if(flag === 'settings') {
+      this.getSettings();
+      this.adminFormFlag = false;
+      this.createNewAdminFlag = false;
+      this.pageSettingsFlag = true;
+    }
+  }
+
 }

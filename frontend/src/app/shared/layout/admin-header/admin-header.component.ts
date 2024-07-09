@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpErrorResponse } from '@angular/common/http';
 import {RouteCheckUtil} from "../../utils/checkTheRoute.util";
 import {Router} from "@angular/router";
+import {SettingsService} from "../../services/settings.service";
+import {UserInfoType} from "../../../../types/userInfo.type";
 
 @Component({
   selector: 'admin-header',
@@ -17,7 +19,11 @@ export class AdminHeaderComponent implements OnInit{
   dashBoardOrHomeLink = '/dashboard';
 
   dashBoardOrHomeText = 'Go to the Dashboard'
-  constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router) {}
+
+  adminInfo!: UserInfoType;
+
+  img: string = '';
+  constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) {}
 
   ngOnInit() {
     let route;
@@ -34,9 +40,24 @@ export class AdminHeaderComponent implements OnInit{
       }
     });
 
+    this.getAdminsInfo();
 
   }
+  getAdminsInfo() {
 
+    this.settingsService.getUserInfo()
+      .subscribe({
+        next: (response: DefaultResponseType | UserInfoType) => {
+          if((response as DefaultResponseType).success === 0) {
+            this.snackBar.open((response as DefaultResponseType).message);
+          }
+
+          this.adminInfo = response as UserInfoType;
+          this.img = (response as UserInfoType).authUser.avatar as string;
+
+        }
+      })
+  }
   logout() {
     this.authService.logout()
       .subscribe( {

@@ -197,8 +197,10 @@ class AuthController extends Controller
                  }
              }
 
-             // Remove conflict markers and any unnecessary whitespace
-             $user->save();
+                    $user->avatar = $request->avatar;
+
+                    $user->save();
+
 
              return response()->json([
                  'success' => 1,

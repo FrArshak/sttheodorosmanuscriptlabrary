@@ -1,9 +1,9 @@
 <div class="admin-header" *ngIf="showAdminHeader">
   <div class="admin-info">
-    <div class="admin-img"></div>
+    <div class="admin-img" style="background-image: url('http://arm-manu-jr.com/storage/{{img}}' )"></div>
 
     <div class="admin-name">
-      <span>Arshak</span>
+      <span>{{adminInfo.authUser.name}}</span>
       <span class="admin-word">Admin</span>
     </div>
   </div>
