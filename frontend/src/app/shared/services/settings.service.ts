@@ -45,7 +45,7 @@ export class SettingsService {
     return this.http.get<UserInfoType | DefaultResponseType>(environment.api + 'check-auth');
   }
   updateAdminsInfo(id: number ,avatar: string, name: string ,email: string, password: string, newPassword: string, newPasswordConfirm: string ): Observable<DefaultResponseType> {
-    return this.http.put<DefaultResponseType>(environment.api + 'change-current-user-data/' + id, {avatar, name, email, password, newPassword, newPasswordConfirm})
+    return this.http.put<DefaultResponseType>(environment.api + 'change-current-user-data/' + id, ,{avatar: '1720447486_oecrill_macag_ejtop_1720447486.webp', name, email, password, newPassword, newPasswordConfirm})
   }
   createNewAdmin(name: string, email: string, password: string, passwordConfirm: string): Observable<DefaultResponseType> {
     return this.http.post<DefaultResponseType>(environment.api + 'create-user', {name, email, password, passwordConfirm});

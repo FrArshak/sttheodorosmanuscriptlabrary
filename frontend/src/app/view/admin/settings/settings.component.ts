@@ -22,8 +22,19 @@ export class SettingsComponent implements OnInit{
   pageSettingsFlag: boolean = true;
   formData: FormData | null = null;
 
-  img: string = '';
 
+////////////IMAGES ///////////////
+  img: string = '';
+  newAdminImg: string = '';
+
+  logoImg: string = '';
+
+  imgIsAdded: boolean = false;
+
+  newAdminImgIsAdded: boolean = false;
+
+  logoIsAdded: boolean = false;
+/////////////////////
   showPassword: boolean = false;
 
   passwordType: string = 'password'
@@ -50,9 +61,7 @@ export class SettingsComponent implements OnInit{
 
 
 
-  imgIsAdded: boolean = false;
 
-  logoIsAdded: boolean = false;
   constructor(private settingsService: SettingsService, private postService: PostService,
               private snackBar: MatSnackBar, private fb: FormBuilder) {
   }
@@ -63,21 +72,30 @@ export class SettingsComponent implements OnInit{
   this.getSettings();
   }
 
-  onFileSelected(event: Event): void {
+  onFileSelected(event: Event, flag: string): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
       const file = input.files[0];
-      this.uploadFile(file);
+      this.uploadFile(file, flag);
     }
   }
 
-  uploadFile(file: File): void {
+  uploadFile(file: File, flag: string): void {
     this.formData = new FormData();
       this.formData.append('image', file);
       this.postService.sendUploadedImage(this.formData).subscribe({
         next: (data: UploadImgType | DefaultResponseType) => {
-          this.img = (data as UploadImgType).image as string;
-          this.imgIsAdded = true;
+          if(flag === 'current') {
+            this.img = (data as UploadImgType).image as string;
+            this.imgIsAdded = true;
+          } else if(flag === 'new') {
+            this.newAdminImg = (data as UploadImgType).image as string;
+            this.newAdminImgIsAdded = true;
+          } else if(flag === 'logo') {
+            this.logoImg = this.newAdminImg = (data as UploadImgType).image as string;
+            this.logoIsAdded = true;
+          }
+
         },
         error: (error) => this.snackBar.open(error.message)
       });
@@ -105,41 +123,7 @@ export class SettingsComponent implements OnInit{
       this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
   }
 
-  updateAdminInfo() {
-    const id = localStorage.getItem('userId');
-    if(id && this.adminForm.value.name
-      && this.adminForm.value.email
-      && this.adminForm.value.password
-      && this.adminForm.value.newPassword
-      && this.adminForm.value.newPasswordConfirm)
-    this.settingsService.updateAdminsInfo(
-      JSON.parse(id as string), this.img ? this.img : '',
-      this.adminForm.value.name,
-      this.adminForm.value.email,
-      this.adminForm.value.password,
-      this.adminForm.value.newPassword,
-      this.adminForm.value.newPasswordConfirm
-    ) .subscribe({
-      next: (response: DefaultResponseType) => {
-        if(response.success === 0 ) {
-          throw new Error(response.message)
-        }
 
-        this.snackBar.open(response.message);
-        this.adminForm.setValue({
-          name: this.adminForm.value.name as string,
-          email: this.adminForm.value.email as string,
-          password: '',
-          newPassword: '',
-          newPasswordConfirm: ''
-        })
-
-      },
-      error: (error) => {
-
-      }
-    })
-  }
 
   createNewAdmin() {
     if(this.adminForm.value.name && this.adminForm.value.email && this.adminForm.value.password && this.adminForm.value.newPasswordConfirm) {
@@ -158,14 +142,51 @@ export class SettingsComponent implements OnInit{
     }
   }
 
+  updateAdminInfo() {
+    console.log(this.img)
+    const id = localStorage.getItem('userId');
+    if(id && this.adminForm.value.name
+      && this.adminForm.value.email
+      && this.adminForm.value.password
+      && this.adminForm.value.newPassword
+      && this.adminForm.value.newPasswordConfirm)
+      this.settingsService.updateAdminsInfo(
+        JSON.parse(id as string), this.img as string,
+        this.adminForm.value.name,
+        this.adminForm.value.email,
+        this.adminForm.value.password,
+        this.adminForm.value.newPassword,
+        this.adminForm.value.newPasswordConfirm
+      ) .subscribe({
+        next: (response: DefaultResponseType) => {
+          if(response.success === 0 ) {
+            throw new Error(response.message)
+          }
+
+          this.snackBar.open(response.message);
+          this.adminForm.setValue({
+            name: this.adminForm.value.name as string,
+            email: this.adminForm.value.email as string,
+            password: '',
+            newPassword: '',
+            newPasswordConfirm: ''
+          })
+
+        },
+        error: (error) => {
+
+        }
+      })
+  }
   getAdminsInfo() {
+
     this.settingsService.getUserInfo()
       .subscribe({
         next: (response: DefaultResponseType | UserInfoType) => {
           if((response as DefaultResponseType).success === 0) {
             this.snackBar.open((response as DefaultResponseType).message);
           }
-
+          this.img = (response as UserInfoType).authUser.avatar as string;
           this.adminForm.setValue({
             name: (response as UserInfoType).authUser.name,
             email: (response as UserInfoType).authUser.email,

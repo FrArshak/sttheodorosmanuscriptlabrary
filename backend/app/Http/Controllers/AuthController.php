@@ -181,34 +181,30 @@ class AuthController extends Controller
 
                     $user->name = $request->name;
 
-                    if($request->email !== $user->email) {
-                        $emailValidate = $request->validate([
-                            'email'  =>  'email|unique:users',
-                        ]);
+             if($request->email !== $user->email) {
+                 $emailValidate = $request->validate([
+                     'email'  =>  'email|unique:users',
+                 ]);
 
-                        if($emailValidate) {
-                            $user->email = $request->email;
-                        } else {
-                            return response()->json([
-                                'success' => 0,
-                                'type' => 'error',
-                                'message'  => 'Email is already taken',
-                            ]);
-                        }
-                    }
+                 if($emailValidate) {
+                     $user->email = $request->email;
+                 } else {
+                     return response()->json([
+                         'success' => 0,
+                         'type' => 'error',
+                         'message'  => 'Email is already taken',
+                     ]);
+                 }
+             }
 
-<<<<<<< HEAD
-=======
-                  
->>>>>>> 73fc9050487ea2c7d8575d2991e51ece2012e27a
+             // Remove conflict markers and any unnecessary whitespace
+             $user->save();
 
-                    $user->save();
-
-                    return response()->json([
-                        'success' => 1,
-                        'type' => 'success',
-                        'message'  => 'Your data has been updated',
-                    ], 200);
+             return response()->json([
+                 'success' => 1,
+                 'type' => 'success',
+                 'message'  => 'Your data has been updated',
+             ], 200);
                 }
             } else {
                 return response()->json([
