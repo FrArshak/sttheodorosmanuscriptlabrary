@@ -197,6 +197,8 @@ class AuthController extends Controller
                         }
                     }
 
+                    $user->avatar = $request->avatar;
+
                     $user->save();
 
                     return response()->json([
