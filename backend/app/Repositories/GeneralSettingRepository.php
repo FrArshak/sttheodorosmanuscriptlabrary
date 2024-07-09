@@ -22,66 +22,6 @@ class GeneralSettingRepository implements GeneralSettingInterface
     }
 
     /**
-     * @return mixed
-     */
-    public function getAboutUsPageContent(): mixed
-    {
-        return $this->model->where('setting_key', 'aboutUsPageContent')->first();
-    }
-
-    /**
-     * @param $key
-     * @param $data
-     * @return mixed
-     */
-    public function updateOrCreateData($key, $data): mixed
-    {
-        $data['setting_value'] = $data['setting_value'] === null ? '' : $data['setting_value'];
-        if($this->ifExist($key)) {
-            if($key === 'aboutUsPageContent') {
-                return $this->model->where('setting_key', $key)->update([
-                    'setting_value' => $data['setting_value'] ?: '',
-                    'setting_json' => $data['setting_json'] ?: ''
-                ]);
-            } else {
-                return $this->model->where('setting_key', $key)->update([
-                    'setting_value' => $data['setting_value'] ?: '',
-                ]);
-            }
-        } else {
-            if($key === 'aboutUsPageContent') {
-                $myData = [
-                    'setting_key' => $key,
-                    'setting_value' => $data['setting_value'] ?: '',
-                    'setting_json' => $data['setting_json'] ?: ''
-                ];
-                return $this->model->create($myData);
-            } else {
-                $myData = [
-                    'setting_key' => $key,
-                    'setting_value' => $data['setting_value'] ?: '',
-                ];
-                return $this->model->create($myData);
-            }
-
-        }
-    }
-
-    /**
-     * @param $key
-     * @param $data
-     * @return mixed
-     */
-    public function updateOrCreatePageData($key, $data): mixed
-    {
-        if($this->ifExist($key)) {
-            return $this->model->where('setting_key', $key)->update($data);
-        } else {
-            return $this->model->create($data);
-        }
-    }
-
-    /**
      * @param $key
      * @return mixed
      */
@@ -102,8 +42,45 @@ class GeneralSettingRepository implements GeneralSettingInterface
      * @param $key
      * @return mixed
      */
-    public function getAboutUsContent($key): mixed
+    public function getSpecificSetting($key): mixed
     {
         return $this->model->where('setting_key', $key)->first();
+    }
+
+    /**
+     * @param $key
+     * @param $data
+     * @return mixed
+     */
+    public function updateOrCreateData($key, $data): mixed
+    {
+        $data['setting_value'] = $data['setting_value'] === null ? '' : $data['setting_value'];
+        if($this->ifExist($key)) {
+            return $this->model->where('setting_key', $key)->update([
+                'setting_value' => $data['setting_value'] ?? '',
+                'setting_json' => $data['setting_json'] ?? null
+            ]);
+        } else {
+            $myData = [
+                'setting_key' => $key,
+                'setting_value' => $data['setting_value'] ?? '',
+                'setting_json' => $data['setting_json'] ?? null
+            ];
+            return $this->model->create($myData);
+        }
+    }
+
+    /**
+     * @param $key
+     * @param $data
+     * @return mixed
+     */
+    public function updateOrCreateSpecificSetting($key, $data): mixed
+    {
+        if($this->ifExist($key)) {
+            return $this->model->where('setting_key', $key)->update($data);
+        } else {
+            return $this->model->create($data);
+        }
     }
 }

@@ -33,7 +33,7 @@ class CatalogRepository implements CatalogInterface
      */
     public function getCatalogs($skip, $take): mixed
     {
-        return  $this->model->skip($skip)->take($take)->get();
+        return  $this->model->orderBy('created_at', 'desc')->skip($skip)->take($take)->get();
     }
 
     /**

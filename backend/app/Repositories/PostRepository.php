@@ -51,7 +51,7 @@ class PostRepository implements PostInterface
      */
     public function getPosts($postType, $skip, $take):mixed
     {
-        return $this->model->where('post_type', $postType)->skip($skip)->take($take)->get();
+        return $this->model->where('post_type', $postType)->orderBy('created_at', 'desc')->skip($skip)->take($take)->get();
     }
 
     /**

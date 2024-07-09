@@ -43,24 +43,14 @@ class GeneralSettingsController extends Controller
             $generalSettings =  $this->generalSettingsRepo->getGeneralSettings();
 
             // Initialize settings array with default values
-            $settings = [
-                'logo' => '',
-                'companyName' => '',
-                'address' => '',
-                'phone' => '',
-                'email' => '',
-                'fax' => '',
-                'businessHours' => '',
-                'metaTitle' => '',
-                'metaDesc' => '',
-                'addressOnMap' => ''
-            ];
+            $settings = [];
 
             // Map setting values to corresponding keys
             foreach ($generalSettings as $setting) {
-                if (array_key_exists($setting->setting_key, $settings)) {
-                    $settings[$setting->setting_key] = $setting->setting_value;
-                }
+                $settings[$setting->setting_key] = [
+                    'setting_value' => $setting->setting_value,
+                    'setting_json' => json_decode($setting->setting_json),
+                ];
             }
 
             return response()->json([
@@ -79,12 +69,13 @@ class GeneralSettingsController extends Controller
     }
 
     /**
+     * @param $key
      * @return JsonResponse
      */
-    public function getAboutUsContent(): JsonResponse
+    public function getSpecificSetting($key): JsonResponse
     {
         try {
-            $data = $this->generalSettingsRepo->getAboutUsContent('aboutUsPageContent');
+            $data = $this->generalSettingsRepo->getSpecificSetting($key);
             if($data) {
                 return response()->json([
                     'success' => 1,
@@ -96,39 +87,9 @@ class GeneralSettingsController extends Controller
             return response()->json([
                 'success' => 1,
                 'type' => 'success',
-                'message' => 'No about us page data'
+                'message' => 'No data has been found'
             ], 200);
         } catch (\Exception $exception) {
-            Log::error($exception);
-            return response()->json([
-                'success' => 0,
-                'type' => 'error',
-                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
-            ]);
-        }
-    }
-
-    /**
-     * @param Request $request
-     * @return JsonResponse
-     */
-    public function updateAboutUsContent(Request $request): JsonResponse
-    {
-        try {
-            DB::beginTransaction();
-
-            $data = $request->all();
-
-            $this->generalSettingsRepo->updateOrCreatePageData($data['setting_key'], $data);
-
-            DB::commit();
-            return response()->json([
-                'success' => 1,
-                'type' => 'success',
-                'message' => 'Section has been updated'
-            ], 200);
-        } catch (\Exception $exception) {
-            DB::rollBack();
             Log::error($exception);
             return response()->json([
                 'success' => 0,
@@ -148,7 +109,12 @@ class GeneralSettingsController extends Controller
             $settingsData = $request->all();
             DB::beginTransaction();
             foreach ($settingsData as $data) {
-                $this->generalSettingsRepo->updateOrCreateData($data['setting_key'], $data);
+                if(is_array($data)) {
+                    $this->generalSettingsRepo->updateOrCreateData($data['setting_key'], $data);
+                } else {
+                    $this->generalSettingsRepo->updateOrCreateData($settingsData['setting_key'], $settingsData);
+                    break;
+                }
             }
             DB::commit();
             return response()->json([
@@ -157,6 +123,36 @@ class GeneralSettingsController extends Controller
                 'message'  => 'Settings have been updated',
             ], 200);
         }  catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error($exception);
+            return response()->json([
+                'success' => 0,
+                'type' => 'error',
+                'message'  => 'Something went wrong.Here is the error => ' . $exception->getMessage(),
+            ]);
+        }
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function updateSpecificSetting(Request $request): JsonResponse
+    {
+        try {
+            DB::beginTransaction();
+
+            $data = $request->all();
+
+            $this->generalSettingsRepo->updateOrCreateSpecificSetting($data['setting_key'], $data);
+
+            DB::commit();
+            return response()->json([
+                'success' => 1,
+                'type' => 'success',
+                'message' => 'Setting has been updated'
+            ], 200);
+        } catch (\Exception $exception) {
             DB::rollBack();
             Log::error($exception);
             return response()->json([
