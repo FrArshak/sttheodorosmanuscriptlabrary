@@ -17,9 +17,6 @@ export class AuthService {
     this.isLogged = !!localStorage.getItem(this.accessTokenKey);
 
   }
-
-
-
   public getIsLoggedIn(): boolean {
     return this.isLogged;
   }

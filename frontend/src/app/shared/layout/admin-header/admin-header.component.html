@@ -31,7 +31,7 @@
         <a>Logout</a>
       </button>
       <button mat-menu-item >
-        <a>Go to the Dashboard</a>
+        <a [routerLink]="dashBoardOrHomeLink">{{dashBoardOrHomeText}}</a>
       </button>
     </mat-menu>
 

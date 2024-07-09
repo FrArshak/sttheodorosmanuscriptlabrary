@@ -9,7 +9,9 @@
       <div class="subhead news-subHead">
         Stay updated with the latest insights and updates on art, culture, and history.
       </div>
-      <image-slider></image-slider>
+      <div class="slider">
+        <image-slider [theme]="'news'"></image-slider>
+      </div>
     </div>
   </div>
 
@@ -21,9 +23,28 @@
       <div class="subhead news-subHead">
         Stay updated with the latest insights and updates on art, culture, and history.
       </div>
-      <image-slider></image-slider>
+      <div class="slider">
+        <image-slider [theme]="'articles'"></image-slider>
+      </div>
     </div>
+
   </div>
-  <admin-modal></admin-modal>
+  <contact-form></contact-form>
+
+  <div class="support">
+    <div class="container">
+      <div class="title support-title">
+        Support Our Mission
+      </div>
+      <button *ngIf="isLogged" (click)="toggleActive()" class="new-post">Add new post</button>
+      <div class="support-items">
+        <app-support-mission (idEmitter)="getId($event)" (activeLocalEmitter)="toggleActiveLocal()" *ngFor="let post of posts" [post]="post"  (postItem)="getPost($event)"   (active)="getActive($event)" (update)="getUpdate($event)"  (support)="getSupportFlag($event)"></app-support-mission>
+      </div>
+    </div>
+
+  </div>
+
+  <admin-modal [update]="update"  [isPdf]="false" [active]="active" [postItem]="postItem"    [support]="support"></admin-modal>
+  <app-modal [id]="id" [active]="activeLocal" [post]="true"></app-modal>
 </div>
 

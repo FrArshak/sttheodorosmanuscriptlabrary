@@ -2,11 +2,11 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {
   RouterOutlet,
   Router,
-  NavigationEnd,
   ActivatedRoute,
 } from '@angular/router';
 import { slideInAnimation } from './shared/utils/route-animation';
 import { AuthService } from './core/auth.service';
+import {LoaderService} from "./shared/services/loader.service";
 
 @Component({
   selector: 'app-root',
@@ -19,13 +19,19 @@ export class AppComponent implements OnInit {
   showHeader: boolean = true;
   isLogged: boolean = false;
   currentRoute: string = '';
+  loaderIsShowed: boolean = false;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+    private loaderService: LoaderService
   ) {
     this.isLogged = this.authService.getIsLoggedIn();
+
+    this.loaderService.$loading.subscribe(isShowed => {
+      this.loaderIsShowed = isShowed
+    })
   }
 
   ngOnInit() {
@@ -36,6 +42,9 @@ export class AppComponent implements OnInit {
         this.showHeader = false;
       } else if (this.currentRoute === '/') {
         this.showHeader = true;
+        this.isLogged = this.authService.getIsLoggedIn();
+      } else if (this.currentRoute === '/dashboard' || this.currentRoute === '/settings') {
+        this.showHeader = false;
         this.isLogged = this.authService.getIsLoggedIn();
       }
     });

@@ -1,6 +1,11 @@
-<div class="admin-modal" [class.active]="active" >
-
+<div class="admin-modal" [class.active]="active || activeLocal" >
+  <div class="close-modal" (click)="deleteUploadedImg(img)">
+    <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0 0 50 50">
+      <path d="M 7.71875 6.28125 L 6.28125 7.71875 L 23.5625 25 L 6.28125 42.28125 L 7.71875 43.71875 L 25 26.4375 L 42.28125 43.71875 L 43.71875 42.28125 L 26.4375 25 L 43.71875 7.71875 L 42.28125 6.28125 L 25 23.5625 Z"></path>
+    </svg>
+  </div>
   <div class="admin-modal-items">
+
     <div class="admin-modal-item post-img">
       <div class="add-img-input-container" *ngIf="!imgIsAdded">
         <div class="add-img-picture">
@@ -8,19 +13,24 @@
             <path d="M57.3333 27.3333C56.4492 27.3333 55.6014 27.6845 54.9763 28.3096C54.3511 28.9347 54 29.7826 54 30.6666V41.9333L49.0666 37C47.3247 35.2718 44.9704 34.302 42.5166 34.302C40.0629 34.302 37.7085 35.2718 35.9666 37L33.6333 39.3666L25.3666 31.0666C23.6247 29.3384 21.2704 28.3687 18.8166 28.3687C16.3629 28.3687 14.0085 29.3384 12.2666 31.0666L7.33329 36.0333V17.3333C7.33329 16.4492 7.68448 15.6014 8.3096 14.9763C8.93472 14.3511 9.78257 14 10.6666 14H37.3333C38.2173 14 39.0652 13.6488 39.6903 13.0236C40.3154 12.3985 40.6666 11.5507 40.6666 10.6666C40.6666 9.78257 40.3154 8.93472 39.6903 8.3096C39.0652 7.68448 38.2173 7.33329 37.3333 7.33329H10.6666C8.01446 7.33329 5.47092 8.38686 3.59556 10.2622C1.72019 12.1376 0.666626 14.6811 0.666626 17.3333V58.0666C0.675409 60.5216 1.65454 62.8735 3.39047 64.6094C5.12641 66.3454 7.47832 67.3245 9.93329 67.3333H51.4C52.3032 67.3261 53.201 67.1914 54.0666 66.9333C55.9914 66.3934 57.6859 65.2369 58.8902 63.6413C60.0944 62.0457 60.7419 60.099 60.7333 58.1V30.6666C60.7334 30.2232 60.645 29.7843 60.4733 29.3754C60.3017 28.9666 60.0502 28.5961 59.7335 28.2857C59.4169 27.9753 59.0415 27.7312 58.6294 27.5676C58.2172 27.4041 57.7766 27.3244 57.3333 27.3333ZM10.6666 60.6666C9.78257 60.6666 8.93472 60.3154 8.3096 59.6903C7.68448 59.0652 7.33329 58.2173 7.33329 57.3333V45.4333L16.9666 35.8C17.4538 35.3155 18.1129 35.0436 18.8 35.0436C19.487 35.0436 20.1461 35.3155 20.6333 35.8L45.5333 60.6666H10.6666ZM54 57.3333C53.9785 57.9787 53.7701 58.6041 53.4 59.1333L38.3333 44L40.7 41.6666C40.9389 41.4227 41.2242 41.229 41.539 41.0967C41.8538 40.9644 42.1918 40.8963 42.5333 40.8963C42.8748 40.8963 43.2128 40.9644 43.5276 41.0967C43.8424 41.229 44.1276 41.4227 44.3666 41.6666L54 51.3666V57.3333ZM64 7.33329H60.6666V3.99996C60.6666 3.1159 60.3154 2.26806 59.6903 1.64294C59.0652 1.01782 58.2173 0.666626 57.3333 0.666626C56.4492 0.666626 55.6014 1.01782 54.9763 1.64294C54.3511 2.26806 54 3.1159 54 3.99996V7.33329H50.6666C49.7826 7.33329 48.9347 7.68448 48.3096 8.3096C47.6845 8.93472 47.3333 9.78257 47.3333 10.6666C47.3333 11.5507 47.6845 12.3985 48.3096 13.0236C48.9347 13.6488 49.7826 14 50.6666 14H54V17.3333C54 18.2173 54.3511 19.0652 54.9763 19.6903C55.6014 20.3154 56.4492 20.6666 57.3333 20.6666C58.2173 20.6666 59.0652 20.3154 59.6903 19.6903C60.3154 19.0652 60.6666 18.2173 60.6666 17.3333V14H64C64.884 14 65.7319 13.6488 66.357 13.0236C66.9821 12.3985 67.3333 11.5507 67.3333 10.6666C67.3333 9.78257 66.9821 8.93472 66.357 8.3096C65.7319 7.68448 64.884 7.33329 64 7.33329Z" fill="#8B8B8B"/>
           </svg>
         </div>
-        <input type="file" id="image" class="admin-modal-item-input" (change)="onFileSelected($event)">
+        <input type="file" id="image"  class="admin-modal-item-input" (change)="onFileSelected($event, false)">
       </div>
       <div class="added-img" *ngIf="imgIsAdded">
         <div class="delete-uploaded-img" (click)="deleteUploadedImg(img)">
-          <!-- SVG icon here -->
         </div>
         <img src="http://arm-manu-jr.com/storage/{{img}}" alt="">
       </div>
     </div>
 
+    <div class="admin-modal-item catalog-pdf" *ngIf="isPdf">
+      <label for="pdf">Upload Pdf</label>
+      <input type="file" name="pdf" id="pdf" (change)="onFileSelected($event, true)">
+    </div>
+
     <div class="admin-modal-item post-title" >
-      <input type="text" *ngIf="isEn" [(ngModel)]="postTitleEn" id="postTitle" class="admin-modal-item-input" placeholder="Enter the title" required>
-      <input type="text" *ngIf="!isEn" [(ngModel)]="postTitleArm" id="postTitle" class="admin-modal-item-input" placeholder="Enter the title" required>
+      <input type="text" *ngIf="isEn" [value]="postTitleEn" [(ngModel)]="postTitleEn" id="postTitle" class="admin-modal-item-input" placeholder="Enter the title" required>
+      <input type="text" *ngIf="!isEn" [(ngModel)]="postTitleArm" id="post" class="admin-modal-item-input" placeholder="Enter the title" required>
+
 
       <div class="post-title-lang" [matMenuTriggerFor]="menu" >
         <div class="lang" *ngIf="isEn" >
@@ -86,13 +96,17 @@
 
     </div>
     <div class="admin-modal-item paragraph">
-      <quill-editor [(ngModel)]="postParagraph" [modules]="quillConfig" theme="snow" class="admin-modal-item-input" (onContentChanged)="onContentChanged($event)"></quill-editor>
+      <quill-editor *ngIf="isEn" [(ngModel)]="postParagraphEn"  [modules]="quillConfig" theme="snow" class="admin-modal-item-input" (onContentChanged)="onContentChanged($event)"></quill-editor>
+      <quill-editor *ngIf="!isEn"  [(ngModel)]="postParagraphAm"  [modules]="quillConfig" theme="snow" class="admin-modal-item-input" (onContentChanged)="onContentChanged($event)"></quill-editor>
       <div class="character-counter">{{ currentCharacters }}/{{ maxCharacters }} characters</div>
     </div>
   </div>
   <div class="admin-modal-actions">
-    <span class="btn btn-cancel" (click)="toggleModal(img)">Cancel Post</span>
-    <span class="btn btn-update" (click)="createPost()">Create Post</span>
+    <span class="btn btn-cancel" (click)="toggleModal(img)" >Cancel Post</span>
+    <span class="btn btn-update" *ngIf="!update && !isPdf"  (click)="createPost()">Create Post</span>
+    <span class="btn btn-update" *ngIf="update && postItem" (click)="updatePost()">Update Post</span>
+    <span class="btn btn-update" *ngIf="isPdf && !update" (click)="createCatalog()">Create Catalog</span>
+    <span class="btn btn-update" *ngIf="isPdf && update" (click)="updateCatalog()">Update Catalog</span>
   </div>
 
 

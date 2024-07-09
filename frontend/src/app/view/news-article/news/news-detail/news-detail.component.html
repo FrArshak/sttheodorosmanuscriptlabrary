@@ -1,1 +1,42 @@
-<p>news-detail works!</p>
+<div class="detail">
+  <div class="container">
+    <div class="title detail-title">
+      {{post.post_en.title}}
+    </div>
+
+    <div class="detail-admin-info">
+      <div class="detail-admin-details">
+        <div class="detail-admin-img">
+
+        </div>
+        <div class="detail-admin-name">
+          Rafael Ghazarian
+        </div>
+      </div>
+
+      <div class="detail-admin-date">
+        06 June 2024
+      </div>
+    </div>
+
+    <div class="detail-img" style="background-image: url('http://arm-manu-jr.com/storage/{{post.image}}')">
+
+    </div>
+
+    <div class="detail-text" [innerHTML]="post.post_en.paragraph">
+
+    </div>
+
+    <div class="detail-explore-more">
+      <div class="detail-explore-more-title">
+        Explore More News
+      </div>
+      <div class="detail-explore-more-cards">
+        <app-card [post]="postItem"  *ngFor="let postItem of posts"></app-card>
+      </div>
+    </div>
+  </div>
+
+
+
+</div>

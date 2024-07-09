@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, EventEmitter, NgZone, OnInit, Output, ViewChild} from '@angular/core';
 import { AuthService } from "../../../../core/auth.service";
 import { PostService } from "../../../../shared/services/post.service";
 import {PostItemType, PostType} from "../../../../../types/post.type";
@@ -6,6 +6,7 @@ import { ActiveParamsType } from "../../../../../types/active-params.type";
 import { DefaultResponseType } from "../../../../../types/default-response.type";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { ActivatedRoute, Router } from "@angular/router";
+import {skip} from "rxjs";
 
 @Component({
   selector: 'news',
@@ -14,19 +15,34 @@ import { ActivatedRoute, Router } from "@angular/router";
 })
 export class NewsComponent implements OnInit {
 
+  @Output() activeLocalEmitter: EventEmitter<boolean> = new EventEmitter<boolean>();
+  @Output() idEmitter: EventEmitter<number> = new EventEmitter<number>();
+
+  activeLocal: boolean = false;
   isLogged: boolean = false;
+  title: string = 'News';
+  subtitle: string = 'Fresh Discoveries and News on Armenian Manuscripts';
   active: boolean = false;
+  news: PostItemType[]  = []; // Changed to an array to hold multiple pages of posts
 
-  news: PostItemType[] = []; // Changed to an array to hold multiple pages of posts
+  pagesCount: number = 0;
 
-  currentPage: number = 1;
-  pageSize: number = 9;
-  hasMorePosts: boolean = true; // Flag to check if more posts are available
+  postsTotal: number = 0;
 
-  activeParams: ActiveParamsType = { postType: 'news', skip: 0, take: 9 };
+  activeParams: ActiveParamsType = { postType: '', skip: 0, take: 9 };
+
+  activePage: number = 1;
+
+  updateModalFlag: boolean = false;
+
+  currentRoute: string = '';
+  postItem!: PostType;
+
+  id: number = 0;
 
   constructor(private authService: AuthService, private postService: PostService,
-              private _snackBar: MatSnackBar, private router: Router, private activatedRoute: ActivatedRoute) {
+              private _snackBar: MatSnackBar, private router: Router,
+              private activatedRoute: ActivatedRoute, private zone: NgZone) {
     this.isLogged = this.authService.getIsLoggedIn();
   }
 
@@ -35,13 +51,34 @@ export class NewsComponent implements OnInit {
       this.isLogged = isLoggedIn;
     });
 
+    this.checkTheRoute();
+
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.currentPage = params['page'] ? +params['page'] : 1;
-      this.activeParams.skip = (this.currentPage - 1) * this.pageSize;
+
+      if(params.hasOwnProperty('take')) {
+        const take = params['take'];
+        this.activePage = take / 9;
+        this.changePage(this.activePage);
+      }
+
       this.loadPosts();
     });
+  }
 
-    this.loadPosts();
+  checkTheRoute() {
+    this.currentRoute = this.router.url;
+    this.router.events.subscribe(() => {
+      this.currentRoute = this.router.url;
+      if (this.currentRoute.includes('news')) {
+        this.activeParams.postType = 'news'
+        this.loadPosts();
+      } else if (this.currentRoute.includes('articles')) {
+        this.title = 'Articles';
+        this.subtitle = 'Fresh Discoveries and News on Armenian Manuscripts';
+        this.activeParams.postType = 'articles';
+        this.loadPosts()
+      }
+    });
   }
 
   loadPosts() {
@@ -51,38 +88,84 @@ export class NewsComponent implements OnInit {
           this._snackBar.open((response as DefaultResponseType).message);
           return;
         }
-        const posts = response as PostType;
-        this.hasMorePosts = posts.posts.length === this.pageSize; // Check if the number of posts is equal to pageSize
-        if (this.currentPage === 1) {
-          this.news = posts.posts; // For the first page, replace the existing posts
-        } else {
-          this.news = [...this.news, ...posts.posts]; // For subsequent pages, append the new posts
-        }
+        this.news = (response as PostType).posts as PostItemType[];
+        this.postsTotal = (response as PostType).totalPost as number
+
+
+        this.pagesCount = Math.ceil(this.postsTotal / 9);
       }
     });
   }
 
   goToPrev() {
-    if (this.currentPage > 1) {
-      this.currentPage--;
-      this.updateQueryParams();
+    if(this.activePage === 1) {
+      return
     }
+    this.activePage--;
+    this.changePage(this.activePage);
   }
 
   goToNext() {
-    if (this.hasMorePosts) {
-      this.currentPage++;
-      this.updateQueryParams();
+    if(this.activePage >= this.pagesCount ) {
+      return
     }
+    this.activePage++
+    this.changePage(this.activePage);
   }
 
   updateQueryParams() {
     this.router.navigate(['/news'], {
-      queryParams: { page: this.currentPage }
+      queryParams: { skip: this.activeParams.skip, take: this.activeParams.take }
     });
+    this.loadPosts();
   }
 
-  toggleActive() {
+  toggleActive(updateFlag?: boolean) {
     this.active = !this.active;
+    if(updateFlag) {
+      this.updateModalFlag = true;
+    }
   }
+  getPagesArray(): number[] {
+    return Array(this.pagesCount).fill(0).map((x, i) => i + 1);
+  }
+
+  changePage(page: number) {
+    this.activeParams.skip = (page - 1) * 9
+    this.activeParams.take = page * 9;
+    this.activePage = page;
+    this.updateQueryParams()
+  }
+
+  getPostItem(data: PostType) {
+    this.postItem = data;
+    console.log(this.postItem);
+  }
+
+  getUpdatedPost(post: PostItemType) {
+    const updatedPost = this.news?.find(postItem => postItem.id === post.id);
+    if(updatedPost) {
+      updatedPost.post_en.title = post.post_en.title
+      updatedPost.post_en.paragraph = post.post_en.paragraph
+      updatedPost.post_am.title = post.post_am.title
+      updatedPost.post_am.paragraph = post.post_am.paragraph
+    }
+  }
+
+  getId(id: number) {
+    this.id = id;
+  }
+
+  toggleActiveLocal() {
+    this.activeLocal = !this.activeLocal;
+  }
+
+
+  // getCreatedPost(post: PostItemType) {
+  //   // this.zone.run(() => {
+  //   //   this.news.push(post);
+  //   //   this.updateQueryParams();
+  //   //   this.loadPosts();
+  //   // });
+  // }
 }

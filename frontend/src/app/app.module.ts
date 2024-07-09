@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import {NgModule, CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA} from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MAT_SNACK_BAR_DEFAULT_OPTIONS, MatSnackBarModule } from '@angular/material/snack-bar';
@@ -11,13 +11,16 @@ import { HTTP_INTERCEPTORS ,HttpClientModule } from '@angular/common/http';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { RouterModule } from '@angular/router';
 import { AuthInterceptor } from './core/auth-interceptor';
-import { MainComponent } from './view/main/main.component';
 import {NewsArticleModule} from "./view/news-article/news-article.module";
+import {CommonModule} from "@angular/common";
+import {LoaderComponent} from "./shared/components/loader/loader.component";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
+    LoaderComponent,
     BrowserModule,
+    CommonModule,
     SharedModule,
     NewsArticleModule,
     HttpClientModule,
@@ -37,7 +40,7 @@ import {NewsArticleModule} from "./view/news-article/news-article.module";
     provideAnimationsAsync(),
   ],
   bootstrap: [AppComponent],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA]
+  schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]
 
 })
 export class AppModule {}

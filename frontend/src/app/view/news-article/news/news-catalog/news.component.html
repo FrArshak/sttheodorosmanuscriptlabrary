@@ -2,24 +2,43 @@
   <div class="container">
 
     <div class="title news-title">
-      News
+      {{title}}
     </div>
 
     <div class="subhead news-subhead">
-      Fresh Discoveries and News on Armenian Manuscripts
+      {{subtitle}}
     </div>
 
     <span class="btn add-news-btn" *ngIf="isLogged" (click)="toggleActive()">Add a news article</span>
 
     <div class="cards" *ngIf="news && news.length > 0">
-      <app-card   *ngFor="let post of news" [post]="post"></app-card>
+      <app-card (postItem)="getPostItem($event)" (activeLocalEmitter)="toggleActiveLocal()" (idEmitter)="getId($event)"   (activeCalled)="toggleActive(true)"  *ngFor="let post of news" [post]="post"></app-card>
     </div>
+
+    <div class="pagination" *ngIf="postsTotal > 9" [class.disabled]="activePage ? activePage === 1 : true">
+      <button class="pagination-arrow prev" (click)="goToPrev()">
+        <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 227.096 227.096" xml:space="preserve" fill="#000000" transform="rotate(180)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon style="fill:#ffffff;" points="152.835,39.285 146.933,45.183 211.113,109.373 0,109.373 0,117.723 211.124,117.723 146.933,181.902 152.835,187.811 227.096,113.55 "></polygon> </g> </g> </g></svg>
+      </button>
+
+      <div class="pagination-items">
+        <div class="pagination-item" [ngClass]="{'active': page === activePage}"  (click)="changePage(page)" *ngFor="let page of getPagesArray(); let i = index;">
+          {{ page }}
+        </div>
+      </div>
+
+      <button class="pagination-arrow next" (click)="goToNext()" [class.disabled]="activePage ? activePage === postsTotal : (activePage === 1)">
+        <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 227.096 227.096" xml:space="preserve" fill="#000000" transform="rotate(0)"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <g> <polygon style="fill:#ffffff;" points="152.835,39.285 146.933,45.183 211.113,109.373 0,109.373 0,117.723 211.124,117.723 146.933,181.902 152.835,187.811 227.096,113.55 "></polygon> </g> </g> </g></svg>
+      </button>
+    </div>
+
   </div>
 
-  <admin-modal [active]="active"></admin-modal>
 
-  <div class="pagination">
-    <button class="prev" (click)="goToPrev()"><</button>
-    <button class="next" (click)="goToNext()">></button>
-  </div>
+  <admin-modal  (postUpdated)="getUpdatedPost($event)"
+               [postItem]="postItem"
+               [update]="updateModalFlag"
+               [active]="active"></admin-modal>
+  <app-modal [id]="id" [active]="activeLocal" [post]="true"></app-modal>
+  <!--               (postCreated)="getCreatedPost($event)"-->
+
 </div>

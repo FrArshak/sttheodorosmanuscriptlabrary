@@ -2,24 +2,19 @@
 
 
   <owl-carousel-o [options]="customOptions" #owlSlide>
-      <ng-template carouselSlide >
-        <div class="slide" style="background-image: url(/assets/images/new-bg.png);">
+      <ng-template carouselSlide *ngFor="let slide of slides" >
+        <div class="slide" style="background-image: url('http://arm-manu-jr.com/storage/{{slide.image}}')">
 
           <div class="slide-text">
             <div class="slide-text-title">
-              Treasures of Armenian Manuscripts
+              {{slide.post_en.title}}
             </div>
-            <div class="slide-text-info">
-              Dive into the world of Armenian manuscripts, where history and art intertwine. These ancient documents preserve the rich cultural heritage and literary accomplishments of the Armenian people. Spanning centuries, they include religious texts, historical chronicles, and literary works that reflect the intellectual and artistic achievements of Armenia. Each manuscript offers a unique glimpse into the past, showcasing the vibrant traditions and enduring spirit of the Armenian civilization.
+            <div class="slide-text-info" [innerHTML]="slide.post_en.paragraph">
             </div>
 
           </div>
       </div>
      </ng-template>
-      <ng-template carouselSlide ><div class="slide">
-      </div></ng-template>
-      <ng-template carouselSlide ><div class="slide"> Slide 3</div></ng-template>
-      <ng-template carouselSlide ><div class="slide"> Slide 4</div></ng-template>
   </owl-carousel-o>
 </div>
 

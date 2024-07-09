@@ -1,5 +1,5 @@
 export type UploadImgType = {
-  image: string
+  image: string,
   message: string
   success: number
   type: string

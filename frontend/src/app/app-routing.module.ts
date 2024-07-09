@@ -18,6 +18,21 @@ const routes: Routes = [
       ),
     data: { animation: 'AdminLoginPage' },
   },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./view/scripts-catalogs/scripts-catalogs.module').then(
+        (m) => m.ScriptsCatalogsModule
+      ),
+    data: { animation: 'ScriptsCatalogLoginPage' },
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./view/admin/admin.module').then((m) => m.AdminModule),
+    data: {animation: 'AdminPage'}
+
+  }
 ];
 
 @NgModule({

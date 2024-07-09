@@ -6,6 +6,8 @@
   padding-bottom: 20px;
   position: relative;
   background: transparent;
+  z-index: 1;
+
 
   .container {
     display: flex;
@@ -34,9 +36,6 @@
 
       }
     }
-
-
-
 
     .burger {
       display: none;

@@ -1,0 +1,143 @@
+<sidebar></sidebar>
+<div class="settings">
+  <div class="title settings-title">
+    Settings
+  </div>
+
+  <div class="settings-container">
+    <div class="settings-actions">
+      <button class="btn" [class.active]="adminFormFlag" (click)="changeTheInnerSettings('admin-info')">Admin Info</button>
+      <button class="btn" [class.active]="createNewAdminFlag" (click)="changeTheInnerSettings('create-new')">Create New Admin</button>
+      <button class="btn" [class.active]="pageSettingsFlag" (click)="changeTheInnerSettings('settings')">Settings</button>
+    </div>
+    <div class="settings-items" *ngIf="adminFormFlag || createNewAdminFlag"  [formGroup]="adminForm">
+      <div class="setting-item img" >
+        <div class="not-added-img" *ngIf="!imgIsAdded" >
+          <label for="img"  style="background-image: url('/assets/images/admin-bg.png')"></label>
+          <input type="file" (change)="onFileSelected($event)" id="img">
+          <span>Upload Photo</span>
+        </div>
+        <div class="added-img" *ngIf="imgIsAdded">
+          <div class="delete-uploaded-img" (click)="deleteUploadedImg(img)" >
+            <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path style="fill:#030104;" d="M21.125,0H4.875C2.182,0,0,2.182,0,4.875v16.25C0,23.818,2.182,26,4.875,26h16.25 C23.818,26,26,23.818,26,21.125V4.875C26,2.182,23.818,0,21.125,0z M18.78,17.394l-1.388,1.387c-0.254,0.255-0.67,0.255-0.924,0 L13,15.313L9.533,18.78c-0.255,0.255-0.67,0.255-0.925-0.002L7.22,17.394c-0.253-0.256-0.253-0.669,0-0.926l3.468-3.467 L7.221,9.534c-0.254-0.256-0.254-0.672,0-0.925l1.388-1.388c0.255-0.257,0.671-0.257,0.925,0L13,10.689l3.468-3.468 c0.255-0.257,0.671-0.257,0.924,0l1.388,1.386c0.254,0.255,0.254,0.671,0.001,0.927l-3.468,3.467l3.468,3.467 C19.033,16.725,19.033,17.138,18.78,17.394z"></path> </g> </g></svg>
+          </div>
+          <img src="http://arm-manu-jr.com/storage/{{img}}" alt="">
+        </div>
+      </div>
+      <div class="setting-items-container">
+        <div class="setting-item">
+          <label for="name">Full Name</label>
+          <input type="text" formControlName="name" id="name">
+        </div>
+
+        <div class="setting-item">
+          <label for="email">Email</label>
+          <input type="email" formControlName="email" id="email">
+        </div>
+
+        <div class="setting-item password">
+          <label for="password">Password</label>
+          <input [type]="passwordType" formControlName="password" id="password">
+          <div class="hidePassword" (click)="togglePassword()" *ngIf="!showPassword">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2 2L22 22" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.71277 6.7226C3.66479 8.79527 2 12 2 12C2 12 5.63636 19 12 19C14.0503 19 15.8174 18.2734 17.2711 17.2884M11 5.05822C11.3254 5.02013 11.6588 5 12 5C18.3636 5 22 12 22 12C22 12 21.3082 13.3317 20 14.8335" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 14.2362C13.4692 14.7112 12.7684 15.0001 12 15.0001C10.3431 15.0001 9 13.657 9 12.0001C9 11.1764 9.33193 10.4303 9.86932 9.88818" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </div>
+          <div class="showPassword" (click)="togglePassword()" *ngIf="showPassword">
+            <svg viewBox="0 0 24 24" #password fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="12" cy="12" r="3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g></svg>
+          </div>
+        </div>
+
+        <div class="setting-item password" *ngIf="adminFormFlag">
+          <label for="new-password">New Password</label>
+          <input [type]="passwordType" formControlName="newPassword" id="new-password">
+          <div class="hidePassword" (click)="togglePassword()" *ngIf="!showPassword">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2 2L22 22" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.71277 6.7226C3.66479 8.79527 2 12 2 12C2 12 5.63636 19 12 19C14.0503 19 15.8174 18.2734 17.2711 17.2884M11 5.05822C11.3254 5.02013 11.6588 5 12 5C18.3636 5 22 12 22 12C22 12 21.3082 13.3317 20 14.8335" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 14.2362C13.4692 14.7112 12.7684 15.0001 12 15.0001C10.3431 15.0001 9 13.657 9 12.0001C9 11.1764 9.33193 10.4303 9.86932 9.88818" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </div>
+          <div class="showPassword" (click)="togglePassword()" *ngIf="showPassword">
+            <svg viewBox="0 0 24 24" #password fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="12" cy="12" r="3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g></svg>
+          </div>
+        </div>
+        <div class="setting-item password">
+          <label for="password-confirm">Confirm the New Password</label>
+          <input [type]="passwordType" formControlName="newPasswordConfirm" id="password-confirm">
+          <div class="hidePassword" (click)="togglePassword()" *ngIf="!showPassword">
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M2 2L22 22" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M6.71277 6.7226C3.66479 8.79527 2 12 2 12C2 12 5.63636 19 12 19C14.0503 19 15.8174 18.2734 17.2711 17.2884M11 5.05822C11.3254 5.02013 11.6588 5 12 5C18.3636 5 22 12 22 12C22 12 21.3082 13.3317 20 14.8335" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M14 14.2362C13.4692 14.7112 12.7684 15.0001 12 15.0001C10.3431 15.0001 9 13.657 9 12.0001C9 11.1764 9.33193 10.4303 9.86932 9.88818" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> </g></svg>
+          </div>
+          <div class="showPassword" (click)="togglePassword()" *ngIf="showPassword">
+            <svg viewBox="0 0 24 24" #password fill="none" xmlns="http://www.w3.org/2000/svg"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <path d="M1 12C1 12 5 4 12 4C19 4 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <path d="M1 12C1 12 5 20 12 20C19 20 23 12 23 12" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path> <circle cx="12" cy="12" r="3" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></circle> </g></svg>
+          </div>
+        </div>
+      </div>
+
+      <button class="btn update-btn" (click)="createNewAdminFlag ? createNewAdmin() : updateAdminInfo()">Update Info</button>
+
+    </div>
+
+    <div class="settings-items" *ngIf="pageSettingsFlag" [formGroup]="settingsForm">
+      <div class="setting-item img" >
+        <div class="not-added-img" *ngIf="!imgIsAdded" >
+          <label for="img"  style="background-image: url('/assets/images/admin-bg.png')"></label>
+          <input type="file" (change)="onFileSelected($event)" id="img">
+          <span>Upload Photo</span>
+        </div>
+        <div class="added-img" *ngIf="imgIsAdded">
+          <div class="delete-uploaded-img" (click)="deleteUploadedImg(img)" >
+            <svg height="200px" width="200px" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 26 26" xml:space="preserve" fill="#000000"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <g> <path style="fill:#030104;" d="M21.125,0H4.875C2.182,0,0,2.182,0,4.875v16.25C0,23.818,2.182,26,4.875,26h16.25 C23.818,26,26,23.818,26,21.125V4.875C26,2.182,23.818,0,21.125,0z M18.78,17.394l-1.388,1.387c-0.254,0.255-0.67,0.255-0.924,0 L13,15.313L9.533,18.78c-0.255,0.255-0.67,0.255-0.925-0.002L7.22,17.394c-0.253-0.256-0.253-0.669,0-0.926l3.468-3.467 L7.221,9.534c-0.254-0.256-0.254-0.672,0-0.925l1.388-1.388c0.255-0.257,0.671-0.257,0.925,0L13,10.689l3.468-3.468 c0.255-0.257,0.671-0.257,0.924,0l1.388,1.386c0.254,0.255,0.254,0.671,0.001,0.927l-3.468,3.467l3.468,3.467 C19.033,16.725,19.033,17.138,18.78,17.394z"></path> </g> </g></svg>
+          </div>
+          <img src="http://arm-manu-jr.com/storage/{{img}}" alt="">
+        </div>
+      </div>
+      <div class="setting-items-container setting">
+        <div class="setting-item">
+          <label for="company-name">Company Name</label>
+          <input type="text" formControlName="companyName" id="company-name">
+        </div>
+        <div class="setting-item">
+          <label for="address">Address</label>
+          <input type="text" formControlName="address" id="address">
+        </div>
+      </div>
+      <div class="setting-items-container setting">
+        <div class="setting-item">
+          <label for="phone">Phone</label>
+          <input type="text" formControlName="phone" id="phone">
+        </div>
+        <div class="setting-item">
+          <label for="emailOfficial">Email</label>
+          <input type="email" formControlName="email" id="emailOfficial">
+        </div>
+      </div>
+      <div class="setting-items-container setting">
+        <div class="setting-item">
+          <label for="fax">Fax</label>
+          <input type="text" formControlName="fax" id="fax">
+        </div>
+        <div class="setting-item">
+          <label for="business-hours">Business Hours </label>
+          <input type="text" formControlName="businessHours" id="business-hours">
+        </div>
+      </div>
+      <div class="setting-items-container setting">
+        <div class="setting-item">
+          <label for="metaTitle">Meta Title</label>
+          <input type="text" formControlName="metaTitle" id="metaTitle">
+        </div>
+        <div class="setting-item">
+          <label for="metaDesc">Meta Description</label>
+          <input type="text" formControlName="metaDesc" id="metaDesc">
+        </div>
+      </div>
+      <div class="setting-items-container setting">
+        <div class="setting-item">
+          <label for="addressOnMap">Address on Map</label>
+          <input type="text" formControlName="addressOnMap" id="addressOnMap">
+        </div>
+      </div>
+
+      <div class="btn" (click)="updateSettings()">Update Settings</div>
+    </div>
+
+
+
+
+  </div>
+</div>

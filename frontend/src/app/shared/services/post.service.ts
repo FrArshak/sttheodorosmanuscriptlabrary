@@ -4,7 +4,7 @@ import {environment} from "../../../environments/environment";
 import {UploadImgType} from "../../../types/upload-img.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {Observable} from "rxjs";
-import {PostType} from "../../../types/post.type";
+import {PostItemType, PostType} from "../../../types/post.type";
 import {Params} from "@angular/router";
 import {ActiveParamsType} from "../../../types/active-params.type";
 
@@ -23,8 +23,14 @@ export class PostService {
     return this.http.delete<DefaultResponseType>(environment.api + 'delete-image/' + img);
   }
 
-  createNewPost(post_type: string,  post_en: {title: string, paragraph: string},  image: string, created_by: number, post_am?: string): Observable<DefaultResponseType> {
+  createNewPost(post_type: string, image: string, created_by: number, post_en?: {title: string, paragraph: string }, post_am?: {title: string, paragraph: string},): Observable<DefaultResponseType> {
     return this.http.post<DefaultResponseType>(environment.api + 'store-post', {post_type, post_en, post_am: post_en, image, created_by})
+  }
+  updatePost(id: number,post_type: string, image: string, created_by: number, post_en?: {title: string, paragraph: string }, post_am?: {title: string, paragraph: string},): Observable<DefaultResponseType> {
+    return this.http.put<DefaultResponseType>(environment.api + 'update-post/' + id, {post_type, post_en, post_am: post_en, image, created_by})
+  }
+  deletePost(id: number): Observable<DefaultResponseType> {
+    return this.http.put<DefaultResponseType>(environment.api + 'delete-post/' + id, {hello: 'hello'})
   }
 
   getPosts(params: ActiveParamsType) : Observable<PostType | DefaultResponseType>{
@@ -33,8 +39,8 @@ export class PostService {
     }  )
   }
 
-  getPost(id: string)  {
-
+  getPost(id: number): Observable<DefaultResponseType | PostType>  {
+    return this.http.get<DefaultResponseType | PostType>(environment.api + 'get-post/' + id);
   }
 
 

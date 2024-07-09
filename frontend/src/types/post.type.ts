@@ -1,7 +1,9 @@
 export type PostType = {
   success: number,
   type: string,
-  posts: PostItemType[]
+  totalPost?: number
+  posts?: PostItemType[]
+  post?: PostItemType
 
 }
 
@@ -18,8 +20,8 @@ export  type PostItemType = {
     paragraph: string
   },
   image: string
-  created_by: number,
-  created_at: string,
-  updated_at: string
+  created_by?: number,
+  created_at?: string,
+  updated_at?: string
 
 }

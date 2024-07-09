@@ -1,0 +1,9 @@
+<div class="modal active" [class.active]="active" >
+  <div class="modal-content">
+    <span>Are you sure you want to delete?</span>
+    <div class="modal-actions">
+      <button class="btn yes" (click)="deleteSelected()">Yes</button>
+      <button class="btn no" (click)="closeModal()" >No</button>
+    </div>
+  </div>
+</div>
