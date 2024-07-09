@@ -197,11 +197,6 @@ class AuthController extends Controller
                         }
                     }
 
-<<<<<<< HEAD
-=======
-                  
->>>>>>> 73fc9050487ea2c7d8575d2991e51ece2012e27a
-
                     $user->save();
 
                     return response()->json([
