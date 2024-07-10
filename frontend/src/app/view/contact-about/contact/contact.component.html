@@ -1,0 +1,56 @@
+<div class="contact">
+  <div class="contact-form">
+    <contact-form></contact-form>
+  </div>
+
+  <div class="contact-map">
+
+    <div class="container">
+      <div class="title contact-map-title">Find Us on Google Maps</div>
+      <div class="subhead">Our office is located in the heart of the historic Old City of Jerusalem, surrounded by rich cultural and historical landmarks. You can find our exact location on the map below.</div>
+      <div class="map" [innerHTML]="safeAddressOnMap">
+      </div>
+    </div>
+
+  </div>
+
+  <div class="connect">
+    <div class="container">
+      <div class="title connect-title">Connect with Us</div>
+      <div class="connect-containers">
+        <ul class="connect-items">
+          <div class="connect-item-title">
+            Office Address
+          </div>
+          <li class="connect-item">{{settings.address.setting_value}}</li>
+        </ul>
+        <ul class="connect-items">
+          <div class="connect-item-title">
+            Office Hours
+          </div>
+          <li class="connect-item">{{settings.businessHours.setting_value}}</li>
+        </ul>
+        <ul class="connect-items">
+          <div class="connect-item-title">
+            Email
+          </div>
+          <li class="connect-item">{{settings.email.setting_value}}</li>
+        </ul>
+        <ul class="connect-items">
+          <div class="connect-item-title">
+            Phone
+          </div>
+          <li class="connect-item">{{settings.phone.setting_value}}</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="donation">
+    <div class="title">Support Our Mission</div>
+  </div>
+
+  <app-support-mission></app-support-mission>
+
+</div>

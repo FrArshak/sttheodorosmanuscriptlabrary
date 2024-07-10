@@ -32,6 +32,13 @@ const routes: Routes = [
       import('./view/admin/admin.module').then((m) => m.AdminModule),
     data: {animation: 'AdminPage'}
 
+  },
+  {
+    path: '',
+    loadChildren: () =>
+      import('./view/contact-about/contact-about.module').then((m) => m.ContactAboutModule),
+    data: {animation: 'ContactAbout'}
+
   }
 ];
 

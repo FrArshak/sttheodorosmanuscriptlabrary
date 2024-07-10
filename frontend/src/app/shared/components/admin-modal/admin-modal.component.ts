@@ -133,7 +133,7 @@ export class AdminModalComponent implements OnInit, OnChanges {
     } else if (route === '/catalogs') {
       this.isEn = false;
       return '';
-    } else if(route === '/' || '/contact' || '/about-us') {
+    } else if(route === '/' || '/contact' || '/about-us' || '') {
       return 'support';
     }
 

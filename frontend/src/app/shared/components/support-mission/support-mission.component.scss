@@ -6,6 +6,9 @@
   align-items: center;
   position: relative;
 
+  &:nth-child(2) {
+  }
+
   .support-item-info {
 
     max-width: 570px;

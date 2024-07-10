@@ -47,6 +47,8 @@ export class SettingsComponent implements OnInit{
   showNewPasswordConfirm: boolean = false;
 
   passwordType: string = 'password'
+  newPasswordType: string = 'password'
+  newPasswordConfirmType: string = 'password'
 
   adminForm = this.fb.group({
     name: ['', Validators.required],
@@ -91,8 +93,8 @@ export class SettingsComponent implements OnInit{
 
   uploadFile(file: File, flag: string): void {
     this.formData = new FormData();
-      this.formData.append('image', file);
       if(flag === 'logo') {
+        this.formData?.append('logo', file);
         this.settingsService.sendUploadedLogo(this.formData).subscribe({
           next: (data: UploadLogoType | DefaultResponseType) => {
               this.logoImg = (data as UploadLogoType).logo as string;
@@ -100,20 +102,23 @@ export class SettingsComponent implements OnInit{
           },
           error: (error) => this.snackBar.open(error.message)
         });
-      }
-      this.postService.sendUploadedImage(this.formData).subscribe({
-        next: (data: UploadImgType | DefaultResponseType) => {
-          if(flag === 'current') {
-            this.img = (data as UploadImgType).image as string;
-            this.imgIsAdded = true;
-          } else if(flag === 'new') {
-            this.newAdminImg = (data as UploadImgType).image as string;
-            this.newAdminImgIsAdded = true;
-          }
+      } else {
+        this.formData?.append('image', file);
+        this.postService.sendUploadedImage(this.formData).subscribe({
+          next: (data: UploadImgType | DefaultResponseType) => {
+            if(flag === 'current') {
+              this.img = (data as UploadImgType).image as string;
+              this.imgIsAdded = true;
+            } else if(flag === 'new') {
+              this.newAdminImg = (data as UploadImgType).image as string;
+              this.newAdminImgIsAdded = true;
+            }
 
-        },
-        error: (error) => this.snackBar.open(error.message)
-      });
+          },
+          error: (error) => this.snackBar.open(error.message)
+        });
+      }
+
 
   }
 
@@ -156,10 +161,10 @@ export class SettingsComponent implements OnInit{
   }
   toggleNewPassword() {
       this.showPassword = !this.showPassword
-      this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+      this.newPasswordType = this.newPasswordType ===  'password' ? 'text' : 'password';
   }  toggleNewPasswordConfirm() {
       this.showPassword = !this.showPassword
-      this.passwordType = this.passwordType === 'password' ? 'text' : 'password';
+      this.newPasswordConfirmType = this.newPasswordConfirmType === 'password' ? 'text' : 'password';
   }
 
 

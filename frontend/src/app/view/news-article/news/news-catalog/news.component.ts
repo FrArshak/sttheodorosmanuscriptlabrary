@@ -20,8 +20,8 @@ export class NewsComponent implements OnInit {
 
   activeLocal: boolean = false;
   isLogged: boolean = false;
-  title: string = 'News';
-  subtitle: string = 'Fresh Discoveries and News on Armenian Manuscripts';
+  title: string = '';
+  subtitle: string = '';
   active: boolean = false;
   news: PostItemType[]  = []; // Changed to an array to hold multiple pages of posts
 
@@ -44,6 +44,7 @@ export class NewsComponent implements OnInit {
               private _snackBar: MatSnackBar, private router: Router,
               private activatedRoute: ActivatedRoute, private zone: NgZone) {
     this.isLogged = this.authService.getIsLoggedIn();
+    this.checkTheRoute();
   }
 
   ngOnInit() {
@@ -61,7 +62,7 @@ export class NewsComponent implements OnInit {
         this.changePage(this.activePage);
       }
 
-      this.loadPosts();
+      // this.loadPosts();
     });
   }
 
@@ -71,6 +72,8 @@ export class NewsComponent implements OnInit {
       this.currentRoute = this.router.url;
       if (this.currentRoute.includes('news')) {
         this.activeParams.postType = 'news'
+        this.title = 'News';
+        this.subtitle = 'Fresh Discoveries and News on Armenian Manuscripts';
         this.loadPosts();
       } else if (this.currentRoute.includes('articles')) {
         this.title = 'Articles';

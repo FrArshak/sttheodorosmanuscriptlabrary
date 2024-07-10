@@ -22,6 +22,8 @@ export class AdminHeaderComponent implements OnInit{
 
   adminInfo!: UserInfoType;
 
+  name: string = '';
+
   img: string = '';
   constructor(private authService: AuthService, private _snackBar: MatSnackBar, private router: Router, private settingsService: SettingsService, private snackBar: MatSnackBar) {}
 
@@ -54,6 +56,7 @@ export class AdminHeaderComponent implements OnInit{
 
           this.adminInfo = response as UserInfoType;
           this.img = (response as UserInfoType).authUser.avatar as string;
+          this.name = (response as UserInfoType).authUser.name as string;
 
         }
       })

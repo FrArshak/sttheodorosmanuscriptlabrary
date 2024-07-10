@@ -15,7 +15,7 @@ import {LoaderService} from "./shared/services/loader.service";
   animations: [slideInAnimation],
 })
 export class AppComponent implements OnInit {
-  title = 'frontend2';
+  title = 'frontend';
   showHeader: boolean = true;
   isLogged: boolean = false;
   currentRoute: string = '';
