@@ -54,7 +54,9 @@ class GeneralSettingRepository implements GeneralSettingInterface
      */
     public function updateOrCreateData($key, $data): mixed
     {
+
         $data['setting_value'] = $data['setting_value'] === null ? '' : $data['setting_value'];
+
         if($this->ifExist($key)) {
             return $this->model->where('setting_key', $key)->update([
                 'setting_value' => $data['setting_value'] ?? '',

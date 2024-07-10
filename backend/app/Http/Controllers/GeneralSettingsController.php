@@ -187,7 +187,10 @@ class GeneralSettingsController extends Controller
             $newImage = $this->fileMenager->imageSizeLimit($newImage);
             $this->fileMenager->uploadImage($newImage, $newImageName);
 
-            $this->generalSettingsRepo->updateOrCreateData('logo', $newImageName);
+
+
+            $this->generalSettingsRepo->updateOrCreateData('logo', ["setting_value" => $newImageName]);
+
 
             DB::commit();
             return response()->json([
@@ -217,7 +220,7 @@ class GeneralSettingsController extends Controller
 
             $this->fileMenager->delete($logo);
 
-            $this->generalSettingsRepo->updateOrCreateData('logo', '');
+            $this->generalSettingsRepo->updateOrCreateData('logo', ["setting_value" => ""]);
 
             return response()->json([
                 'success' => 1,
