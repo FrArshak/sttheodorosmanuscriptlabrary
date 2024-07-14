@@ -113,8 +113,13 @@
           }
         }
 
-        .btn {
+        .send-btn {
           align-self: flex-end;
+          background-color: #2153B6;
+          border-radius: 10px;
+          padding: 20px 40px;
+          color: white;
+          cursor: pointer;
           margin-top: 50px;
         }
 
@@ -177,9 +182,10 @@
       width: 100%;
 
       .send-btn {
-        width: 88%;
+        width: 100%;
         text-align: center;
         margin-bottom: 40px;
+        padding: 20px 0;
       }
 
     }
