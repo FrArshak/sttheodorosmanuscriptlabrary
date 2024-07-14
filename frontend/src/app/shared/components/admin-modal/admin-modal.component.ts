@@ -85,11 +85,19 @@ export class AdminModalComponent implements OnInit, OnChanges {
     private ngZone: NgZone
   ) {
     this.contentChangedSubject.pipe(debounceTime(300)).subscribe(event => this.handleContentChanged(event));
+
+    // this.initializeCatalogValues();
+    // this.initializePostItemValues();
+    // this.cdr.detectChanges();
+
+    this.postService.data$.subscribe(data => {
+      this.update = data;
+    })
   }
 
   ngOnInit(): void {
-    this.initializeComponent();
 
+    this.initializeComponent();
 
   }
 
@@ -100,12 +108,13 @@ export class AdminModalComponent implements OnInit, OnChanges {
       this.initializePostItemValues();
     } else if(this.update && this.support) {
       this.initializeComponent();
-    } else if (this.active && this.update) {
+    } else if (!this.update) {
       this.resetValues();
     }
   }
 
   private initializeComponent(): void {
+    console.log(this.update);
     this.currentRoute = this.router.url;
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url;
@@ -120,7 +129,9 @@ export class AdminModalComponent implements OnInit, OnChanges {
       this.initializeCatalogValues();
     } else if (this.postItem && this.update && !this.catalog) {
       this.initializePostItemValues();
-    } else if (this.active && this.update) {
+    } else if (this.active && this.update && this.catalog) {
+      this.initializeCatalogValues();
+    } else if(this.active && !this.update && this.catalog) {
       this.resetValues();
     }
   }
@@ -257,6 +268,9 @@ export class AdminModalComponent implements OnInit, OnChanges {
               this.snackBar.open(response.message);
             } else {
               this.snackBar.open(response.message);
+              this.postTitleArm = '';
+              this.postParagraphAm = '';
+              this.imgIsAdded = false;
               this.toggleModal();
             }
           },

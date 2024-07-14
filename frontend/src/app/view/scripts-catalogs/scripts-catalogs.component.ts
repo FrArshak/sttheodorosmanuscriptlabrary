@@ -3,6 +3,7 @@ import {AuthService} from "../../core/auth.service";
 import {CatalogService} from "../../shared/services/catalog.service";
 import {CatalogItemType, CatalogType, SingleCatalogType} from "../../../types/catalog.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
+import {PostService} from "../../shared/services/post.service";
 
 @Component({
   selector: 'app-scripts-catalogs',
@@ -12,6 +13,8 @@ import {DefaultResponseType} from "../../../types/default-response.type";
 export class ScriptsCatalogsComponent implements OnInit{
 
   isLogged: boolean = false;
+
+
 
   active: boolean = false;
   activeLocal: boolean = false;
@@ -24,23 +27,70 @@ export class ScriptsCatalogsComponent implements OnInit{
 
   id: number = 0;
   deletedObj!: {active: boolean ,id: number, type: string};
-  constructor(private authService: AuthService, private catalogService: CatalogService) {
+
+  totalAmount: number = 0;
+  displayedCatalogs: CatalogItemType[] = [];
+
+  loadingAmount: number = 3;
+
+  loadMoreFlag: boolean = true;
+  constructor(private authService: AuthService, private catalogService: CatalogService, private postService: PostService) {
     this.isLogged = this.authService.getIsLoggedIn();
   }
 
   ngOnInit(): void {
+    this.loadCatalogs();
+  }
+
+
+
+  loadCatalogs() {
     this.catalogService.getCatalogs()
       .subscribe({
         next: (response: DefaultResponseType | CatalogType) => {
           if((response as DefaultResponseType).success === 0) {
             throw new Error((response as DefaultResponseType).message)
           }
+          this.totalAmount = (response as CatalogType).totalCatalogs;
+          console.log(this.totalAmount);
           this.catalogs = (response as CatalogType).catalogs
+          this.loadMore();
         }
       })
   }
+  loadMore() {
+    if(this.totalAmount < 3) {
+      this.loadingAmount = this.totalAmount;
+      this.loadMoreFlag = false;
+      for (let i = 0; i < this.loadingAmount; i++) {
+        this.displayedCatalogs.push((this.catalogs as CatalogItemType[])[i]);
+      }
+      return;
+    } else {
+      for (let i = 0; i < this.loadingAmount; i++) {
+        this.displayedCatalogs.push((this.catalogs as CatalogItemType[])[i]);
+      }
+      const remainingAmount = this.totalAmount = this.loadingAmount;
+      if(remainingAmount <= 3) {
+        if(remainingAmount === 1) {
+          this.loadingAmount += 1;
+        } else if(remainingAmount === 2) {
+          this.loadingAmount +=2;
+        } else if(remainingAmount === 3) {
+          this.loadingAmount += 3;
+          this.loadMoreFlag = false;
+        }
+      }
+    }
 
-  toggleActive() {
+
+    console.log(this.displayedCatalogs);
+
+  }
+
+
+  toggleActive(flag: boolean) {
+    this.postService.updateData(flag);
     this.active = !this.active;
   }
   toggleLocalActive() {
@@ -62,4 +112,5 @@ export class ScriptsCatalogsComponent implements OnInit{
     this.id = id;
     this.catalogs = this.catalogs.filter(catalog => catalog.id !== id);
   }
+
 }

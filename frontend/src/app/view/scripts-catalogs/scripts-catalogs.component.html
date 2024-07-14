@@ -1,13 +1,22 @@
 <div class="catalog">
   <div class="container">
 
-    <span class="btn add-catalog" *ngIf="isLogged" (click)="toggleActive()">Add a new catalog</span>
+    <span class="btn add-catalog" *ngIf="isLogged" (click)="toggleActive(false)">Add a new catalog</span>
 
     <div class="catalog-items">
-      <catalog (idEmitter)="getId($event)" (sendDeletedObj)="getDeletedObj($event)" (activeLocalEmitter)="toggleLocalActive()" (activeEmitter)="toggleActive()" (updateCalled)="updateFlag()" (catalogItemEmitter)="getEditedCatalog($event)"  *ngFor="let catalog of catalogs" [catalog]="catalog"></catalog>
+      <catalog (idEmitter)="getId($event)"
+               (sendDeletedObj)="getDeletedObj($event)"
+               (activeLocalEmitter)="toggleLocalActive()"
+               (activeEmitter)="toggleActive(true)"
+               (updateCalled)="updateFlag()"
+               (catalogItemEmitter)="getEditedCatalog($event)"
+               *ngFor="let catalog of displayedCatalogs" [catalog]="catalog"></catalog>
     </div>
+
+    <button class="btn load-more" *ngIf="loadMoreFlag" (click)="loadCatalogs()">Load More</button>
 
   </div>
 </div>
-<admin-modal [update]="update" [catalog]="updatedCatalog" [isPdf]="true" [active]="active"></admin-modal>
+<admin-modal [update]="update" [catalog]="updatedCatalog"
+             [isPdf]="true" [active]="active"></admin-modal>
 <app-modal [id]="id" [active]="activeLocal" ></app-modal>

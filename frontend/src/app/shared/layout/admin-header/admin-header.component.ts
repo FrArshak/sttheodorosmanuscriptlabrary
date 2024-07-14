@@ -31,9 +31,7 @@ export class AdminHeaderComponent implements OnInit{
     let route;
     this.router.events.subscribe(() => {
       route = RouteCheckUtil.checkTheRoute(this.router.url, 'dashboard', 'settings', '/')
-      console.log(route);
       if(route === 1 || route === 2) {
-        console.log(route)
         this.dashBoardOrHomeLink = '/';
         this.dashBoardOrHomeText = 'Home'
       } else if(route === 3) {

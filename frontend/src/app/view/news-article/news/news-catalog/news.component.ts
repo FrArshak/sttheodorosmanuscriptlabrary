@@ -45,6 +45,9 @@ export class NewsComponent implements OnInit {
               private activatedRoute: ActivatedRoute, private zone: NgZone) {
     this.isLogged = this.authService.getIsLoggedIn();
     this.checkTheRoute();
+    this.postService.data$.subscribe(data => {
+      this.updateModalFlag = data;
+    })
   }
 
   ngOnInit() {
@@ -123,11 +126,9 @@ export class NewsComponent implements OnInit {
     this.loadPosts();
   }
 
-  toggleActive(updateFlag?: boolean) {
+  toggleActive(updateFlag: boolean) {
     this.active = !this.active;
-    if(updateFlag) {
-      this.updateModalFlag = true;
-    }
+      this.postService.updateData(updateFlag)
   }
   getPagesArray(): number[] {
     return Array(this.pagesCount).fill(0).map((x, i) => i + 1);

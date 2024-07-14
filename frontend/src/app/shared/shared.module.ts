@@ -13,6 +13,7 @@ import {AdminModalComponent} from "./components/admin-modal/admin-modal.componen
   declarations: [
     HeaderComponent,
     AdminHeaderComponent,
+
     // Other components, directives, pipes
   ],
   imports: [

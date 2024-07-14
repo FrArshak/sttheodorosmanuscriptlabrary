@@ -1,4 +1,13 @@
-import {ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {
+  AfterViewInit,
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output, SimpleChanges
+} from '@angular/core';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthService} from "../../../core/auth.service";
 import {CatalogItemType, CatalogType, SingleCatalogType} from "../../../../types/catalog.type";
@@ -19,7 +28,7 @@ import {ModalComponent} from "../modal/modal.component";
   templateUrl: './catalog.component.html',
   styleUrl: './catalog.component.scss'
 })
-export class CatalogComponent implements OnInit{
+export class CatalogComponent implements OnInit, AfterViewInit, OnChanges{
 
   @Input() catalog!: CatalogItemType;
 
@@ -48,13 +57,25 @@ export class CatalogComponent implements OnInit{
     this.isLogged = this.authService.getIsLoggedIn();
   }
   ngOnInit() {
-    const originalDate = this.catalog.created_at;
-    this.formattedDate = moment(originalDate).format('DD MMMM YYYY');
-    console.log(this.formattedDate); // Output: 27 June 2024
+ // Output: 27 June 2024
 
   }
 
+  ngAfterViewInit() {
+
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if(changes['catalog']) {
+      const originalDate = this.catalog.created_at;
+      this.formattedDate = moment(originalDate).format('DD MMMM YYYY');
+      console.log(this.formattedDate);
+    }
+  }
+
   updateCatalog(id: number) {
+
+    this.update = true;
     this.updateCalled.emit(this.update);
     this.activeEmitter.emit(this.active);
     this.catalogService.getCatalog(id)
@@ -68,7 +89,7 @@ export class CatalogComponent implements OnInit{
           this.catalogItemEmitter.emit(this.catalogItem);
         },
         error: (error: HttpErrorResponse) => {
-
+          throw new Error(error.message);
         }
       })
 

@@ -49,8 +49,7 @@ class StatisticsController extends Controller
             ]);
         }
     }
-
-    /**
+    /** dalbayob
      * @param Request $request
      * @return JsonResponse
      */

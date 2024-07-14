@@ -14,6 +14,8 @@ import { AuthInterceptor } from './core/auth-interceptor';
 import {NewsArticleModule} from "./view/news-article/news-article.module";
 import {CommonModule} from "@angular/common";
 import {LoaderComponent} from "./shared/components/loader/loader.component";
+import { provideCharts, withDefaultRegisterables} from 'ng2-charts';
+import {FooterComponent} from "./shared/layout/footer/footer.component";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +27,7 @@ import {LoaderComponent} from "./shared/components/loader/loader.component";
     NewsArticleModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FooterComponent,
     MatMenuModule,
     BrowserAnimationsModule,
     RouterModule,
@@ -38,6 +41,7 @@ import {LoaderComponent} from "./shared/components/loader/loader.component";
     { provide: MAT_MENU_DEFAULT_OPTIONS, useValue: { duration: 2500 } },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideAnimationsAsync(),
+    provideCharts(withDefaultRegisterables()),
   ],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA, NO_ERRORS_SCHEMA]

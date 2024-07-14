@@ -5,7 +5,7 @@ import {UploadImgType} from "../../../types/upload-img.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {environment} from "../../../environments/environment";
 import {UploadPdfType} from "../../../types/upload-pdf.type";
-import {SingleCatalogType} from "../../../types/catalog.type";
+import {CatalogType, SingleCatalogType} from "../../../types/catalog.type";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class CatalogService {
       return this.http.post<DefaultResponseType>(environment.api + 'store-catalog', {catalog_title, catalog_text, pdf_path, image});
     }
 
-   getCatalogs(): Observable<DefaultResponseType> {
-      return this.http.get<DefaultResponseType>(environment.api + 'get-catalogs', )
+   getCatalogs(): Observable<DefaultResponseType | CatalogType> {
+      return this.http.get<DefaultResponseType | CatalogType>(environment.api + 'get-catalogs', )
    }
 
    getCatalog(id: number): Observable<SingleCatalogType | DefaultResponseType> {

@@ -1,13 +1,14 @@
 @import '../../../../assets/styles/variables';
 
 .sidebar {
-  position: fixed;
+  //position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 240px;
-  height: 100%;
+  height: 100vh;
   background: #273142;
+  //top: 68px;
 
   nav {
     ul {

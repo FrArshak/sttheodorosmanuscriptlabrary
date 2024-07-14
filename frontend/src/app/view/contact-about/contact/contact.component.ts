@@ -5,23 +5,34 @@ import {GeneralSettingsType} from "../../../../types/general-settings.type";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {SettingsType} from "../../../../types/settings.type";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {MainComponent} from "../../main/main.component";
+import {AuthService} from "../../../core/auth.service";
+import {PostService} from "../../../shared/services/post.service";
 
 @Component({
   selector: 'app-contact',
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.scss'
 })
-export class ContactComponent implements OnInit{
+export class ContactComponent extends MainComponent implements OnInit{
 
   settings!: SettingsType;
 
   addressOnMap: string = '';
 
+  address: string = '';
+  businessHours: string = '';
+  email: string = '';
+  phone: string = '';
+
   safeAddressOnMap!: SafeHtml;
-  constructor(private snackBar: MatSnackBar,private settingsService: SettingsService, private sanitizer: DomSanitizer) {
+  constructor(private snackBar: MatSnackBar,private settingsService: SettingsService, private sanitizer: DomSanitizer,
+              postService: PostService, authService: AuthService) {
+    super(postService, authService);
   }
 
-  ngOnInit() {
+  override ngOnInit() {
+    super.ngOnInit();
     this.settingsService.getSettings()
       .subscribe({
         next: (response: DefaultResponseType | GeneralSettingsType) => {
@@ -33,7 +44,10 @@ export class ContactComponent implements OnInit{
 
           const modifiedIframe = this.modifyIframe(this.addressOnMap, 1088, 560);
           this.safeAddressOnMap = this.sanitizer.bypassSecurityTrustHtml(modifiedIframe);
-
+          this.address = this.settings.address.setting_value;
+          this.businessHours = this.settings.businessHours.setting_value;
+          this.email = this.settings.email.setting_value;
+          this.phone = this.settings.phone.setting_value;
 
         },
       })

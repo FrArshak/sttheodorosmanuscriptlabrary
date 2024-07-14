@@ -5,6 +5,7 @@
   background: $color-blue-dark;
   .title {
     text-align: center;
+    margin-bottom: 30px;
   }
   .contact-form {
     margin: -120px;
@@ -74,6 +75,15 @@
       }
 
 
+    }
+  }
+
+  .donation {
+    padding-bottom: 160px;
+    .donation-items {
+      display: flex;
+      flex-direction: column;
+      row-gap: 120px;
     }
   }
 }

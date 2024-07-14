@@ -11,6 +11,7 @@ html, body {
 .container {
   max-width: $container-width;
   margin: 0 auto;
+  padding: 0 15px;
 }
 li {
   list-style: none;

@@ -34,7 +34,7 @@ export class MainComponent implements OnInit {
 
   postItem!: PostType;
   id: number = 0;
-  constructor(private postService: PostService, private authService: AuthService) {
+  constructor(protected postService: PostService, protected authService: AuthService) {
     this.isLogged = this.authService.getIsLoggedIn();
   }
 
@@ -50,7 +50,8 @@ export class MainComponent implements OnInit {
       });
   }
 
-  toggleActive() {
+  toggleActive(flag: boolean) {
+    this.postService.updateData(flag);
     this.active = !this.active;
   }
   toggleActiveLocal() {

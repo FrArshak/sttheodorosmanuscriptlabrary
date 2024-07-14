@@ -22,25 +22,25 @@
           <div class="connect-item-title">
             Office Address
           </div>
-          <li class="connect-item">{{settings.address.setting_value}}</li>
+          <li class="connect-item">{{address}}</li>
         </ul>
         <ul class="connect-items">
           <div class="connect-item-title">
             Office Hours
           </div>
-          <li class="connect-item">{{settings.businessHours.setting_value}}</li>
+          <li class="connect-item">{{businessHours}}</li>
         </ul>
         <ul class="connect-items">
           <div class="connect-item-title">
             Email
           </div>
-          <li class="connect-item">{{settings.email.setting_value}}</li>
+          <li class="connect-item">{{email}}</li>
         </ul>
         <ul class="connect-items">
           <div class="connect-item-title">
             Phone
           </div>
-          <li class="connect-item">{{settings.phone.setting_value}}</li>
+          <li class="connect-item">{{phone}}</li>
         </ul>
       </div>
 
@@ -48,9 +48,15 @@
   </div>
 
   <div class="donation">
-    <div class="title">Support Our Mission</div>
+    <div class="container">
+      <div class="title">Support Our Mission</div>
+
+      <div class="donation-items">
+        <app-support-mission (idEmitter)="getId($event)" (activeLocalEmitter)="toggleActiveLocal()" *ngFor="let post of posts" [post]="post"  (postItem)="getPost($event)"   (active)="getActive($event)" (update)="getUpdate($event)"  (support)="getSupportFlag($event)"></app-support-mission>
+      </div>
+    </div>
+
   </div>
 
-  <app-support-mission></app-support-mission>
 
 </div>

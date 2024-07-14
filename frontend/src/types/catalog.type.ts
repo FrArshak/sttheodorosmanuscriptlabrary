@@ -1,7 +1,8 @@
 export type CatalogType = {
   success: number,
   type: string,
-  catalogs: CatalogItemType[]
+  catalogs: CatalogItemType[],
+  totalCatalogs: number
 }
 export type SingleCatalogType = {
   success: number,

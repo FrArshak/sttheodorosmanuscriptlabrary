@@ -42,6 +42,10 @@ export type GeneralSettingsType =  {
     addressOnMap: {
       setting_value: string,
         setting_json: any,
+    },
+    donationLink: {
+      setting_value: string,
+        setting_json: any,
     }
   }
 }

@@ -21,7 +21,6 @@ export class SidebarComponent implements OnInit {
   ngOnInit() {
     this.router.events.subscribe(() => {
       this.currentRoute = this.router.url;
-
       if(this.currentRoute.includes('dashboard')) {
         this.dashboardFlag = true;
         this.settingsFlag = false;

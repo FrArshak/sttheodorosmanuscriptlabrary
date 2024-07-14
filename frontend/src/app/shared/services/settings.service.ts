@@ -24,7 +24,7 @@ export class SettingsService {
   deleteUploadedLogo(img: string): Observable<DefaultResponseType> {
     return this.http.delete<DefaultResponseType>(environment.api + 'delete-logo/' + img);
   }
-  updateSettings(logo: string, companyName: string, address: string, phone:string, email: string, fax: string, businessHours: string, metaTitle: string, metaDesc: string, addressOnMap: string): Observable<DefaultResponseType> {
+  updateSettings(logo: string, companyName: string, address: string, phone:string, email: string, fax: string, businessHours: string, metaTitle: string, metaDesc: string, addressOnMap: string, donationLink: string): Observable<DefaultResponseType> {
     return this.http.post<DefaultResponseType>(environment.api + 'update-general-settings', [
       {setting_key: 'logo', setting_value: logo},
       {setting_key: 'companyName', setting_value: companyName},
@@ -36,6 +36,7 @@ export class SettingsService {
       {setting_key: 'metaTitle', setting_value: metaTitle},
       {setting_key: 'metaDesc', setting_value: metaDesc},
       {setting_key: 'addressOnMap', setting_value: addressOnMap},
+      {setting_key: 'donationLink', setting_value: donationLink},
         ])
   }
 

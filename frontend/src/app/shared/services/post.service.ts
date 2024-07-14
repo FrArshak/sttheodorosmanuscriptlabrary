@@ -3,9 +3,8 @@ import {HttpClient} from "@angular/common/http";
 import {environment} from "../../../environments/environment";
 import {UploadImgType} from "../../../types/upload-img.type";
 import {DefaultResponseType} from "../../../types/default-response.type";
-import {Observable} from "rxjs";
-import {PostItemType, PostType} from "../../../types/post.type";
-import {Params} from "@angular/router";
+import {BehaviorSubject, Observable} from "rxjs";
+import {PostType} from "../../../types/post.type";
 import {ActiveParamsType} from "../../../types/active-params.type";
 
 @Injectable({
@@ -13,7 +12,14 @@ import {ActiveParamsType} from "../../../types/active-params.type";
 })
 export class PostService {
 
+
+  private dataSubject: BehaviorSubject<boolean> = new BehaviorSubject<any>(false);
+  public data$: Observable<any> = this.dataSubject.asObservable();
   constructor(private http: HttpClient) { }
+
+  updateData(newData: any) {
+    this.dataSubject.next(newData);
+  }
 
   sendUploadedImage(formData: FormData): Observable<UploadImgType | DefaultResponseType> {
     return this.http.post<UploadImgType | DefaultResponseType>(environment.api + 'upload-image', formData);

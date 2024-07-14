@@ -9,10 +9,14 @@
       {{subtitle}}
     </div>
 
-    <span class="btn add-news-btn" *ngIf="isLogged" (click)="toggleActive()">Add a news article</span>
+    <span class="btn add-news-btn" *ngIf="isLogged" (click)="toggleActive(false)">Add a news article</span>
 
     <div class="cards" *ngIf="news && news.length > 0">
-      <app-card (postItem)="getPostItem($event)" (activeLocalEmitter)="toggleActiveLocal()" (idEmitter)="getId($event)"   (activeCalled)="toggleActive(true)"  *ngFor="let post of news" [post]="post"></app-card>
+      <app-card (postItem)="getPostItem($event)"
+                (activeLocalEmitter)="toggleActiveLocal()"
+                (idEmitter)="getId($event)"
+                (activeCalled)="toggleActive(true)"
+                *ngFor="let post of news" [post]="post"></app-card>
     </div>
 
     <div class="pagination" *ngIf="postsTotal > 9" [class.disabled]="activePage ? activePage === 1 : true">

@@ -67,7 +67,8 @@ export class SettingsComponent implements OnInit{
     businessHours: ['', Validators.required],
     metaTitle: ['', Validators.required],
     metaDesc: ['', Validators.required],
-    addressOnMap: ['', Validators.required]
+    addressOnMap: ['', Validators.required],
+    donationLink: ['', Validators.required]
   })
 
 
@@ -94,7 +95,7 @@ export class SettingsComponent implements OnInit{
   uploadFile(file: File, flag: string): void {
     this.formData = new FormData();
       if(flag === 'logo') {
-        this.formData?.append('logo', file);
+        this.formData?.append('image', file);
         this.settingsService.sendUploadedLogo(this.formData).subscribe({
           next: (data: UploadLogoType | DefaultResponseType) => {
               this.logoImg = (data as UploadLogoType).logo as string;
@@ -260,7 +261,8 @@ export class SettingsComponent implements OnInit{
       this.settingsForm.value.businessHours as string,
       this.settingsForm.value.metaTitle as string,
       this.settingsForm.value.metaDesc as string,
-      this.settingsForm.value.addressOnMap as string)
+      this.settingsForm.value.addressOnMap as string,
+      this.settingsForm.value.donationLink as string)
       .subscribe({
         next: (response: DefaultResponseType) => {
           if(response.success === 0) {
@@ -281,8 +283,10 @@ export class SettingsComponent implements OnInit{
           }
           const settings = response as GeneralSettingsType
           if(settings) {
-            this.logoIsAdded = true;
-            this.logoImg = settings.settings.logo.setting_value as string;
+            console.log(settings)
+            // this.logoIsAdded = settings.settings.logo.setting_value === "";
+            // this.logoImg = settings.settings.logo.setting_value as string;
+            this.logoIsAdded = false;
             this.settingsForm.setValue({
               companyName: settings.settings.companyName.setting_value,
               address: settings.settings.address.setting_value,
@@ -292,7 +296,8 @@ export class SettingsComponent implements OnInit{
               businessHours: settings.settings.businessHours.setting_value,
               metaTitle: settings.settings.metaTitle.setting_value,
               metaDesc: settings.settings.metaDesc.setting_value,
-              addressOnMap: settings.settings.addressOnMap.setting_value
+              addressOnMap: settings.settings.addressOnMap.setting_value,
+              donationLink:  settings.settings.donationLink.setting_value
             })
           }
 
