@@ -67,8 +67,7 @@
               "optimization": false,
               "extractLicenses": false,
               "sourceMap": true,
-              "outputPath": "dist/assets/frontend/browser",
-              "baseHref": "/assets/frontend/browser/"
+              "outputPath": "dist/assets/frontend"
             }
           },
           "defaultConfiguration": "production"
