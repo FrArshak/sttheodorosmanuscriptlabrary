@@ -1,0 +1,40 @@
+<div class="admin-header" *ngIf="showAdminHeader">
+  <div class="admin-info">
+    <div class="admin-img" style="background-image: url('http://arm-manu-jr.com/storage/{{img}}' )"></div>
+
+    <div class="admin-name">
+      <span>{{name}}</span>
+      <span class="admin-word">Admin</span>
+    </div>
+  </div>
+
+  <div class="admin-menu">
+    <div class="admin-menu-icon" [matMenuTriggerFor]="menu">
+      <svg
+      width="30"
+      height="20"
+      viewBox="0 0 30 20"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+       >
+      <path
+        d="M1.875 1.875H28.125M1.875 10H28.125M1.875 18.125H28.125"
+        stroke="white"
+        stroke-width="3.75"
+        stroke-miterlimit="10"
+        stroke-linecap="round"
+      />
+      </svg>
+    </div>
+    <mat-menu  #menu="matMenu" >
+      <button mat-menu-item (click)="logout()">
+        <a>Logout</a>
+      </button>
+      <button mat-menu-item >
+        <a [routerLink]="dashBoardOrHomeLink">{{dashBoardOrHomeText}}</a>
+      </button>
+    </mat-menu>
+
+
+  </div>
+</div>

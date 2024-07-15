@@ -1,0 +1,46 @@
+@import '../../../../assets/styles/variables';
+
+.sidebar {
+  //position: fixed;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 240px;
+  height: 100vh;
+  background: #273142;
+  //top: 68px;
+
+  nav {
+    ul {
+      a {
+        display: inline-block;
+        cursor: pointer;
+        padding: 6px 6px 6px 12px;
+        box-sizing: border-box;
+        margin-top: 5px;
+        border-radius: 4px;
+        color: white;
+        width: 100%;
+        font-size: 14px;
+        text-decoration: none;
+        &.active {
+          background: $color-blue;
+        }
+
+      }
+    }
+  }
+
+  .logout {
+    padding: 25px 15px;
+    box-sizing: border-box;
+
+
+    .logout-btn {
+      padding: 15px 35px;
+      width: 190px;
+      box-sizing: border-box;
+      text-align: center;
+    }
+  }
+}

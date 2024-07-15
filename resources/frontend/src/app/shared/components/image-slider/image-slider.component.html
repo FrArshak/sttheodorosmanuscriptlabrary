@@ -1,0 +1,22 @@
+<div class="slider">
+
+
+  <owl-carousel-o [options]="customOptions" #owlSlide>
+      <ng-template carouselSlide *ngFor="let slide of slides" >
+        <div class="slide" style="background-image: url('http://arm-manu-jr.com/storage/{{slide.image}}')">
+
+          <div class="slide-text">
+            <div class="slide-text-title">
+              {{slide.post_en.title}}
+            </div>
+            <div class="slide-text-info" [innerHTML]="slide.post_en.paragraph">
+            </div>
+
+          </div>
+      </div>
+     </ng-template>
+  </owl-carousel-o>
+</div>
+
+
+

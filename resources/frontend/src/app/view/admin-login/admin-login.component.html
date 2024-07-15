@@ -1,0 +1,46 @@
+<div class="login" [formGroup]="loginForm">
+  <div class="container">
+    <div class="login-content">
+      <div class="login-logo">
+        <div class="logo">
+          <svg width="80" height="69" viewBox="0 0 80 69" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M30.9328 4.601C24.932 1.63735 16.5444 0.185593 5.31493 0.134052C4.25588 0.119168 3.21761 0.438609 2.33857 1.04978C1.61705 1.55425 1.02643 2.23439 0.618647 3.03038C0.210866 3.82637 -0.00157515 4.71381 8.79264e-06 5.61465V54.7683C8.79264e-06 58.091 2.28542 60.5976 5.31493 60.5976C17.119 60.5976 28.9597 61.7384 36.0518 68.6725C36.1488 68.7678 36.2707 68.8315 36.4025 68.8557C36.5342 68.8799 36.6699 68.8635 36.7927 68.8086C36.9155 68.7537 37.02 68.6627 37.0932 68.5468C37.1664 68.431 37.2051 68.2955 37.2044 68.1571V10.2397C37.2046 9.84892 37.1238 9.46268 36.9673 9.10702C36.8109 8.75136 36.5825 8.43456 36.2976 8.178C34.6731 6.74142 32.8685 5.53822 30.9328 4.601ZM77.3852 1.04462C76.5058 0.434976 75.4674 0.117318 74.4089 0.134052C63.1795 0.185593 54.7918 1.63048 48.791 4.601C46.8554 5.53651 45.0504 6.73733 43.4246 8.17112C43.1402 8.42806 42.9123 8.74498 42.7562 9.10058C42.6 9.45618 42.5193 9.84223 42.5194 10.2328V68.1537C42.5193 68.2866 42.5572 68.4167 42.6283 68.5275C42.6994 68.6383 42.8005 68.7249 42.919 68.7765C43.0375 68.828 43.1681 68.8422 43.2944 68.8173C43.4207 68.7924 43.537 68.7295 43.6289 68.6364C47.8924 64.2554 55.3748 60.5925 74.4155 60.5942C75.8251 60.5942 77.177 60.015 78.1737 58.9839C79.1705 57.9529 79.7304 56.5545 79.7304 55.0964V5.61637C79.7324 4.71375 79.5194 3.82451 79.1104 3.02719C78.7014 2.22986 78.1089 1.54896 77.3852 1.04462Z"
+              fill="white"
+            />
+          </svg>
+        </div>
+        <div class="logo-text">Manuscripts</div>
+      </div>
+
+      <div class="login-form">
+        <div class="login-form-title">Login to Account</div>
+
+        <div class="login-form-subtitle">Please enter your email and password to continue</div>
+
+        <div class="login-inputs">
+          <div class="login-input email">
+            <label>Email address:</label>
+
+            <input type="text" class="input email" formControlName="email" />
+         </div>
+
+          <div class="login-input password">
+              <label class="password-label">Password</label>
+
+            <input type="password" class="input password" formControlName="password" />
+          </div>
+
+          <div class="checkbox">
+            <input type="checkbox" formControlName="rememberMe" id="remember" />
+            <label for="remember">Remember Password</label>
+          </div>
+        </div>
+
+        <div class="login-btn">
+          <btn class="btn" (click)="login()" [disabled]="loginForm.invalid">Sign in</btn>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

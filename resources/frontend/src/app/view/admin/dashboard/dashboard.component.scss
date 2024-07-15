@@ -1,0 +1,94 @@
+@import "../../../../assets/styles/variables";
+
+.dashboard {
+  background: $color-blue-dark;
+  width: 100%;
+  height: auto;
+  display: flex;
+  .dashboard-content {
+    padding-left: 260px;
+    padding-top: 50px;
+
+    .title {
+      margin-bottom: 30px;
+    }
+
+    .stat-boxes {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      column-gap: 40px;
+      margin-bottom: 30px;
+
+      .stat-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        border-radius: 14px;
+        background: rgb(39, 49, 66);
+        width: 262px;
+        height: 150px;
+        box-sizing: border-box;
+        padding: 16px;
+
+        .stat-box-info {
+          display: flex;
+          flex-direction: column;
+          row-gap: 20px;
+
+          .stat-box-title{
+            font-size: 16px;
+            color: rgb(217, 217, 217);
+            font-weight: 600;
+          }
+
+          .stat-box-amount {
+            font-size: 28px;
+            font-weight: 700;
+            color: #ffffff;
+          }
+        }
+
+      }
+
+      .dashboard-actions {
+        display: flex;
+        column-gap: 20px;
+
+        .btn {
+          transition: all 300ms ease-in-out ;
+          &:hover {
+            background: #5151ff;
+          }
+
+          &.clicked {
+            animation: btn-animation 300ms ease-in-out;
+          }
+        }
+      }
+    }
+
+    .chart {
+      width: 1138px;
+      height: 444px;
+      background: rgb(39, 49, 66);
+    }
+  }
+}
+
+@keyframes btn-animation {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(1px);
+  }
+  80% {
+    transform: translateY(3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+

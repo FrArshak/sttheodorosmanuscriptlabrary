@@ -1,0 +1,136 @@
+@import "../../../../assets/styles/variables";
+
+.card {
+  max-width: 365px;
+  max-height: 453px;
+  border-radius: 8px;
+  position: relative;
+  text-decoration: none;
+  color: black;
+
+  &:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+  }
+  .btn {
+    width: 25px;
+    height: 25px;
+
+    z-index: 999;
+    position: absolute;
+    padding: 15px;
+    border-radius: 50%;
+    background: #ffffff;
+    cursor: pointer;
+    transition: all 300ms ;
+
+    &.edit-btn {
+      top: 10px;
+      left: 10px;
+
+      &:hover {
+        background: $color-blue;
+        svg {
+          fill: #ffffff;
+        }
+      }
+    }
+
+    &.delete-btn {
+      top: 10px;
+      right: 10px;
+
+      &:hover {
+        background: red;
+
+        svg {
+          fill: #ffffff;
+        }
+      }
+
+      svg {
+        fill: red;
+
+      }
+    }
+
+    svg {
+      width: 100%;
+      height: 100%;
+      fill: #ffffff;
+      stroke: $color-blue;
+
+    }
+  }
+  .card-img {
+    display: block;
+    width: 100%;
+    height: 205px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    background-position: center;
+    background-size: cover;
+
+  }
+
+  .card-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    min-height: 248px;
+    padding: 20px;
+    box-sizing: border-box;
+    background-color: #ffffff;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+
+    .card-title {
+      font-size: 24px;
+      font-weight: 400;
+    }
+
+    .card-text {
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .card-admin-info {
+      display: flex;
+      //justify-content: space-between;
+      align-items: center;
+
+
+      .card-admin-detail {
+
+        display: flex;
+        justify-content: flex-start;
+        column-gap: 5px;
+        align-items: center;
+        border-right: 1px solid gray;
+        padding-right: 10px;
+
+         .card-admin-img {
+           width: 40px;
+           height: 40px;
+           border-radius: 50%;
+           background-position: center;
+           background-size: cover;
+         }
+
+        .card-admin-name {
+          font-size: 14px;
+          font-weight: 400;
+          color: rgb(118, 118, 118);
+        }
+      }
+
+      .card-admin-date {
+        font-size: 14px;
+        font-weight: 400;
+        color: rgb(118, 118, 118);
+        margin-left: 15px;
+      }
+    }
+  }
+}

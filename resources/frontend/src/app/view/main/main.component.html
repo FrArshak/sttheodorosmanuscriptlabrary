@@ -1,0 +1,60 @@
+<div class="main">
+  <app-banner-text-slider></app-banner-text-slider> <!-- Added the missing banner text slider component -->
+
+  <div class="news-article">
+    <div class="container">
+      <div class="title news-title">
+        Explore News
+      </div>
+      <div class="subhead news-subHead">
+        Stay updated with the latest insights and updates on art, culture, and history.
+      </div>
+      <div class="slider">
+        <image-slider [theme]="'news'"></image-slider>
+      </div>
+    </div>
+  </div>
+
+  <div class="news-article">
+    <div class="container">
+      <div class="title news-title">
+        Explore Manuscripts
+      </div>
+      <div class="subhead news-subHead">
+        Stay updated with the latest insights and updates on art, culture, and history.
+      </div>
+      <div class="slider">
+        <image-slider [theme]="'articles'"></image-slider>
+      </div>
+    </div>
+
+  </div>
+  <contact-form></contact-form>
+
+  <div class="support">
+    <div class="container">
+      <div class="title support-title">
+        Support Our Mission
+      </div>
+      <button *ngIf="isLogged" (click)="toggleActive(false)"  class="new-post">Add new post</button>
+      <div class="support-items">
+        <app-support-mission (idEmitter)="getId($event)"
+                             (activeLocalEmitter)="toggleActiveLocal()"
+                             *ngFor="let post of posts" [post]="post"
+                             (postItem)="getPost($event)"
+                             (active)="toggleActive(true)"
+                             (update)="getUpdate($event)"
+                             (support)="getSupportFlag($event)">
+
+        </app-support-mission>
+      </div>
+    </div>
+
+  </div>
+
+  <admin-modal [update]="update"  [isPdf]="false"
+               [active]="active" [postItem]="postItem"
+               [support]="support"></admin-modal>
+  <app-modal [id]="id" [active]="activeLocal" [post]="true"></app-modal>
+</div>
+

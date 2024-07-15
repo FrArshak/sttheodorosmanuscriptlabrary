@@ -1,0 +1,1 @@
+import{ia as n}from"./chunk-HD5U724E.js";var o=(()=>{let t=class t{transform(r,e){return r?r.length>e?r.substr(0,e)+"...":r:""}};t.\u0275fac=function(e){return new(e||t)},t.\u0275pipe=n({name:"truncate",type:t,pure:!0,standalone:!0});let i=t;return i})();export{o as a};
