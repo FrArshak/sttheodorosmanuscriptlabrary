@@ -1,0 +1,23 @@
+name: Deploy to StTheodorosManuscripLabrary
+
+on:
+  push:
+    branches:
+      - main  # or the branch you want to deploy from
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.HOSTINGER_DEPLOY_KEY }}
+
+      - name: Sync files to Hostinger
+        run: |
+          composer2 install
