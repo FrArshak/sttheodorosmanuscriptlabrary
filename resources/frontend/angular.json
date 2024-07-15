@@ -59,12 +59,16 @@
                   "maximumError": "200kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "outputPath": "../../public/assets/frontend",
+              "deployUrl": "/assets/frontend/browser/"
             },
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "outputPath": "dist/assets/frontend/browser",
+              "baseHref": "/assets/frontend/browser/"
             }
           },
           "defaultConfiguration": "production"
