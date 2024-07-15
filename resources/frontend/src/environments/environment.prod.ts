@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  api: 'http://localhost:3000/api/',
-  serverStaticPath: 'http://localhost:3000/images/products/'
+  api: 'http://sttheodorosmanuscriptlabrary.test//api/',
+  serverStaticPath: 'http://sttheodorosmanuscriptlabrary.test/images/products/'
 };

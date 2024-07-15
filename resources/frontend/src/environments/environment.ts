@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://arm-manu-jr.com/api/',
-  serverStaticPath: 'http://localhost:3000/images/'
+  api: 'http://sttheodorosmanuscriptlabrary.test/api/',
+  serverStaticPath: 'http://sttheodorosmanuscriptlabrary.test/images/'
 };
 
 /*

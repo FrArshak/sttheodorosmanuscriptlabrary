@@ -1,0 +1,1 @@
+import{a}from"./chunk-BK442BPD.js";import"./chunk-CEGYHUTB.js";import"./chunk-4JJ6EDAR.js";import"./chunk-4GPGGGDQ.js";import"./chunk-W4VRCJZR.js";import"./chunk-RXBYV5TM.js";import"./chunk-HNION4YH.js";import"./chunk-AYCNZA3G.js";import"./chunk-HD5U724E.js";import"./chunk-UGUGGRN7.js";export{a as NewsArticleModule};

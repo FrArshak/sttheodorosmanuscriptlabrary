@@ -12,5 +12,5 @@
   <body>
     <!--This is comment-->
     <app-root></app-root>
-  <link rel="modulepreload" href="/assets/frontend/browser/chunk-GJ3UV4GB.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-MAVNWS4Y.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-RA4OJ56O.js"><script src="/assets/frontend/browser/polyfills-6EAL64PA.js" type="module"></script><script src="/assets/frontend/browser/main-GO74GFOM.js" type="module"></script></body>
+  <link rel="modulepreload" href="/assets/frontend/browser/chunk-GJ3UV4GB.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-MAVNWS4Y.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-BK442BPD.js"><script src="/assets/frontend/browser/polyfills-6EAL64PA.js" type="module"></script><script src="/assets/frontend/browser/main-LXPLLJIF.js" type="module"></script></body>
 </html>
