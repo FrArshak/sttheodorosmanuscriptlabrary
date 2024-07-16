@@ -17,23 +17,7 @@ jobs:
     steps:       
     - name: Checkout repository
       uses: actions/checkout@v2
-
-    - name: Set up SSH key
-      run: |
-        echo "${{ secrets.SSH_PRIVATE_KEY }}" > private_key
-        chmod 600 private_key
-
-    - name: Test SSH connection
-      run: |
-        ssh -i private_key -p 65002 -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.HOST }} "echo 'SSH connection successful'"
-
-    - name: Print SSH config
-      run: |
-        echo "Host: ${{ secrets.HOST }}"
-        echo "Username: ${{ secrets.USERNAME }}"
-        echo "Private Key: ${{ secrets.SSH_PRIVATE_KEY }}"
-
-      
+  
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
       with:
