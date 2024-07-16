@@ -24,6 +24,11 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 65002
         script: |
-          cd domains/sttheodorosmanuscriptlabrary.com/public_html/
+          cd domains/sttheodorosmanuscriptlabrary.com/
           git pull origin main
+          git pull origin main
+          rsync -av --delete-after public/ public_html/
+          mv public_html/public/* public_html/
+          rm -rf public_html/public
+          git status
           git status
