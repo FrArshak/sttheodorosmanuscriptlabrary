@@ -52,6 +52,7 @@ class AuthController extends Controller
 
             $user = User::where('email', $request->email)->first();
 
+dd($user);
             if($user) {
                 if (Hash::check($request->password, $user->password)) {
 
@@ -200,7 +201,7 @@ class AuthController extends Controller
                     if ($request->has('avatar')) {
                         $user->avatar = $request->avatar;
                     }
-                    
+
                     $user->save();
 
 
