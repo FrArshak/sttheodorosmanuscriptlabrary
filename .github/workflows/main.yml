@@ -17,6 +17,13 @@ jobs:
     steps:       
     - name: Checkout repository
       uses: actions/checkout@v2
+
+    - name: Print SSH config
+      run: |
+        echo "Host: ${{ secrets.HOST }}"
+        echo "Username: ${{ secrets.USERNAME }}"
+        echo "Private Key: ${{ secrets.SSH_PRIVATE_KEY }}"
+
       
     - name: Deploy using ssh
       uses: appleboy/ssh-action@master
