@@ -9,7 +9,10 @@ import { AuthService } from './core/auth.service';
 import {LoaderService} from "./shared/services/loader.service";
 import {StatisticsService} from "./shared/services/statistics.service";
 import {HttpErrorResponse} from "@angular/common/http";
-
+import {Meta} from '@angular/platform-browser'
+import {SettingsService} from "./shared/services/settings.service";
+import {DefaultResponseType} from "../types/default-response.type";
+import {GeneralSettingsType} from "../types/general-settings.type";
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -25,12 +28,18 @@ export class AppComponent implements OnInit {
 
   showAdminHeader: boolean = false;
 
+  settingsMetaTitle: {name: string, content: string} = {name: 'metaTitle', content: ''};
+  settingsMetaDesc: {name: string, content: string} = {name: 'metaDescription', content: ''};
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private loaderService: LoaderService,
-    private statisticsService: StatisticsService
+    private statisticsService: StatisticsService,
+
+    private meta: Meta,
+    private settingsService: SettingsService
   ) {
     this.isLogged = this.authService.getIsLoggedIn();
 
@@ -40,6 +49,24 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    this.settingsService.getSettings()
+      .subscribe({
+        next: (response: DefaultResponseType | GeneralSettingsType) => {
+          if((response as DefaultResponseType).success === 0 ){
+            throw new Error((response as DefaultResponseType).message);
+          }
+
+          this.settingsMetaTitle.content = (response as GeneralSettingsType).settings.metaTitle.setting_value as string;
+          this.settingsMetaDesc.content = (response as GeneralSettingsType).settings.metaDesc.setting_value as string;
+
+          this.meta.addTags([
+            this.settingsMetaTitle,
+            this.settingsMetaDesc
+          ]);
+
+        },
+      })
 
     this.statisticsService.countVisitor()
       .subscribe({
