@@ -26,6 +26,6 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: 65002
         script: |
-          cd domains/https://sttheodorosmanuscriptlabrary.com/public_html/
+          cd domains/sttheodorosmanuscriptlabrary.com/public_html/
           git pull origin main
           git status
