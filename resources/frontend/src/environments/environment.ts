@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   api: 'https://sttheodorosmanuscriptlabrary.com/api/',
-  serverStaticPath: 'https://sttheodorosmanuscriptlabrary.com/images/'
+  serverStaticPath: 'https://sttheodorosmanuscriptlabrary.com/storage/'
 };
 
 /*
