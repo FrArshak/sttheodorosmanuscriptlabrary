@@ -36,11 +36,11 @@ return [
             'throw' => false,
         ],
 
-        'public' => [
+        'public_html' => [
             'driver' => 'local',
-            'root' => storage_path('app/public'),
+            'root' => storage_path('app/public_html'),
             'url' => env('APP_URL').'/storage',
-            'visibility' => 'public',
+            'visibility' => 'public_html',
             'throw' => false,
         ],
 
@@ -70,7 +70,11 @@ return [
     */
 
     'links' => [
+<<<<<<< HEAD
         base_path('public_html/storage') => storage_path('app/public'),
+=======
+        base_path('public_html/storage') => storage_path('app/public_html'),
+>>>>>>> 1236002a2f6e9ce30be1c527310846ec0d45e886
     ],
 
 ];
