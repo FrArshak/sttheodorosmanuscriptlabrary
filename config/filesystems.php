@@ -70,11 +70,7 @@ return [
     */
 
     'links' => [
-<<<<<<< HEAD
         base_path('public_html/storage') => storage_path('app/public'),
-=======
-        base_path('public_html/storage') => storage_path('app/public_html'),
->>>>>>> 1236002a2f6e9ce30be1c527310846ec0d45e886
     ],
 
 ];
