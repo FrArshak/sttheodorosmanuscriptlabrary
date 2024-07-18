@@ -1,7 +1,5 @@
 @import "../../../../assets/styles/variables";
 
-.settings-container {
-}
 .settings {
   display: flex;
   width: 100%;
@@ -55,6 +53,7 @@
       flex-direction: column;
       align-items: flex-start;
       row-gap: 25px;
+      flex-wrap: wrap;
 
       &.setting {
         flex-direction: row;
@@ -91,6 +90,7 @@
       &.img {
         position: relative;
         width: 360px;
+        margin-bottom: 40px;
 
         .not-added-img {
 
@@ -131,8 +131,7 @@
 
           width: 80px;
           height: 80px;
-          position: absolute;
-          top: -65px;
+          position: relative;
           left: 40%;
           &:hover {
             .delete-uploaded-img {
@@ -183,7 +182,186 @@
         }
       }
     }
+  }
+}
 
+@media screen and (max-width: 1450px) {
+  .settings {
+    .settings-items {
+      padding: 40px;
+      width: 1000px;
+    }
+  }
+}
 
+@media screen and (max-width: 1300px) {
+  .settings {
+    .settings-container {
+      padding-left: 30px;
+      padding-top: 30px;
+    }
+
+    .settings-items {
+      padding: 40px;
+      width: 900px;
+    }
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  .settings {
+    .settings-container {
+      padding-left: 30px;
+      padding-top: 30px;
+      height: 100%;
+    }
+
+    .setting-items-container {
+      justify-content: center;
+    }
+
+    .settings-items {
+      padding: 40px;
+      width: 800px;
+      height: 100%;
+
+      .btn {
+        margin-top: 30px;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  .settings {
+
+    .settings-items {
+      padding: 40px;
+      width: 700px;
+      height: 100%;
+
+    }
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .settings {
+
+    .settings-items {
+      padding: 40px;
+      width: 600px;
+      height: 100%;
+
+    }
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .settings {
+
+    .settings-items {
+      padding: 40px;
+      width: 500px;
+      height: 100%;
+
+    }
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .settings {
+
+    .settings-container {
+      left: 140px;
+    }
+
+    .settings-items {
+      padding: 40px;
+      width: 400px;
+      height: 100%;
+
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .settings {
+
+    .settings-container {
+      left: 140px;
+    }
+
+    .settings-items {
+      padding: 20px;
+      width: 300px;
+      height: 100%;
+      margin: 0;
+
+      .setting-item {
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 500px) {
+  .settings {
+
+    .settings-container {
+      left: 90px;
+      padding: 20px;
+
+      .settings-actions {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    .settings-items {
+      padding: 20px;
+      width: 300px;
+      height: 100%;
+      margin: 0;
+
+      .setting-item {
+        input {
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 440px) {
+  .settings {
+
+    .settings-container {
+      left: 90px;
+      padding: 10px;
+
+      .settings-title {
+        font-size: 40px;
+      }
+
+      .settings-actions {
+        display: flex;
+        flex-wrap: wrap;
+      }
+    }
+
+    .settings-items {
+      padding: 10px;
+      width: 250px;
+      height: 100%;
+      margin: 0;
+
+      .setting-item {
+        input {
+          width: 100%;
+        }
+      }
+    }
   }
 }

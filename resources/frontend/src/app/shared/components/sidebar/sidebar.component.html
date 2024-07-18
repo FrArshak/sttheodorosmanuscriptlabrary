@@ -2,13 +2,23 @@
 <div class="sidebar">
   <nav class="nav">
     <ul class="nav-menu">
-      <a [class.active]="dashboardFlag" routerLink="/dashboard">Dashboard</a>
-      <a [class.active]="settingsFlag" routerLink="/settings">Settings</a>
+      <li>
+        <a [class.active]="dashboardFlag" routerLink="/dashboard">
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a [class.active]="settingsFlag" routerLink="/settings">
+          <span>Settings</span>
+        </a>
+      </li>
     </ul>
   </nav>
 
   <div class="logout">
-    <div class="btn logout-btn">Logout</div>
+    <div class="btn logout-btn">
+      <span>Logout</span>
+    </div>
   </div>
 </div>
 
