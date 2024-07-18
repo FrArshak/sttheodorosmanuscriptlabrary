@@ -4,16 +4,20 @@
 }
 .settings {
   display: flex;
-
-  column-gap: 250px;
   width: 100%;
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   background: $color-blue-dark;
+  position: relative;
+  top: 68px;
 
   .settings-title {
     margin-bottom: 40px;
   }
   .settings-container {
+    padding-left: 40px;
+    padding-top: 40px;
+    position: relative;
+    left: 240px;
 
     .settings-actions {
       margin-bottom: 20px;

@@ -2,7 +2,7 @@
   -->
 <loader></loader>
 
-<admin-header *ngIf="showHeader && isLogged || showAdminHeader && isLogged"></admin-header>
+<admin-header *ngIf="showHeader && isLogged || showAdminHeader && isLogged" class="admin-header-container"></admin-header>
   <header *ngIf="showHeader"></header>
 <div [@routeAnimations]="prepareRoute(outlet)">
   <router-outlet #outlet="outlet"></router-outlet>
