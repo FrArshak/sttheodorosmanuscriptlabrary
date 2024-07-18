@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {BehaviorSubject, Observable} from "rxjs";
 import {DefaultResponseType} from "../../../types/default-response.type";
 import {environment} from "../../../environments/environment";
 import {UserInfoType} from "../../../types/userInfo.type";
@@ -13,9 +13,14 @@ import {UploadLogoType} from "../../../types/upload-logo.type";
 })
 export class SettingsService {
 
+
+  private langSubject: BehaviorSubject<boolean> = new BehaviorSubject<any>(false);
+  public lang$: Observable<any> = this.langSubject.asObservable();
   constructor(private http: HttpClient) { }
 
-
+  changeLang(newData: any) {
+    this.langSubject.next(newData);
+  }
 
   sendUploadedLogo(formData: FormData): Observable<UploadLogoType | DefaultResponseType> {
     return this.http.post<UploadLogoType | DefaultResponseType>(environment.api + 'upload-logo', formData);

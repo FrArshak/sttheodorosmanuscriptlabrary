@@ -8,6 +8,7 @@ import { slideInAnimation } from './shared/utils/route-animation';
 import { AuthService } from './core/auth.service';
 import {LoaderService} from "./shared/services/loader.service";
 import {StatisticsService} from "./shared/services/statistics.service";
+import {LogoService} from "./shared/services/logo.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {Meta} from '@angular/platform-browser'
 import {SettingsService} from "./shared/services/settings.service";
@@ -31,13 +32,15 @@ export class AppComponent implements OnInit {
   settingsMetaTitle: {name: string, content: string} = {name: 'metaTitle', content: ''};
   settingsMetaDesc: {name: string, content: string} = {name: 'metaDescription', content: ''};
 
+  logo: string = '';
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private loaderService: LoaderService,
     private statisticsService: StatisticsService,
-
+    private logoService: LogoService,
     private meta: Meta,
     private settingsService: SettingsService
   ) {
@@ -59,11 +62,14 @@ export class AppComponent implements OnInit {
 
           this.settingsMetaTitle.content = (response as GeneralSettingsType).settings.metaTitle.setting_value as string;
           this.settingsMetaDesc.content = (response as GeneralSettingsType).settings.metaDesc.setting_value as string;
+          this.logo = (response as GeneralSettingsType).settings.logo.setting_value as string;
 
           this.meta.addTags([
             this.settingsMetaTitle,
             this.settingsMetaDesc
           ]);
+
+          this.changeIcon(this.logo)
 
         },
       })
@@ -95,6 +101,10 @@ export class AppComponent implements OnInit {
     });
   }
 
+
+  changeIcon(iconUrl: string): void {
+    this.logoService.setIcon('/storage/' + iconUrl);
+  }
   prepareRoute(outlet: RouterOutlet) {
     return (
       outlet &&
