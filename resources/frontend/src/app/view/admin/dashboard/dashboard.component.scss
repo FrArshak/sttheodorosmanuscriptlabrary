@@ -5,9 +5,15 @@
   width: 100%;
   height: auto;
   display: flex;
+  padding-bottom: 40px;
+  position: relative;
+  top: 68px;
+
   .dashboard-content {
-    padding-left: 260px;
-    padding-top: 50px;
+    padding-left: 40px;
+    padding-top: 40px;
+    position: relative;
+    left: 240px;
 
     .title {
       margin-bottom: 30px;

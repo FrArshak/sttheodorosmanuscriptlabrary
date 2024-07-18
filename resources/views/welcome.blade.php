@@ -27,5 +27,9 @@
   <body>
     <!--This is comment-->
     <app-root></app-root>
+<<<<<<< HEAD
   <link rel="modulepreload" href="/assets/frontend/browser/chunk-GJ3UV4GB.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-MAVNWS4Y.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-XKGE56VE.js"><script src="/assets/frontend/browser/polyfills-6EAL64PA.js" type="module"></script><script src="/assets/frontend/browser/main-6FGNUOJY.js" type="module"></script></body>
+=======
+  <link rel="modulepreload" href="/assets/frontend/browser/chunk-GJ3UV4GB.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-MAVNWS4Y.js"><link rel="modulepreload" href="/assets/frontend/browser/chunk-XWFZZJV2.js"><script src="/assets/frontend/browser/polyfills-6EAL64PA.js" type="module"></script><script src="/assets/frontend/browser/main-WLVR5J5C.js" type="module"></script></body>
+>>>>>>> 011c1616b862d8d2723dc7dde364b8e9fe443f4c
 </html>

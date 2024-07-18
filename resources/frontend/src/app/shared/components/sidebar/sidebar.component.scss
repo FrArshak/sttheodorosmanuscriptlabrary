@@ -1,23 +1,24 @@
 @import '../../../../assets/styles/variables';
 
 .sidebar {
-  //position: fixed;
+  position: fixed;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   width: 240px;
-  height: 100vh;
+  height: 91vh;
   background: #273142;
-  //top: 68px;
+  top: 68px;
+  z-index: 99;
 
   nav {
     ul {
+      padding: 0;
       a {
         display: inline-block;
         cursor: pointer;
         padding: 6px 6px 6px 12px;
         box-sizing: border-box;
-        margin-top: 5px;
         border-radius: 4px;
         color: white;
         width: 100%;
@@ -25,6 +26,10 @@
         text-decoration: none;
         &.active {
           background: $color-blue;
+        }
+        &:hover {
+          transition: .5s ease-in-out background-color;
+          background-color: rgba(33, 83, 182, 0.56);
         }
 
       }

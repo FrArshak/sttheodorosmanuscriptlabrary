@@ -9,6 +9,8 @@
 <strong>Message: </strong> <br> {{ $emailData['message']  }} <br>
 </div>
 
+
+
 Thanks,<br>
 {{ config('app.name') }}
 </x-mail::message>

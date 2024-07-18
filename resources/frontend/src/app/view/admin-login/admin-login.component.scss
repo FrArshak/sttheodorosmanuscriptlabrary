@@ -1,5 +1,9 @@
 .login {
-  padding: 167px 163px;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   background: linear-gradient(
     270deg,
     rgb(0, 28, 81) -5.208%,
@@ -7,8 +11,6 @@
   );
 
   .container {
-    max-width: 1115px;
-    height: 735px;
 
     .login-content {
       width: 100%;
@@ -17,15 +19,13 @@
 
 
       .login-logo {
-        padding-right: 54px;
-        padding-left: 86px;
+        padding: 50px;
         background-image: url("/storage/login-bg.webp");
-        width: 484px;
-        height: 100%;
         display: flex;
         justify-content: center;
         align-items: center;
         column-gap: 20px;
+        border-bottom-left-radius: 20px;
 
         .logo-text {
           font-family: Lato, sans-serif;
@@ -36,7 +36,7 @@
       }
 
       .login-form {
-        padding: 110px 57px;
+        padding: 40px;
         border: 0.3px solid rgb(185, 185, 185);
         border-radius: 0px 24px 0px 0px;
         backdrop-filter: blur(34px);
