@@ -38,9 +38,9 @@ return [
 
         'public_html' => [
             'driver' => 'local',
-            'root' => storage_path('app/public_html'),
+            'root' => storage_path('app/public'),
             'url' => env('APP_URL').'/storage',
-            'visibility' => 'public_html',
+            'visibility' => 'public',
             'throw' => false,
         ],
 

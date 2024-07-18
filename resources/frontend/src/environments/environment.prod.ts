@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  api: 'https://sttheodorosmanuscriptlabrary.com//api/',
-  serverStaticPath: 'https://sttheodorosmanuscriptlabrary.com/storage/'
+  api: 'http://sttheodorosmanuscriptlabrary.test/api/',
+  serverStaticPath: 'http://sttheodorosmanuscriptlabrary./storage/'
 };
