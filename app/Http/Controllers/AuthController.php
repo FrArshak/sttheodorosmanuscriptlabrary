@@ -200,7 +200,7 @@ class AuthController extends Controller
                     if ($request->has('avatar')) {
                         $user->avatar = $request->avatar;
                     }
-                    
+
                     $user->save();
 
 
