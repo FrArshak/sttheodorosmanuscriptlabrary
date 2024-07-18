@@ -29,7 +29,7 @@ class FileManagerService
      */
     public function getFile($fileName): JsonResponse
     {
-        $prefix = $fileName[0] === '/' ? 'public_html' : 'public_html/';
+        $prefix = $fileName[0] === '/' ? 'public' : 'public/';
         try {
             if($this->disk->exists($prefix . $fileName)) {
                 $filePath = $this->disk->get($prefix . $fileName);
@@ -64,7 +64,7 @@ class FileManagerService
     public function checkIfExists($filePath): bool
     {
         try {
-            return $this->disk->exists('/public_html/' . $filePath);
+            return $this->disk->exists('/public/' . $filePath);
         } catch (\Exception $exception) {
             Log::error($exception);
             return false;
@@ -82,8 +82,8 @@ class FileManagerService
         try {
             $image->encode();
 
-            $prefix = $uploadPrefix ? ($name[0] === '/' ? 'public_html' : 'public_html/') : ($name[0] === '/' ? '' : '/');
-            $this->disk->put($prefix .$name, $image, 'public_html');
+            $prefix = $uploadPrefix ? ($name[0] === '/' ? 'public' : 'public/') : ($name[0] === '/' ? '' : '/');
+            $this->disk->put($prefix .$name, $image, 'public');
 
             return response()->json([
                 'success' => 1,
@@ -110,9 +110,9 @@ class FileManagerService
     {
         try {
 
-            $prefix = $pdfPath[0] === '/' ? 'public_html' : 'public_html/';
+            $prefix = $pdfPath[0] === '/' ? 'public' : 'public/';
 
-            $this->disk->put($prefix . $pdfPath, $pdfContent, 'public_html');
+            $this->disk->put($prefix . $pdfPath, $pdfContent, 'public');
 
             return response()->json([
                 'success' => 1,
@@ -185,7 +185,7 @@ class FileManagerService
     {
         try {
 
-            $prefix = $path[0] === '/' ? 'public_html' : 'public_html/';
+            $prefix = $path[0] === '/' ? 'public' : 'public/';
             if($this->disk->exists($prefix . $path)) {
 
                 $this->disk->delete($prefix . $path);
