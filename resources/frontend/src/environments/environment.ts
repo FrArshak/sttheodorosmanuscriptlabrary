@@ -4,8 +4,8 @@
 
 export const environment = {
   production: false,
-  api: 'http://sttheodorosmanuscriptlabrary.test/api/',
-  serverStaticPath: 'http://sttheodorosmanuscriptlabrary.test/storage/'
+  api: 'https://sttheodorosmanuscriptlabrary.com/api/',
+  serverStaticPath: 'https://sttheodorosmanuscriptlabrary.com/storage/'
 };
 
 /*
