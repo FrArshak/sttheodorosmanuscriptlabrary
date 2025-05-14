@@ -5,11 +5,12 @@ import {PostService} from "../../services/post.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {DefaultResponseType} from "../../../../types/default-response.type";
 import {HttpErrorResponse} from "@angular/common/http";
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-about-us',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './about-us.component.html',
   styleUrl: './about-us.component.scss'
 })

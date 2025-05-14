@@ -83,7 +83,8 @@ class FileManagerService
             $image->encode();
 
             $prefix = $uploadPrefix ? ($name[0] === '/' ? 'public' : 'public/') : ($name[0] === '/' ? '' : '/');
-            $this->disk->put($prefix .$name, $image, 'public');
+            // $this->disk->put($prefix .$name, $image, 'public');
+            $this->disk->put($prefix . $name, (string) $image->encode(), 'public');
 
             return response()->json([
                 'success' => 1,

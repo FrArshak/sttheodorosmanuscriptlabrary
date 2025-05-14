@@ -2,7 +2,36 @@
   position: fixed;
   top: 0;
   width: 100%;
-  z-index: 99;
+  z-index: 999;
+}
+
+header {
+  position: relative;
+  z-index: 999;
+}
+
+.main-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content-wrapper {
+  flex: 1; // Takes all remaining space between header and footer
+  padding-bottom: 2rem; // Optional: gives spacing if needed
+}
+
+main {
+  z-index: 998;
+}
+
+app-footer {
+  position: relative;
+  z-index: 0;
+}
+
+.heder-element-loggedin {
+  top: 68px;
 }
 
 :host {

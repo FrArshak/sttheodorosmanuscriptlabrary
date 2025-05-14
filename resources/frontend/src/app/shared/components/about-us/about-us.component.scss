@@ -1,4 +1,13 @@
 .about-us-paragraph {
   position: relative;
   text-align: center;
+  padding: 100px 0;
+
+  .title {
+    margin-bottom: 30px;
+  }
+
+  .subhead {
+    line-height: 40px;
+  }
 }

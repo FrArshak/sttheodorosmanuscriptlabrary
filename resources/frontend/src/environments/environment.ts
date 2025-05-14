@@ -8,6 +8,12 @@ export const environment = {
   serverStaticPath: 'https://sttheodorosmanuscriptlabrary.com/storage/'
 };
 
+// export const environment = {
+//   production: false,
+//   api: 'http://sttheodorosmanuscriptlabrary.test/api/',
+//   serverStaticPath: 'http://sttheodorosmanuscriptlabrary.test/storage/'
+// };
+
 /*
  * For easier debugging in development mode, you can import the following file
  * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
