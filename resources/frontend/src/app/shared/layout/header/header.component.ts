@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {RouterLink} from "@angular/router";
+import {Router, NavigationEnd} from "@angular/router";
 import {SettingsService} from "../../services/settings.service";
 
 @Component({
@@ -20,7 +20,12 @@ export class HeaderComponent {
 
   isEn: boolean = true;
 
-  constructor(private settingsService: SettingsService) {
+  constructor(private settingsService: SettingsService,  private router: Router) {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        this.menuFlag = false;
+      }
+    });
   }
 
   toggleMenu() {
