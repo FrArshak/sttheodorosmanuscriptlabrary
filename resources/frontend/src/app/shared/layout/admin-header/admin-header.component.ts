@@ -18,7 +18,7 @@ export class AdminHeaderComponent implements OnInit{
   showAdminHeader: boolean = true;
   dashBoardOrHomeLink = '/dashboard';
 
-  dashBoardOrHomeText = 'Go to the Dashboard'
+  dashBoardOrHomeText = 'Dashboard'
 
   adminInfo!: UserInfoType;
 
@@ -36,7 +36,7 @@ export class AdminHeaderComponent implements OnInit{
         this.dashBoardOrHomeText = 'Home'
       } else if(route === 3) {
         this.dashBoardOrHomeLink = '/dashboard';
-        this.dashBoardOrHomeText = 'Go to the Dashboard'
+        this.dashBoardOrHomeText = 'Dashboard'
       }
     });
 

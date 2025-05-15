@@ -9,32 +9,11 @@
   </div>
 
   <div class="admin-menu">
-    <div class="admin-menu-icon" [matMenuTriggerFor]="menu">
-      <svg
-      width="30"
-      height="20"
-      viewBox="0 0 30 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-       >
-      <path
-        d="M1.875 1.875H28.125M1.875 10H28.125M1.875 18.125H28.125"
-        stroke="white"
-        stroke-width="3.75"
-        stroke-miterlimit="10"
-        stroke-linecap="round"
-      />
-      </svg>
-    </div>
-    <mat-menu  #menu="matMenu" >
-      <button mat-menu-item (click)="logout()">
-        <a>Logout</a>
-      </button>
-      <button mat-menu-item >
-        <a style="text-decoration: none;color: black" [routerLink]="dashBoardOrHomeLink">{{dashBoardOrHomeText}}</a>
-      </button>
-    </mat-menu>
-
-
+    <button>
+      <span [routerLink]="dashBoardOrHomeLink">{{dashBoardOrHomeText}}</span>
+    </button>
+    <button (click)="logout()">
+      <span>Logout</span>
+    </button>
   </div>
 </div>

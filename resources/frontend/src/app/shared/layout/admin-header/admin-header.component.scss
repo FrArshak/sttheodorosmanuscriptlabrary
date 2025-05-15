@@ -35,18 +35,18 @@
     }
 
     .admin-menu {
-        cursor: pointer;
+        display: flex;
 
-        &:hover {
-            .admin-menu-icon {
-                svg {
-                    path {
-                      transition: all 200ms ease-in-out;
-                      stroke: rgb(46, 46, 224);
-                    }
-                }
+        button {
+            color: #ffffff;
+            background-color: transparent;
+            border: none;
+            font-size: 18px;
+            padding: 5px 20px;
+
+            a {
+                color: #ffffff;
             }
-
         }
     }
 }
